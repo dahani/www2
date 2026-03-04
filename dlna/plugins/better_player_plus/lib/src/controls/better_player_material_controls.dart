@@ -284,6 +284,15 @@ void toggleFit() {
                     )),
                   const  Spacer(),
                   BetterPlayerMaterialClickableWidget(
+                      onTap:() {
+                         _betterPlayerController!.toggleFullScreen();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Icon(_betterPlayerController!.isFullScreen?Icons.fullscreen_exit:Icons.fullscreen, color: _controlsConfiguration.iconsColor),
+                      ),
+                    ),
+                  BetterPlayerMaterialClickableWidget(
                       onTap:toggleFit,
                       child: Padding(
                         padding: const EdgeInsets.all(8),

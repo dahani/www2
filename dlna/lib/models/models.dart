@@ -225,7 +225,7 @@ Map<String, dynamic> toJson() {
       language: json['language']??"",
       poster: titleData['poster']??"",
       backdrop: titleData['backdrop']??"",
-      duration: titleData['runtime'],
+      duration: titleData['runtime']??0,
       runtime: titleData['runtime']!=null?formatRuntime(titleData['runtime']):'----',
       rating: (titleData['rating'] as num).toDouble(),
       year: titleData['year']??"",

@@ -26,16 +26,13 @@ class MyApp extends StatelessWidget {
 
 //crow movie https://egymovies.org/api/v1/titles/2794?loader=titleCreditsPage
 /*
-
+https://egymovies.org/api/v1/watch/13724
 https://egymovies.org/api/v1/titles/2657/related if exist
 
-   data-value="revenue:desc"Biggest revenue first
-    data-value="budget:desc"Biggest budget first
-     data-value="rating:desc"Highest rated first
-      data-value="created_at:desc"Recently created
-         data-value="popularity:desc"Most popular first
-
-
-
+      data-value="revenue:desc"Biggest revenue first
+        data-value="budget:desc"Biggest budget first
+         data-value="rating:desc"Highest rated first
+          data-value="created_at:desc"Recently created
+      data-value="popularity:desc"Most popular first
 
 */

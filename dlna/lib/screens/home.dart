@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:dlna/models/models.dart';
 import 'package:dlna/screens/movies.dart';
 import 'package:dlna/screens/scan_test.dart';
+import 'package:dlna/screens/youtube_player.dart';
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/database_service.dart';
 import 'package:dlna/services/dlna_provider.dart';
@@ -78,6 +79,7 @@ class _DlnaHomePageState extends State<DlnaHomePage>
   void _loadFavorites() async {
     setState(() => _isLoadingChannels = true);
     final favs = await DatabaseService.instance.getFavourites();
+
     setState(() {
       _displayChannels = favs.map((e) => ChannelModel.fromMap(e)).toList();
       _selectedCategory = {'name': 'Favorites'}; // Label for UI
@@ -185,13 +187,17 @@ class _DlnaHomePageState extends State<DlnaHomePage>
       if (resp.statusCode == 200) {
         final List data = resp.data;
         await DatabaseService.instance.insertFullJson(data);
+
+          getCats(isFirst: true);
+    setState(() => _isLoadingChannels = false);
+    Fluttertoast.showToast(msg: "Loading Complete");
       }
     } catch (e) {
       debugPrint("JSON error: $e");
+       Fluttertoast.showToast(msg: e.toString());
     }
 
-    getCats(isFirst: true);
-    setState(() => _isLoadingChannels = false);
+
   }
 
   void _showQualitySelector(ChannelModel ch, int indexd) {
@@ -235,10 +241,13 @@ class _DlnaHomePageState extends State<DlnaHomePage>
   }
 
   ChannelModel _changeChannel(int step) {
-    selecteChannelIndex =
-        (selecteChannelIndex + step + _displayChannels.length) %
-        _displayChannels.length;
+    selecteChannelIndex =(selecteChannelIndex + step + _displayChannels.length) %_displayChannels.length;
+
     final selected = _displayChannels[selecteChannelIndex];
+  setState(() {
+      dlnaService.setChannel(selected);
+
+  });
     return selected;
   }
 
@@ -325,21 +334,22 @@ class _DlnaHomePageState extends State<DlnaHomePage>
                               onTap: _showSleepTimerSheet,
                             ),
                             ListTile(
-                              leading: const Icon(Icons.timer),
+                              leading: const Icon(Icons.delete),
                               title: const Text("Clear favourite"),
-                              onTap: _clearAllFavs,
+                              onTap:() { Navigator.pop(context);_clearAllFavs();} ,
                             ),
                             ListTile(
-                              leading: const Icon(Icons.timer),
+                              leading: const Icon(Icons.play_lesson_rounded),
                               title: Text("Seconde Player $secondPlayer"),
                               onTap: () {
                                 setModalState(() {
                                   secondPlayer = !secondPlayer;
                                 });
+
                               },
                             ),
                             ListTile(
-                              leading: const Icon(Icons.timer),
+                              leading: const Icon(Icons.play_arrow),
                               title: const Text("Play Url"),
                               onTap: () async {
                                 final result = await showInputDialog(context);
@@ -386,6 +396,20 @@ class _DlnaHomePageState extends State<DlnaHomePage>
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => RealScannerScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                             ListTile(
+                              leading: const Icon(
+                                Icons.perm_scan_wifi_outlined,
+                              ),
+                              title: const Text("Youtube player"),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => YouTubeLivePlayer(),
                                   ),
                                 );
                               },
@@ -863,20 +887,22 @@ class _DlnaHomePageState extends State<DlnaHomePage>
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
-                                  child: ThaModernPlayer(
-                                    controller: controller1,
-                                    doubleTapSeek: const Duration(seconds: 10),
-                                    longPressSeek: const Duration(seconds: 3),
-                                    autoHideAfter: const Duration(seconds: 3),
-                                    initialBoxFit: BoxFit.fill,
-                                    autoFullscreen: false,
-                                    onErrorDetails: (err) {
-                                      if (err != null) {
-                                        debugPrint(
-                                          "Playback error: ${err.code} • ${err.message}",
-                                        );
-                                      }
-                                    },
+                                  child: AspectRatio(aspectRatio: 16/11,
+                                    child: ThaModernPlayer(
+                                      controller: controller1,
+                                      doubleTapSeek: const Duration(seconds: 10),
+                                      longPressSeek: const Duration(seconds: 3),
+                                      autoHideAfter: const Duration(seconds: 3),
+                                      initialBoxFit: BoxFit.fill,
+                                      autoFullscreen: false,
+                                      onErrorDetails: (err) {
+                                        if (err != null) {
+                                          debugPrint(
+                                            "Playback error: ${err.code} • ${err.message}",
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ),
 
@@ -926,14 +952,14 @@ class _DlnaHomePageState extends State<DlnaHomePage>
           onPressed: () {
             if (!dlnaService.isConnected ||
                 dlnaService.selectedDevice == null) {
-              Fluttertoast.showToast(msg: "Connect Tv");
+              _openSettings(context);
             } else {
               _showControlsBottomSheet();
             }
           },
           // backgroundColor: Colors.blue,
           // foregroundColor: Colors.white,
-          child: const Icon(Icons.control_camera, size: 36),
+          child:  Icon(dlnaService.isConnected? Icons.control_camera:Icons.settings, size: 36),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: SafeArea(
@@ -1091,6 +1117,7 @@ class _DlnaHomePageState extends State<DlnaHomePage>
                 child: TextField(
                   showCursor: false,
                   controller: _searchController,
+                  autofocus: false,
                   decoration: InputDecoration(
                     hintText: "Search channels...",
                     prefixIcon: const Icon(Icons.search),

@@ -67,7 +67,13 @@ class DatabaseService {
 // ===============================
 // MOVIE FAVOURITE METHODS
 // ===============================
+Future<void> clearMovieFavorite() async {
 
+  final db = await database;
+
+  await db.delete('movies_fav');
+
+}
 Future<void> toggleMovieFavourite(Movie movie) async {
 
   final db = await database;
@@ -201,13 +207,13 @@ Future<List<Map<String, dynamic>>> getChannelsByCategory(int catId) async {
     final map = <String, dynamic>{};
     map.addAll(row);
 
-    String? url = map['url'];
+    /*String? url = map['url'];
 
     if (url == null && map['resolutions'] != null) {
       final resolutions = jsonDecode(map['resolutions']);
       url = resolutions.entries.first.value['url'];
       map['url'] = url;
-    }
+    }*/
 
     updated.add(map);
   }

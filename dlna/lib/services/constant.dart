@@ -17,6 +17,7 @@ const defautWebsiteApi="https://egymovies.org/";
 const baseUrl="${defautWebsiteApi}api/v1";
 const egyBestTopTen="$baseUrl/channel/64?channelType=channel&restriction&loader=channelPage";
 String getMovieInfos(String id) =>"$baseUrl/titles/$id?loader=titlePage";
+String getRelatedMovies(String id) =>"$baseUrl/titles/$id/related";
 String getSearchQuery(String query) =>"$baseUrl/search/$query?loader=searchAutocomplete";
 String getActorInfos(String id) =>"$baseUrl/people/$id?loader=personPage";
 

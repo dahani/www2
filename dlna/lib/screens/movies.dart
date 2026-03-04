@@ -439,7 +439,7 @@ setState(() {
     borderRadius: const BorderRadius.vertical(
       top: Radius.circular(15),
     ),
-            child: BottomAppBar(color: const Color.fromARGB(255, 120, 111, 111),
+            child: BottomAppBar(color:  Colors.black87,
               height: 55,
               padding: EdgeInsets.all(0),
               shape: const CircularNotchedRectangle(), // encoche pour le FAB
@@ -488,7 +488,7 @@ setState(() {
         title: _isSearching
             ? TextField(
                 controller: _searchController,
-                autofocus: true,
+                autofocus: false,
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   hintText: 'Search movies...',
@@ -686,6 +686,22 @@ setState(() {
                       end: Alignment.bottomCenter,
                       colors: [Colors.transparent, Colors.black54, Colors.black],
                       stops: [0.4, 0.7, 1.0],
+                    ),
+                  ),
+                ),
+                 Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: Colors.black54, borderRadius: BorderRadius.circular(8)),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
+                        Text(movie.rating.toString(),
+                            style: const TextStyle(color: Colors.white, fontSize: 12)),
+                      ],
                     ),
                   ),
                 ),

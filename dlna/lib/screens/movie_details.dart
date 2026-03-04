@@ -34,6 +34,7 @@ class MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late MovieDetails movie;
   late DlnaService dlnaService;
   List<String> imagesMovie=[];
+  final List<Movie> related_movies = [];
   dynamic credits;
    bool isFav = false;
    bool loadedInfos=false;
@@ -43,8 +44,19 @@ class MovieDetailsScreenState extends State<MovieDetailsScreen> {
     dlnaService = Provider.of<DlnaProvider>(context, listen: false).dlnaService;
 
 checkFavStatus();
+_getRelatedMovies();
   }
 
+  Future<dynamic> _getRelatedMovies() async {
+    final res = await DioService.get(getRelatedMovies(widget.movieId));
+
+    final rel= res.data['titles'].map((row) => Movie.fromJson(row)).toList();
+    for (dynamic x in rel) {print(x);
+      related_movies.add(x);
+    }
+     print(related_movies);
+
+  }
   Future<dynamic> _getMovieInfos() async {
     final res = await DioService.get(getMovieInfos(widget.movieId));
     return res.data;
@@ -99,6 +111,7 @@ Widget _buildBody(){
                         const SizedBox(height: 30),
                         _buildSectionTitle("Description"),
                         const SizedBox(height: 10),
+
                         Directionality(textDirection: TextDirection.rtl,
                           child: Text(
                             movie.description ?? "No description available.",
@@ -110,6 +123,36 @@ Widget _buildBody(){
                           ),
                         ),
                         const SizedBox(height: 30),
+                          const SizedBox(height: 30),
+                         if(related_movies.isNotEmpty)
+                         _buildSectionTitle("Related Movies"),
+                           if(related_movies.isNotEmpty)
+                         SizedBox(
+                          height: 260,
+                        child: GridView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1,//mainAxisExtent: 200,
+                            childAspectRatio: 1.6,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
+                          itemCount: related_movies.length,
+                          itemBuilder: (context, index) {
+                            final movie = related_movies[index];
+                            return buildMovieCard(
+                              movie,
+                              () async {
+                                await DatabaseService.instance.toggleMovieFavourite(movie);
+                                setState(() {});
+                              },
+                              context,
+                            );
+                          },
+                        ),
+                      ),
+
                         Row(
                           children: [
                             Text(

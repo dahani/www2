@@ -34,9 +34,15 @@ class MoviesFavouriteScreenState extends State<MoviesFavouriteScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF0F1014),
       appBar: AppBar(
-        title: const Text("My Movie List", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text("List Favourite", style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF0F1014),
         elevation: 0,
+        actions: [
+          IconButton(onPressed: ()async {
+            await DatabaseService.instance.clearMovieFavorite();
+            _loadFavourites();
+          }, icon: Icon(Icons.delete))
+        ],
       ),
       body: SafeArea(
         child: _isLoading
@@ -75,7 +81,7 @@ class MoviesFavouriteScreenState extends State<MoviesFavouriteScreen> {
     );
   }
 
-  Widget _buildMovieItem(Movie data) {
+  Widget _buildMovieItem(Movie movie) {
 
     return GestureDetector(
       onTap: () async {
@@ -83,7 +89,7 @@ class MoviesFavouriteScreenState extends State<MoviesFavouriteScreen> {
         //final movie = Movie.fromJson(data);
         await Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => MovieDetailsScreen(movieId: data.id.toString())),
+          MaterialPageRoute(builder: (_) => MovieDetailsScreen(movieId: movie.id.toString())),
         );
         _loadFavourites(); // Refresh list when coming back
       },
@@ -91,55 +97,103 @@ class MoviesFavouriteScreenState extends State<MoviesFavouriteScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
+            child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
             child: Stack(
+              fit: StackFit.expand,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: NetworkImageWidget(
-                    imageUrl: data.image,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: Colors.black54, borderRadius: BorderRadius.circular(8)),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 14),
-                        Text(" ${data.rating}",
-                            style: const TextStyle(color: Colors.white, fontSize: 12)),
-                      ],
+                // Dot notation instead of bracket notation
+                NetworkImageWidget(imageUrl: movie.image, fit: BoxFit.cover),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.transparent, Colors.black54, Colors.black],
+                      stops: [0.4, 0.7, 1.0],
                     ),
                   ),
                 ),
                  Positioned(
                   top: 8,
-                  left: 8,
+                  right: 8,
                   child: Container(
-                    padding: const EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                         color: Colors.black54, borderRadius: BorderRadius.circular(8)),
                     child: Row(
                       children: [
-                        const Icon(Icons.timer_sharp, color: Colors.amber, size: 14),
-                        Text(" ${data.duration}",style: const TextStyle(color: Colors.white, fontSize: 12)),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
+                        Text(movie.rating.toString(),
+                            style: const TextStyle(color: Colors.white, fontSize: 12)),
                       ],
                     ),
                   ),
-                )
+                ),
+                Positioned(
+                  bottom: 8,
+                  left: 8,
+                  right: 8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Center(
+                        child: Text(
+                          movie.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            icon:  Icon( Icons.favorite,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                            onPressed: ()async {
+                              await DatabaseService.instance.toggleMovieFavourite(movie);
+                               setState(() {_loadFavourites();});
+                            },
+                          ),
+                          Text(
+                            movie.duration,
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 11,
+                            ),
+                          ),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            icon: const Icon(
+                              Icons.info_outline,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                            onPressed: () async{await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => MovieDetailsScreen(movieId: movie.id.toString())),
+        );},
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            data.title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ],
       ),
