@@ -129,6 +129,9 @@ String _formatDuration(Duration duration) {
   }
 }
 
+double _verticalDragStartY = 0;
+double _verticalDragEndY = 0;
+double _dragStartX = 0;
   ///Builds main widget of the controls.
   Widget _buildMainWidget() {
     _wasLoading = isLoading(_latestValue);
@@ -157,14 +160,46 @@ String _formatDuration(Duration duration) {
   onHorizontalDragStart: onSwipeStart,
   onHorizontalDragUpdate: onSwipeUpdate,
   onHorizontalDragEnd: onSwipeEnd,
-  onVerticalDragUpdate: (DragUpdateDetails details) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    if (details.globalPosition.dx < screenWidth / 2) {
-      adjustBrightness(details.delta.dy);
-    } else {
-      adjustVolume(details.delta.dy);
+  onVerticalDragStart: (details) {
+  _verticalDragStartY = details.globalPosition.dy;
+  _dragStartX = details.globalPosition.dx;
+},
+  onVerticalDragUpdate: (details) {
+  _verticalDragEndY = details.globalPosition.dy;
+
+  final screenWidth = MediaQuery.of(context).size.width;
+  final leftZone = screenWidth / 3;
+  final rightZone = screenWidth * 2 / 3;
+
+  if (_dragStartX < leftZone) {
+    adjustBrightness(details.delta.dy);
+  } else if (_dragStartX > rightZone) {
+    adjustVolume(details.delta.dy);
+  }
+},
+onVerticalDragEnd: (_) {
+  final screenWidth = MediaQuery.of(context).size.width;
+  final centerStart = screenWidth / 3;
+  final centerEnd = screenWidth * 2 / 3;
+
+  final dragDistance = _verticalDragStartY - _verticalDragEndY;
+
+  if (_dragStartX > centerStart && _dragStartX < centerEnd) {
+    if (dragDistance > 80) {
+     if(!_betterPlayerController!.isFullScreen){
+       _betterPlayerController?.enterFullScreen();
+      _showOverlay("Fullscreen");
+     }
+    } else if (dragDistance < -80) {
+      if(_betterPlayerController!.isFullScreen){
+         _betterPlayerController!.exitFullScreen();
+      _showOverlay("Exit Fullscreen");
+      }
+
     }
-  },
+  }
+},
+
   child: AbsorbPointer(
     absorbing: controlsNotVisible,
     child: Stack(

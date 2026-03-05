@@ -2,8 +2,12 @@
 
 import 'dart:convert';
 import 'package:dlna/models/models.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:io';
+import 'package:external_path/external_path.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DatabaseService {
   static final DatabaseService instance = DatabaseService._init();
@@ -147,6 +151,43 @@ Future<bool> isFavourite(int channelId) async {
   return result.first['is_fav'] == 1;
 }
 
+
+Future<void> exportFavoritesToDownload() async {
+ var status = await Permission.manageExternalStorage.request();
+  if (!status.isGranted) return;
+
+  final db = await instance.database;
+
+  final favs = await db.query(
+    'channels',
+    columns: ['name'],
+    where: 'is_fav = 1',
+  );
+  final favNames = favs.map((e) => e['name']).toList();
+
+  final downloadPath =await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOAD);
+
+  final file = File('$downloadPath/favorites_backup.json');
+  await file.writeAsString(jsonEncode(favNames));
+  Fluttertoast.showToast(msg: "Favorite exported to:${file.path}");
+}
+
+Future<Set<String>> loadFavoritesFromDownload() async {
+
+  final downloadPath =
+      await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOAD);
+
+  final file = File('$downloadPath/favorites_backup.json');
+
+  if (await file.exists()) {
+    final content = await file.readAsString();
+    final List data = jsonDecode(content);
+    return data.toSet().cast<String>();
+  }
+
+  return {};
+}
+
   // ===============================
   // INSERT FULL JSON
   // ===============================
@@ -155,13 +196,8 @@ Future<void> insertFullJson(List data) async {
 
   await db.transaction((txn) async {
     // 1️⃣ Sauvegarder les favoris existants (par nom)
-    final favs = await txn.query(
-      'channels',
-      columns: ['name'],
-      where: 'is_fav = 1',
-    );
+    final favouriteNames = await loadFavoritesFromDownload();
 
-    final favouriteNames = favs.map((e) => e['name']).toSet();
 
     // 2️⃣ Nettoyer les tables
     await txn.delete('channels');

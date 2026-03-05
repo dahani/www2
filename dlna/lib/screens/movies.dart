@@ -53,6 +53,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
 
   String selectedGenreId = "1";
   String filters="";
+  String order="order=created_at:desc";
   void _initService() {
     debugPrint("_initService");
     FlutterForegroundTask.init(
@@ -204,6 +205,19 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                         child: ListView(
                           controller: scrollController,
                           children: [
+                             ListTile(iconColor: Colors.white,textColor: Colors.white,
+                              leading: const Icon(Icons.sort),
+                              title: const Text("Sort"),
+                               onTap:(){
+                                  Navigator.pop(context);
+                                _showFilterBottomSheet(filterSort,(value) {
+                                  final ord="order=$value:desc";
+                                  order=order==ord?"order=$value:asc":ord;
+                                 _reload();
+
+                                },);
+                               },
+                            ),
                             ListTile(iconColor: Colors.white,textColor: Colors.white,
                               leading: const Icon(Icons.generating_tokens),
                               title: const Text("Genres"),
@@ -316,7 +330,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   }
 
   Future<List<Movie>> _fetchMoviesAPI(int page, String query) async {
-    final urlMovies="$baseUrl/channel/Movies?restriction&order=created_at:desc&page=$page&paginate=lengthAware&returnContentOnly=true$filters";
+    final urlMovies="$baseUrl/channel/Movies?restriction&$order&page=$page&paginate=lengthAware&returnContentOnly=true$filters";
     final url = query.isNotEmpty
         ? getSearchQuery(query)
         : urlMovies;

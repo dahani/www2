@@ -24,6 +24,15 @@ String getActorInfos(String id) =>"$baseUrl/people/$id?loader=personPage";
 String getFilteredMovises(int page,String channel){
 return "$baseUrl/channel/$channel?restriction&order=created_at:desc&page=$page&paginate=lengthAware&returnContentOnly=true";
 }
+const filterSort=[
+  {"value":"revenue","name":"أكبر الإيرادات أولا"},
+   {"value":"budget","name":"أكبر ميزانية أولا"},
+    {"value":"rating","name":"الأعلى تقييماً أولاً"},
+     {"value":"created_at","name":"تم إنشاؤها مؤخرًا"},
+     {"value":"popularity","name":"الأكثر شعبية أولاً"},
+
+  ];
+
 
 const filterGenres=[{"value":1,"name":"جريمة"},{"value":2,"name":"دراما"},{"value":3,"name":"خيال علمي"},{"value":4,"name":"حركة"},{"value":5,"name":"حرب"},{"value":6,"name":"إثارة"},{"value":7,"name":"فانتازيا"},{"value":8,"name":"رعب"},{"value":9,"name":"مغامرة"},{"value":10,"name":"غموض"},{"value":11,"name":"تاريخ"},{"value":12,"name":"كوميديا"},{"value":13,"name":"رومنسية"},{"value":14,"name":"عائلي"},{"value":15,"name":"رسوم متحركة"},{"value":16,"name":"غربي"},{"value":17,"name":"موسيقى"},{"value":18,"name":"وثائقي"},{"value":19,"name":"خيال علمي وفانتازيا"},{"value":20,"name":"حركة ومغامرة"},{"value":21,"name":"حرب وسياسة"},{"value":22,"name":"فيلم تلفازي"}];
 const filterLangues=[{"value":"en","name":"English","total":2095},{"value":"hi","name":"Hindi","total":101},{"value":"ko","name":"Korean","total":100},{"value":"es","name":"Spanish","total":71},{"value":"fr","name":"French","total":68},{"value":"tr","name":"Turkish","total":48},{"value":"zh","name":"Mandarin","total":27},{"value":"de","name":"German","total":23},{"value":"id","name":"Indonesian","total":21},{"value":"ja","name":"Japanese","total":17},{"value":"nl","name":"Dutch","total":16},{"value":"ru","name":"Russian","total":16},{"value":"cn","name":"Cantonese","total":15},{"value":"no","name":"Norwegian","total":14},{"value":"pl","name":"Polish","total":14},{"value":"pt","name":"Portuguese","total":12},{"value":"da","name":"Danish","total":11},{"value":"it","name":"Italian","total":10},{"value":"sv","name":"Swedish","total":6},{"value":"th","name":"Thai","total":3},{"value":"fi","name":"Finnish","total":3},{"value":"ms","name":"Malay","total":3},{"value":"te","name":"Telugu","total":3},{"value":"ta","name":"Tamil","total":3},{"value":"tl","name":"Tagalog","total":2},{"value":"ml","name":"Malayalam","total":2},{"value":"uk","name":"Ukrainian","total":2},{"value":"fa","name":"Persian","total":2},{"value":"is","name":"Icelandic","total":1},{"value":"sk","name":"Slovak","total":1},{"value":"lv","name":"Latvian","total":1},{"value":"bn","name":"Bengali","total":1},{"value":"hu","name":"Hungarian","total":1},{"value":"km","name":"Khmer","total":1},{"value":"ro","name":"Romanian","total":1},{"value":"ka","name":"Georgian","total":1},{"value":"vi","name":"Vietnamese","total":1}];

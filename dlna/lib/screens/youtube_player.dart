@@ -1,8 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dlna/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YouTubeLivePlayer extends StatefulWidget {
-  const YouTubeLivePlayer({super.key});
+  final ChannelModel ch;
+  const YouTubeLivePlayer({
+    super.key,
+    required this.ch,
+  });
 
   @override
   State<YouTubeLivePlayer> createState() => _YouTubeLivePlayerState();
@@ -13,12 +19,46 @@ class _YouTubeLivePlayerState extends State<YouTubeLivePlayer> {
   final String videoId = 'xNYkxluuT1E';//
 
   late YoutubePlayerController _controller;
+String? getYoutubeVideoId(String url) {
+  try {
+    final uri = Uri.parse(url);
+
+    // youtu.be/VIDEO_ID
+    if (uri.host.contains('youtu.be')) {
+      return uri.pathSegments.isNotEmpty ? uri.pathSegments.first : null;
+    }
+
+    // youtube.com/watch?v=VIDEO_ID
+    if (uri.queryParameters.containsKey('v')) {
+      return uri.queryParameters['v'];
+    }
+
+    // youtube.com/embed/VIDEO_ID
+    // youtube.com/shorts/VIDEO_ID
+    // youtube.com/live/VIDEO_ID
+    final segments = uri.pathSegments;
+
+    for (int i = 0; i < segments.length; i++) {
+      if (segments[i] == 'embed' ||
+          segments[i] == 'shorts' ||
+          segments[i] == 'live') {
+        if (i + 1 < segments.length) {
+          return segments[i + 1];
+        }
+      }
+    }
+
+    return null;
+  } catch (_) {
+    return null;
+  }
+}
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: videoId,
+      initialVideoId: widget.ch.url,
       flags: const YoutubePlayerFlags(controlsVisibleAtStart: true,
         autoPlay: true,
         mute: false,
@@ -37,7 +77,7 @@ class _YouTubeLivePlayerState extends State<YouTubeLivePlayer> {
       builder: (context, player) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Live YouTube Stream'),
+            title:  Text(widget.ch.name),
           ),
           body: Center(
             child: player, // Embeds the YouTube player widget

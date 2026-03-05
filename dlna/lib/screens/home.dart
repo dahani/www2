@@ -400,18 +400,15 @@ class _DlnaHomePageState extends State<DlnaHomePage>
                                 );
                               },
                             ),
+
                              ListTile(
                               leading: const Icon(
                                 Icons.perm_scan_wifi_outlined,
                               ),
-                              title: const Text("Youtube player"),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => YouTubeLivePlayer(),
-                                  ),
-                                );
+                              title: const Text("Export favourite channels"),
+                              onTap: () async{
+                              await  DatabaseService.instance.exportFavoritesToDownload();
+                               Navigator.pop(context);
                               },
                             ),
                           ],
@@ -1166,9 +1163,22 @@ class _DlnaHomePageState extends State<DlnaHomePage>
       ),
     );
   }
+bool isMissingHttpScheme(String url) {
+  return !(url.startsWith('http://') || url.startsWith('https://'));
+}
+
 
   void _play(ChannelModel ch) async {
     dlnaService.setChannel(ch);
+   if(isMissingHttpScheme(ch.url)){
+       Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => YouTubeLivePlayer(ch:ch),
+        ),
+      );
+return;
+   }
     if (!dlnaService.isConnected || dlnaService.selectedDevice == null) {
       if (secondPlayer) {
         _showControlsBottomSheetPlayer2(ch);

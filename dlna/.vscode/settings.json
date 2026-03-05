@@ -4,5 +4,6 @@
             "**/plugins/*",
             "plugins/*"
         ]
-    }
+    },
+    "commentTranslate.targetLanguage": "ar"
 }

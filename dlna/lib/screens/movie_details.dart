@@ -342,7 +342,6 @@ void checkFavStatus() async {
             onPressed: () async {
               final vieoIdx = getVideoId(movie.embedUrl ?? "");
               final url = "${dlnaService.proxyUrl}?id=$vieoIdx";
-
               //"$proxyBaseUrl?id=$url"
               if (!dlnaService.isConnected ||
                   dlnaService.selectedDevice == null) {
