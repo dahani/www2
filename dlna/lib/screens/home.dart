@@ -13,6 +13,7 @@ import 'package:dlna/services/database_service.dart';
 import 'package:dlna/services/dlna_provider.dart';
 import 'package:dlna/services/dlna_service.dart';
 import 'package:dlna/services/functions.dart';
+import 'package:dlna/screens/remote_controller.dart';
 import 'package:dlna/widgest/controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +44,7 @@ class _DlnaHomePageState extends State<DlnaHomePage>
   final TextEditingController _searchController = TextEditingController();
 
   bool _isSearching = false;
-
+bool isFav=false;
   // 🔹 Loading flags
   bool _isLoadingChannels = true;
   final _hardwareButtonListener = HardwareButtonListener();
@@ -396,6 +397,20 @@ class _DlnaHomePageState extends State<DlnaHomePage>
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => RealScannerScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                             ListTile(
+                              leading: const Icon(
+                                Icons.perm_scan_wifi_outlined,
+                              ),
+                              title: const Text("Remote Controller"),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => RemoteController(),
                                   ),
                                 );
                               },
@@ -972,13 +987,26 @@ class _DlnaHomePageState extends State<DlnaHomePage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  IconButton(
+                 isFav? IconButton(
                     icon: const Icon(Icons.tv, color: Colors.white, size: 36),
                     onPressed: () => setState(() {
                       _selectedCategory = null;
+                      isFav=false;
                       _isSearching = false;
                     }),
-                  ),
+                  ):IconButton(
+                          icon: const Icon(
+                            Icons.favorite,
+                            color: Colors.white,
+                            size: 36,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isFav=true;
+                            });
+                            _loadFavorites();
+                          },
+                        ),
                   dlnaService.isConnected && !dlnaService.isPlayingMovie
                       ? IconButton(
                           icon: const Icon(

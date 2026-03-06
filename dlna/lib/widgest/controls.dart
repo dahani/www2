@@ -1,3 +1,4 @@
+import 'package:dlna/models/models.dart';
 import 'package:dlna/services/dlna_provider.dart';
 import 'package:dlna/services/dlna_service.dart';
 import 'package:dlna/services/functions.dart';
@@ -52,8 +53,7 @@ Future<void> initSlider() async {
 
   @override
   Widget build(BuildContext context) {
-    dynamic selectedCh=dlnaService.selectedChannel;
-
+    ChannelModel selectedCh=dlnaService.selectedChannel;
     return Container(
       decoration:  BoxDecoration(
         color: dlnaService.isDarkMode ? const Color.fromARGB(255, 51, 48, 48) : Colors.white,
@@ -150,21 +150,21 @@ Future<void> initSlider() async {
                   icon: const Icon(Icons.copy,color: Colors.blue,),
                   onPressed: () {
               Clipboard.setData(
-                ClipboardData(text: selectedCh['url']),
+                ClipboardData(text: selectedCh.url),
               );
             },
                     ),
                      IconButton(
                   icon: const Icon(Icons.open_in_new,color: Colors.blue,),
                   onPressed: () async {
-                    await openM3U(selectedCh['url']);
+                    await openM3U(selectedCh.url);
                   },
                 ),
                  IconButton(
                   icon: const Icon(Icons.share,color: Colors.blue,),
                   onPressed: () async {
                     SharePlus.instance.share(
-            ShareParams(uri: Uri.parse(selectedCh['url'])),
+            ShareParams(uri: Uri.parse(selectedCh.url)),
                     );
                   },
                 ),
