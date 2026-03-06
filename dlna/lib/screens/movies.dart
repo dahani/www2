@@ -65,7 +65,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
         onlyAlertOnce: true,
       ),
       iosNotificationOptions: const IOSNotificationOptions(
-        showNotification: false,
+        showNotification: true,
         playSound: false,
       ),
       foregroundTaskOptions: ForegroundTaskOptions(
@@ -110,6 +110,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
         ],
         callback: startCallback,
       );
+       FlutterForegroundTask.sendDataToTask("start_proxy");
     }
   }
 
@@ -140,7 +141,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
       _initService();
       _startService();
       FlutterForegroundTask.addTaskDataCallback(_onReceiveTaskData);
-      FlutterForegroundTask.sendDataToTask("start_proxy");
+
       //
     });
   }
@@ -468,8 +469,10 @@ setState(() {
                     onPressed: () => {Navigator.pop(context)},
                   ),
                    IconButton(
-                icon: const Icon(Icons.cast, color: Colors.white, size: 36),
-                onPressed:()async{await dlnaService.discoverAndConnect(context);},
+                icon:  Icon(dlnaService.isConnected?Icons.cast_connected: Icons.cast, color: Colors.white, size: 36),
+                onPressed:()async{await dlnaService.discoverAndConnect(context);setState(() {
+
+                });},
               ),
                   const SizedBox(width: 60), // espace pour le FAB
                  IconButton(
@@ -680,12 +683,14 @@ setState(() {
       builder: (context, snapshot) {
         bool isFav = snapshot.data ?? false;
         return GestureDetector(
-          onTap: () => Navigator.push(
+          onTap: () {
+            Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => MovieDetailsScreen(movieId: movie.id),
             ),
-          ),
+          ).then((value)=>{setState(() {})});
+          },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Stack(
@@ -796,12 +801,16 @@ setState(() {
         itemBuilder: (context, index) {
           final movie = topTen[index];
           return GestureDetector(
-            onTap: () => Navigator.push(
+            onTap: (){
+              Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (_) => MovieDetailsScreen(movieId: movie.id),
               ),
-            ),
+            ).then((value)=>{
+                setState(() {  })
+            });
+            },
             child: Container(
               width: 300, // Wide format width
               margin: const EdgeInsets.only(right: 16),

@@ -31,6 +31,15 @@ class DlnaService {
     playWithTitle(ch.url,ch.name,isMovie: false);
 
  }
+  Future<void> playWithTitleMovie(String url,String title) async {
+  final ch=ChannelModel(id: -3,name:title,poster: "",url:url,isFav: 0);
+ final tmp=selectedChannel;
+   lastSelectedChannel=tmp;
+  selectedChannel=ch;
+
+    playWithTitle(ch.url,ch.name,isMovie: true);
+
+ }
 void setChannel(ChannelModel ch){
    final tmp=selectedChannel;
    lastSelectedChannel=tmp;
@@ -519,7 +528,7 @@ FlutterForegroundTask.updateService(
           const NotificationButton(id: 'btn_stop', text: 'Stop Service'),
         ],
     );
-    selectedChannel=ChannelModel(id: -3,name:title,poster: "",url:url,isFav: 0);
+
     if (selectedDevice == null) return;
 
     final mimeType = url.endsWith(".m3u8")

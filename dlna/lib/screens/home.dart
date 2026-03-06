@@ -989,11 +989,7 @@ class _DlnaHomePageState extends State<DlnaHomePage>
                           onPressed: () => prevNext(-1),
                         )
                       : IconButton(
-                          icon: const Icon(
-                            Icons.cast,
-                            color: Colors.white,
-                            size: 36,
-                          ),
+                          icon:Icon(dlnaService.isConnected?Icons.cast_connected: Icons.cast, color: Colors.white, size: 36),
                           onPressed: () async {
                             await dlnaService.discoverAndConnect(context);
                           },

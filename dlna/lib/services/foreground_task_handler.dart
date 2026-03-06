@@ -8,6 +8,7 @@ class ProxyTaskHandler extends TaskHandler {
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
     debugPrint("Foreground service started.xx 1");
+    _startProx();
 
   }
 

@@ -5,5 +5,5 @@
             "plugins/*"
         ]
     },
-    "commentTranslate.targetLanguage": "ar"
+    "commentTranslate.targetLanguage": "en"
 }

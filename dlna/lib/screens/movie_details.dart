@@ -357,7 +357,7 @@ void checkFavStatus() async {
                 );
               } else {
                 dlnaService.videoDuration=movie.duration;
-                await dlnaService.playWithTitle(url, movie.title,isMovie: true);
+                await dlnaService.playWithTitleMovie(url, movie.title);
               }
             }, // Trigger BetterPlayer logic here
             style: ElevatedButton.styleFrom(

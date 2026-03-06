@@ -195,6 +195,7 @@ String formatRuntime(int minutes) {
          '${remainingMinutes.toString().padLeft(2, '0')}';
 }
   Widget buildslisTile({required ChannelModel ch,required VoidCallback onClick,required VoidCallback onLongPress,required  DlnaService dlnaService,required VoidCallback setFavourite }) {
+    print( dlnaService.selectedChannel.id);
     return Container(
       color: dlnaService.selectedChannel.id == ch.id
           ? (dlnaService.isDarkMode ? Colors.black : Colors.lime)
