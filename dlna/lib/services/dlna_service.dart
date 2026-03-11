@@ -50,7 +50,7 @@ void setChannel(ChannelModel ch){
       receiveTimeout: const Duration(seconds: 5)));
 Future<void> disconnect() async {
   try {
-    final state = await _getTransportState();
+    final state = await getTransportState();
 
     if (state == "PLAYING" || state == "PAUSED_PLAYBACK") {
       await stop();
@@ -200,7 +200,7 @@ Future<void> _sendAvTransportCommand(String action, {Map<String, String>? extraP
     ),
   );
 }
-Future<String?> _getTransportState() async {
+Future<String?> getTransportState() async {
   if (selectedDevice == null) return null;
 
   const body = '''
@@ -377,7 +377,7 @@ String getTransportStatePublic()  {
   return  statePlaying;
 }
 Future<void> togglePlayPause() async {
-  statePlaying = await _getTransportState()??"STOPPED";
+  statePlaying = await getTransportState()??"STOPPED";
 
   if (statePlaying.isEmpty) return ;
 

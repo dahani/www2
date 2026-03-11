@@ -22,20 +22,27 @@ class _TVControlBottomSheetState extends State<TVControlBottomSheet> {
   String currentApp = "Netflix";
   bool isMute=false;
    late DlnaService dlnaService;
+   String playerState="STOPED";
 @override
 void initState() {
   super.initState();
     dlnaService =  Provider.of<DlnaProvider>(context, listen: false).dlnaService;
 initSlider();
+
 }
 Future<void> initSlider() async {
 
   seek = 0;
+   playerState=await dlnaService.getTransportState()??"STOPPED";
+   print(playerState);
+ dlnaService.statePlaying=playerState;
+ setState(() {
+
+ });
 }
 
-  // Logic for button clicks
   void _handleCommand(String command,{String val=""}) {
-    debugPrint(val);
+
     widget.onlcik(command,val);
     if(command=="mute"){
       setState(() {
@@ -59,7 +66,7 @@ Future<void> initSlider() async {
         color: dlnaService.isDarkMode ? const Color.fromARGB(255, 51, 48, 48) : Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -79,14 +86,100 @@ Future<void> initSlider() async {
           const SizedBox(height: 15),
 
           // Passing functions to the D-Pad
-          RemoteDPad(dla: dlnaService,
-            isMute: isMute,
-            onDirectionPressed: (direction) => _handleCommand(direction),
-            onOkPressed: () {
-               setState(() {
-                dlnaService.togglePlayPause();
-             });
-            },
+          Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Container(
+                          width: 60,
+                          height: 170,
+                          decoration:  BoxDecoration(
+                            color:dlnaService.isDarkMode ? Colors.black :  Colors.blue[800],
+                            borderRadius:  BorderRadius.all(
+                              Radius.circular(40.0),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              IconButton(onPressed: () {
+                                dlnaService.volumeUp();
+                              }, icon: Icon(
+                                Icons.add,color: Colors.white,
+                                size: 38,
+                              ),),
+                              Text(
+                                "Vol",
+                                style: TextStyle(color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
+                              ),
+                              IconButton(onPressed: () {
+                                dlnaService.volumeDown();
+                              }, icon: Icon(
+                                Icons.remove,color: Colors.white,
+                                size: 38,
+                              ),)
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10,),
+              RemoteDPad(dla: dlnaService,
+                isMute: isMute,
+                onDirectionPressed: (direction) => _handleCommand(direction),
+                onOkPressed: () {  dlnaService.togglePlayPause();
+                   setState(() {
+
+                 });
+                },
+              ),
+               SizedBox(width: 10,),
+                Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Container(
+                          width: 60,
+                          height: 170,
+                          decoration:  BoxDecoration(
+                            color:dlnaService.isDarkMode ? Colors.black :  Colors.blue[800],
+                            borderRadius:  BorderRadius.all(
+                              Radius.circular(40.0),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              IconButton(onPressed: () {
+                               _handleCommand("next");
+                              }, icon: Icon(
+                                Icons.add,color: Colors.white,
+                                size: 38,
+                              ),),
+                              Text(
+                                "Ch",
+                                style: TextStyle(color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
+                              ),
+                              IconButton(onPressed: () {
+                                _handleCommand("prev");
+                              }, icon: Icon(
+                                Icons.remove,color: Colors.white,
+                                size: 38,
+                              ),)
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+            ],
           ),
 
           const SizedBox(height: 10),
@@ -207,11 +300,11 @@ class RemoteDPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("rebuild pad");
 bool isPlaying=dla.statePlaying == "PLAYING";
+print(isPlaying);
     return Container(
-      width: 220,
-      height: 220,
+      width: 210,
+      height: 210,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color:dla.isDarkMode ? Colors.black :  Colors.blue[800],
@@ -223,8 +316,8 @@ bool isPlaying=dla.statePlaying == "PLAYING";
              InkWell(
               onTap: onOkPressed,
               child: Container(
-            width: 100,
-            height: 100,
+            width: 90,
+            height: 90,
             decoration:  BoxDecoration(
               color:dla.isDarkMode?const Color.fromARGB(255, 84, 80, 80): Colors.white,
               shape: BoxShape.circle,

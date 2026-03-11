@@ -8,8 +8,10 @@ class DioService {
     receiveTimeout: const Duration(seconds: 10),
   ));
 
-  static Future<Response> get(String url, {Map<String, String> headers=const {"Referer": defautWebsiteApi}, ResponseType responseType = ResponseType.json}) async {
+  static Future<Response> get(String url, {Map<String, String> headers=const {}, ResponseType responseType = ResponseType.json}) async {
     debugPrint(url);
+
+    _dio.options.headers['Referer']=defautWebsiteApi;
      final Map<String, dynamic> mergedHeaders = {
       ..._dio.options.headers,
       ...headers,

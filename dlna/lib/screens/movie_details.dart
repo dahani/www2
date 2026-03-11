@@ -14,6 +14,7 @@ import 'package:dlna/services/dlna_service.dart';
 import 'package:dlna/services/functions.dart';
 import 'package:dlna/widgest/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'dart:ui';
 
 import 'package:provider/provider.dart';
@@ -45,16 +46,18 @@ class MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
 checkFavStatus();
 _getRelatedMovies();
+ FlutterForegroundTask.addTaskDataCallback((data) {
+       print("data from homr $data");
+     },);
   }
 
   Future<dynamic> _getRelatedMovies() async {
     final res = await DioService.get(getRelatedMovies(widget.movieId));
 
     final rel= res.data['titles'].map((row) => Movie.fromJson(row)).toList();
-    for (dynamic x in rel) {print(x);
+    for (dynamic x in rel) {
       related_movies.add(x);
     }
-     print(related_movies);
 
   }
   Future<dynamic> _getMovieInfos() async {

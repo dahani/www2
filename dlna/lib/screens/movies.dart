@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dlna/models/models.dart';
 import 'package:dlna/screens/movies_favourite.dart';
 import 'package:dlna/screens/movie_details.dart';
+import 'package:dlna/screens/server_selection_screen.dart';
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/database_service.dart';
 import 'package:dlna/services/dio_service.dart';
@@ -332,6 +333,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
 
   Future<List<Movie>> _fetchMoviesAPI(int page, String query) async {
     final urlMovies="$baseUrl/channel/Movies?restriction&$order&page=$page&paginate=lengthAware&returnContentOnly=true$filters";
+    print(urlMovies);
     final url = query.isNotEmpty
         ? getSearchQuery(query)
         : urlMovies;
@@ -532,6 +534,14 @@ setState(() {
             },
           ),
           IconButton(icon: const Icon(Icons.refresh), onPressed: _reload),
+          IconButton(onPressed:  () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ServerSelectionScreen(),
+                                  ),
+                                );
+                              }, icon: Icon(Icons.link))
         ],
       ),
       // Strongly typed FutureBuilder
@@ -949,7 +959,7 @@ setState(() {
   }
 
   Future<List<Movie>> _getTop10() async {
-    final res = await DioService.get(egyBestTopTen);
+    final res = await DioService.get(egyBestTopTen());
     List<Movie> movies = [];
     final resultData = res.data['channel']['content']['data'];
     for (dynamic x in resultData) {

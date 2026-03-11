@@ -10,12 +10,36 @@ const JSON_URL="https://www.kompassit.com/iptv/tv.json";
     "Accept": "*/*",
     "Connection": "keep-alive",
   };
+class ServerConfig {
+  static const List<String> servers = [
+    "https://egymovies.org/",
+    "https://egydead.ca/",
+    "https://egybest.la/"
+  ];
+
+  static const String prefKey = "selected_server";
+}
 
 
+void setApiUrl(String url){
+   defautWebsiteApi=url;
+ baseUrl="${defautWebsiteApi}api/v1";
+}
+String defautWebsiteApi="https://egymovies.org/";
+String baseUrl="${defautWebsiteApi}api/v1";
 
-const defautWebsiteApi="https://egymovies.org/";
-const baseUrl="${defautWebsiteApi}api/v1";
-const egyBestTopTen="$baseUrl/channel/64?channelType=channel&restriction&loader=channelPage";
+String egyBestTopTen(){int idREcent=64;
+  if(baseUrl.contains("dead")){
+    idREcent=11;
+  }else  if(baseUrl.contains("egybest")){
+    idREcent=12;
+  }else  if(baseUrl.contains("egymovies")){
+    idREcent=64;
+  }
+
+
+  return "$baseUrl/channel/$idREcent?channelType=channel&restriction&loader=channelPage";
+}
 String getMovieInfos(String id) =>"$baseUrl/titles/$id?loader=titlePage";
 String getRelatedMovies(String id) =>"$baseUrl/titles/$id/related";
 String getSearchQuery(String query) =>"$baseUrl/search/$query?loader=searchAutocomplete";

@@ -7,14 +7,15 @@ import 'package:dio/dio.dart';
 import 'package:dlna/models/models.dart';
 import 'package:dlna/screens/movies.dart';
 import 'package:dlna/screens/scan_test.dart';
+import 'package:dlna/screens/server_selection_screen.dart';
 import 'package:dlna/screens/youtube_player.dart';
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/database_service.dart';
 import 'package:dlna/services/dlna_provider.dart';
 import 'package:dlna/services/dlna_service.dart';
 import 'package:dlna/services/functions.dart';
-import 'package:dlna/screens/remote_controller.dart';
 import 'package:dlna/widgest/controls.dart';
+import 'package:dlna/widgest/server_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -68,6 +69,9 @@ bool isFav=false;
     startListeningToHardwareButtons();
     getCats(isFirst: true);
     VolumeController().showSystemUI = false;
+     FlutterForegroundTask.addTaskDataCallback((data) {
+       print("data from homr $data");
+     },);
   }
 
   @override
@@ -136,7 +140,9 @@ bool isFav=false;
     );
   }
 
-  void startListeningToHardwareButtons() {
+  void startListeningToHardwareButtons() async{
+       defautWebsiteApi = await ServerPreferences.getServer();
+print(defautWebsiteApi);
     _buttonSubscription = _hardwareButtonListener.listen((event) {
       if (event.buttonName.toString() == "VOLUME_UP") {
         dlnaService.volumeUp();
@@ -202,6 +208,7 @@ bool isFav=false;
   }
 
   void _showQualitySelector(ChannelModel ch, int indexd) {
+
     final resolutions = (ch.resolutions) as Map<String, dynamic>;
     showModalBottomSheet(
       context: context,
@@ -209,7 +216,7 @@ bool isFav=false;
         child: ListView(
           children: resolutions.entries.map((entry) {
             final quality = entry.key;
-            final url = entry.value.url;
+            final url = entry.value['url'];
             ch.url = url;
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -401,16 +408,17 @@ bool isFav=false;
                                 );
                               },
                             ),
-                             ListTile(
+
+                            ListTile(
                               leading: const Icon(
-                                Icons.perm_scan_wifi_outlined,
+                                Icons.stream,
                               ),
-                              title: const Text("Remote Controller"),
+                              title: const Text("Select Api Server"),
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => RemoteController(),
+                                    builder: (_) => ServerSelectionScreen(),
                                   ),
                                 );
                               },
@@ -418,7 +426,7 @@ bool isFav=false;
 
                              ListTile(
                               leading: const Icon(
-                                Icons.perm_scan_wifi_outlined,
+                                Icons.favorite,
                               ),
                               title: const Text("Export favourite channels"),
                               onTap: () async{
@@ -987,7 +995,7 @@ bool isFav=false;
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                 isFav? IconButton(
+                 dlnaService.isConnected?isFav? IconButton(
                     icon: const Icon(Icons.tv, color: Colors.white, size: 36),
                     onPressed: () => setState(() {
                       _selectedCategory = null;
@@ -1006,7 +1014,14 @@ bool isFav=false;
                             });
                             _loadFavorites();
                           },
-                        ),
+                        ):IconButton(
+                    icon: const Icon(Icons.tv, color: Colors.white, size: 36),
+                    onPressed: () => setState(() {
+                      _selectedCategory = null;
+                      isFav=false;
+                      _isSearching = false;
+                    }),
+                  ),
                   dlnaService.isConnected && !dlnaService.isPlayingMovie
                       ? IconButton(
                           icon: const Icon(

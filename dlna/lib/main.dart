@@ -1,12 +1,13 @@
+
 import 'package:dlna/services/dlna_provider.dart';
 import 'package:dlna/services/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'screens/home.dart';
 import 'package:provider/provider.dart';
-
-void main() {
+void main()async {
   FlutterForegroundTask.initCommunicationPort();
+
   runApp(ChangeNotifierProvider(create: (_) => DlnaProvider(), child: const MyApp()),);
 }
 

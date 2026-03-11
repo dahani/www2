@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart' hide Response;
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/functions.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart'; // Add shelf_router to pubspec
@@ -25,6 +26,8 @@ class HlsProxyServer {
 
       try {
         final realM3u8 = await resolveMovieM3u8(id);
+        print(id);
+        FlutterForegroundTask.sendDataToMain({'video_id':id});
         return await _proxyM3u8(realM3u8);
       } catch (e) {
         return Response.internalServerError(body: e.toString());
