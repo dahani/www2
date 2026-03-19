@@ -253,10 +253,13 @@ class Actor {
     );
   }
 }
+enum DeviceType { dlna, chromecast }
+
 class DlnaDevice {
   final String name;
   final String controlUrl;        // pour play / AVTransport
   final String renderingUrl;      // pour volume
   final String icon;
-  DlnaDevice({required this.name, required this.controlUrl, required this.renderingUrl, required this.icon});
+   final DeviceType type;
+  DlnaDevice({required this.name, required this.controlUrl, required this.renderingUrl,  this.icon="", required this.type});
 }

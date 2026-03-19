@@ -101,6 +101,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
     if (await FlutterForegroundTask.isRunningService) {
       //return ServiceRequestResult()
       //return FlutterForegroundTask.restartService();
+      FlutterForegroundTask.sendDataToTask("start_proxy");
     } else {
       FlutterForegroundTask.startService(
         serviceId: 257,
@@ -116,9 +117,12 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   }
 
   void _onReceiveTaskData(Object data) {
+    print(data);
     if (data is Map<String, dynamic>) {
       final proxy = data['proxy_url'];
-      dlnaService.proxyUrl = proxy;
+      if(proxy!=null) {
+        dlnaService.proxyUrl = proxy;
+      }
     }
     if (data == "btn_pause") {
       if (dlnaService.isConnected) {

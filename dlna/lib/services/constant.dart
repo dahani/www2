@@ -1,8 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-const JSON_URL="https://www.kompassit.com/iptv/tv.json";
+const JSON_URL="http://wallpapers-app.atspace.cc/tv.json";
 
-
+bool isTv=false;
  const  egybestHeaders = {
      "User-Agent": "Mozilla/5.0 (Linux; Android 10)",
     "Referer": "https://egybestvid.com/",

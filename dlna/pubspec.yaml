@@ -12,11 +12,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   path_provider: ^2.1.2
   dio: ^5.9.1
-  #media_cast_dlna: ^0.2.0
   cached_network_image: ^3.3.1
-  fluttertoast: ^8.2.2
+  fluttertoast: ^9.0.0
  # klipt_video_player: ^1.1.4+1
-  wakelock_plus: ^1.4.0
+  wakelock_plus: ^1.5.0
   sqflite: ^2.4.2
   tha_player: ^0.5.2
   better_player_plus:
@@ -36,9 +35,12 @@ dependencies:
   youtube_player_flutter: ^9.1.3
   external_path: ^2.2.0
   permission_handler: ^12.0.1
-  rxdart: ^0.28.0
+  dart_chromecast: ^0.3.3
+  device_info_plus: ^12.3.0
 
 
+dependency_overrides:
+  xml: ^6.6.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

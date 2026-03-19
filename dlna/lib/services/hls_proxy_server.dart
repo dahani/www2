@@ -3,11 +3,11 @@ import 'package:dio/dio.dart' hide Response;
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/functions.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart'; // Add shelf_router to pubspec
 import 'dio_service.dart';
-import 'package:flutter/rendering.dart';
 class HlsProxyServer {
   final String localIp;
   HttpServer? _server;
@@ -26,7 +26,7 @@ class HlsProxyServer {
 
       try {
         final realM3u8 = await resolveMovieM3u8(id);
-        print(id);
+
         FlutterForegroundTask.sendDataToMain({'video_id':id});
         return await _proxyM3u8(realM3u8);
       } catch (e) {
@@ -46,7 +46,7 @@ class HlsProxyServer {
 
     final handler = Pipeline().addMiddleware(logRequests()).addHandler(router.call);
     _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, port);
-    debugPrint("PROXY LIVE AT: http://$localIp:$port");
+    Fluttertoast.showToast(msg:  "PROXY LIVE AT: http://$localIp:$port");
   }
 
 

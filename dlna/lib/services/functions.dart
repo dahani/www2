@@ -8,6 +8,7 @@
  import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dlna/models/models.dart';
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/dio_service.dart';
@@ -16,6 +17,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+Future<bool> isAndroidTv() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+  // Check for the "leanback" feature, indicating an Android TV device
+  bool isTV = androidInfo.systemFeatures.contains('android.software.leanback') ||
+              androidInfo.systemFeatures.contains('com.google.android.tv.installed');
+  return isTV;
+}
 Future<void> openM3U(String url) async {
     final uri = Uri.parse(url);
 

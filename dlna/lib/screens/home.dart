@@ -527,7 +527,7 @@ print(defautWebsiteApi);
   }
 
   void _showControlsBottomSheetPlayer(ChannelModel ch) {
-    WakelockPlus.enable();
+    WakelockPlus.enable();final GlobalKey _betterPlayerKey = GlobalKey();
     final betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
         aspectRatio: 16 / 10.5,
@@ -699,7 +699,7 @@ print(defautWebsiteApi);
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: BetterPlayer(
-                                    controller: betterPlayerController,
+                                    controller: betterPlayerController,key: _betterPlayerKey,
                                   ),
                                 ),
 
@@ -1097,7 +1097,7 @@ print(defautWebsiteApi);
                     ? _selectedCategory!['name'].toUpperCase()
                     : dlnaService.isConnected
                     ? dlnaService.selectedDevice!.name
-                    : "IPTV & EGYBES",
+                    : "IPTV & MOVIES",
                 style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
             ],

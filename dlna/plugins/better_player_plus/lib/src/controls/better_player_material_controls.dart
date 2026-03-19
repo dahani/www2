@@ -92,23 +92,23 @@ void onSwipeStart(DragStartDetails details) {
 }
 
 void onSwipeUpdate(DragUpdateDetails details) {
-  if (_controller == null || !_controller!.value.initialized){
-    return ;
-  }
+ if (_controller == null || !_controller!.value.initialized){ return ; }
 
   final videoDuration = _controller!.value.duration!.inMilliseconds;
-  final screenWidth = MediaQuery.of(context).size.width;
 
-  // Calculer le delta en millisecondes
-  final seekChange = (details.delta.dx / screenWidth) * videoDuration;
+  const double pixelsPerSecond = 10;
 
-  // Ajouter au pending seek
-  _pendingSeekMilliseconds = (_pendingSeekMilliseconds! + seekChange).round().clamp(0, videoDuration);
+  final seekChangeMs = (details.delta.dx / pixelsPerSecond) * 1000;
 
-  // Optionnel : afficher l'overlay avec la position actuelle pendant le swipe
-  _showOverlay('${_formatDuration(Duration(milliseconds: _pendingSeekMilliseconds!))} / ${_formatDuration(_controller!.value.duration!)}');
+  _pendingSeekMilliseconds = (_pendingSeekMilliseconds! + seekChangeMs)
+      .round()
+      .clamp(0, videoDuration);
+
+  _showOverlay(
+    '${_formatDuration(Duration(milliseconds: _pendingSeekMilliseconds!))} / '
+    '${_formatDuration(_controller!.value.duration!)}'
+  );
 }
-
 void onSwipeEnd(DragEndDetails details) {
   if (_controller == null || !_controller!.value.initialized || _pendingSeekMilliseconds == null) {
     return ;
@@ -319,14 +319,14 @@ void toggleFit() {
                     )),
                   const  Spacer(),
                   BetterPlayerMaterialClickableWidget(
-                      onTap:() {
-                         _betterPlayerController!.toggleFullScreen();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Icon(_betterPlayerController!.isFullScreen?Icons.fullscreen_exit:Icons.fullscreen, color: _controlsConfiguration.iconsColor),
-                      ),
-                    ),
+    onTap: () {
+      betterPlayerController!.enablePictureInPicture(betterPlayerController!.betterPlayerGlobalKey!);
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(8),
+      child: Icon(betterPlayerControlsConfiguration.pipMenuIcon, color: betterPlayerControlsConfiguration.iconsColor),
+    ),
+                  ),
                   BetterPlayerMaterialClickableWidget(
                       onTap:toggleFit,
                       child: Padding(

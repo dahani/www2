@@ -22,6 +22,7 @@ class PlayerScreen extends StatefulWidget {
 
 class _PlayerScreenState extends State<PlayerScreen> {
   late BetterPlayerController _controller;
+   final GlobalKey _betterPlayerKey = GlobalKey();
 void _onReceiveTaskData(Object data) {
 
   if(data=="btn_stop"){
@@ -101,7 +102,7 @@ void _onReceiveTaskData(Object data) {
           children: [
             AspectRatio(
               aspectRatio: 16 / 11,
-              child: BetterPlayer(key: GlobalKey(), controller: _controller),
+              child: BetterPlayer(key: _betterPlayerKey, controller: _controller),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
@@ -114,7 +115,7 @@ void _onReceiveTaskData(Object data) {
               ),
             ),
             ElevatedButton(onPressed: () {
-               _controller.toggleFullScreen();
+               _controller.enablePictureInPicture(_betterPlayerKey);
             }, child: Text("Full screen"))
           ],
         ),
