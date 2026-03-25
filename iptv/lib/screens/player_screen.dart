@@ -182,6 +182,7 @@ void _toggleFavorite() {
       if (_showChannelList) {
         _sidebarAnimationController.forward();
         _scrollToCurrentChannel();
+         FocusScope.of(context).requestFocus(FocusNode());
       } else {
         _sidebarAnimationController.reverse();
       }
@@ -274,105 +275,72 @@ void _toggleFavorite() {
 
   bool get _hasPrevious => _currentIndex > 0;
   bool get _hasNext => _currentIndex < widget.channelList.length - 1;
-bool _handlingBack = false;
+
   @override
   Widget build(BuildContext context) {
     final  media=MediaQuery.of(context).size;
     _betterPlayerController.setOverriddenAspectRatio(media.width/media.height);
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: WillPopScope(
-  onWillPop: () async {
+    return PopScope(  canPop: false,
+  onPopInvokedWithResult: (didPop, result) {
+    if (didPop) return;
+
     if (_showChannelList) {
       _toggleChannelList();
-      return false;
-    }
-    if (!_handlingBack) {
-      _handlingBack = true;
-      Navigator.of(context).pop(true);
-
-      Future.microtask(() => _handlingBack = false);
+    } else {
+      Navigator.of(context).pop(false);
     }
 
-    return false; // VERY IMPORTANT: block system pop
   },
-        child: FocusScope(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: FocusScope(
           autofocus: !_showChannelList,
           onKeyEvent: (node, event) {
-            if (event is KeyDownEvent) {
-              // Menu button - always handled
-              if (event.logicalKey == LogicalKeyboardKey.contextMenu) {
-                _toggleChannelList();
+            if (_showChannelList) {return KeyEventResult.ignored;  }
+            if (event is! KeyDownEvent) return KeyEventResult.ignored;
+
+            print(event.logicalKey.debugName);
+            // Menu button - always handled
+            if (event.logicalKey == LogicalKeyboardKey.contextMenu) {
+              _toggleChannelList();
+              return KeyEventResult.handled;
+            }
+
+            // Channel list is open - handle separately
+
+           if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+              _toggleControls();
+              return KeyEventResult.handled;
+            }
+             if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+              _toggleFavorite();
+              return KeyEventResult.handled;
+            }
+
+            // CONTROLS HIDDEN - Use shortcuts for navigation
+            if (!_showControls) {
+              // Left/Right = Previous/Next channel (shortcuts)
+              if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+                if (_hasPrevious) _previousChannel();
                 return KeyEventResult.handled;
               }
-             if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-                _toggleControls();
+              else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+                if (_hasNext) _nextChannel();
                 return KeyEventResult.handled;
               }
-               if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-                _toggleFavorite();
+              // Select/Enter/Space = Toggle play/pause
+              else if (event.logicalKey == LogicalKeyboardKey.select ||
+                  event.logicalKey == LogicalKeyboardKey.enter ||
+                  event.logicalKey == LogicalKeyboardKey.space) {
+                _togglePlayPause();
                 return KeyEventResult.handled;
               }
-
-              // CONTROLS HIDDEN - Use shortcuts for navigation
-              if (!_showControls) {
-                // Left/Right = Previous/Next channel (shortcuts)
-                if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-                  if (_hasPrevious) _previousChannel();
-                  return KeyEventResult.handled;
-                }
-                else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-                  if (_hasNext) _nextChannel();
-                  return KeyEventResult.handled;
-                }
-                // Up/Down = Show controls
-                else if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
-                    event.logicalKey == LogicalKeyboardKey.arrowDown) {
-                  _showControlsTemporarily();
-                  return KeyEventResult.handled;
-                }
-                // Select/Enter/Space = Toggle play/pause
-                else if (event.logicalKey == LogicalKeyboardKey.select ||
-                    event.logicalKey == LogicalKeyboardKey.enter ||
-                    event.logicalKey == LogicalKeyboardKey.space) {
-                  _togglePlayPause();
-                  return KeyEventResult.handled;
-                }
-                // Info = Show controls
-                else if (event.logicalKey == LogicalKeyboardKey.info) {
-                  _showControlsTemporarily();
-                  return KeyEventResult.handled;
-                }
-                // Channel Up/Down
-                else if (event.logicalKey == LogicalKeyboardKey.channelUp) {
-                  if (_hasNext) _nextChannel();
-                  return KeyEventResult.handled;
-                }
-                else if (event.logicalKey == LogicalKeyboardKey.channelDown) {
-                  if (_hasPrevious) _previousChannel();
-                  return KeyEventResult.handled;
-                }
-
-                // Fast forward / Rewind
-                else if (event.logicalKey == LogicalKeyboardKey.mediaFastForward) {
-                  _seekForward();
-                  return KeyEventResult.handled;
-                }
-                else if (event.logicalKey == LogicalKeyboardKey.mediaRewind) {
-                  _seekBackward();
-                  return KeyEventResult.handled;
-                }
-                // Play/Pause media key
-                else if (event.logicalKey == LogicalKeyboardKey.mediaPlayPause) {
-                  _togglePlayPause();
-                  return KeyEventResult.handled;
-                }
-
-                return KeyEventResult.ignored;
+              // Info = Show controls
+              else if (event.logicalKey == LogicalKeyboardKey.info) {
+                _showControlsTemporarily();
+                return KeyEventResult.handled;
               }
-
-
-              // Channel Up/Down keys (always work)
+              // Channel Up/Down
               else if (event.logicalKey == LogicalKeyboardKey.channelUp) {
                 if (_hasNext) _nextChannel();
                 return KeyEventResult.handled;
@@ -381,13 +349,8 @@ bool _handlingBack = false;
                 if (_hasPrevious) _previousChannel();
                 return KeyEventResult.handled;
               }
-              // Info - show controls
-              else if (event.logicalKey == LogicalKeyboardKey.info) {
-                 _toggleControls();
-                return KeyEventResult.handled;
-              }
 
-              // Fast forward / Rewind media keys (always work)
+              // Fast forward / Rewind
               else if (event.logicalKey == LogicalKeyboardKey.mediaFastForward) {
                 _seekForward();
                 return KeyEventResult.handled;
@@ -401,14 +364,46 @@ bool _handlingBack = false;
                 _togglePlayPause();
                 return KeyEventResult.handled;
               }
-              // Space key (when controls visible, let focus handle it)
-              else if (event.logicalKey == LogicalKeyboardKey.space) {
-                _togglePlayPause();
-                return KeyEventResult.handled;
-              }
 
+              return KeyEventResult.ignored;
             }
-            return KeyEventResult.ignored;
+
+
+            // Channel Up/Down keys (always work)
+            else if (event.logicalKey == LogicalKeyboardKey.channelUp) {
+              if (_hasNext) _nextChannel();
+              return KeyEventResult.handled;
+            }
+            else if (event.logicalKey == LogicalKeyboardKey.channelDown) {
+              if (_hasPrevious) _previousChannel();
+              return KeyEventResult.handled;
+            }
+            // Info - show controls
+            else if (event.logicalKey == LogicalKeyboardKey.info) {
+               _toggleControls();
+              return KeyEventResult.handled;
+            }
+
+            // Fast forward / Rewind media keys (always work)
+            else if (event.logicalKey == LogicalKeyboardKey.mediaFastForward) {
+              _seekForward();
+              return KeyEventResult.handled;
+            }
+            else if (event.logicalKey == LogicalKeyboardKey.mediaRewind) {
+              _seekBackward();
+              return KeyEventResult.handled;
+            }
+            // Play/Pause media key
+            else if (event.logicalKey == LogicalKeyboardKey.mediaPlayPause) {
+              _togglePlayPause();
+              return KeyEventResult.handled;
+            }
+            // Space key (when controls visible, let focus handle it)
+            else if (event.logicalKey == LogicalKeyboardKey.space) {
+              _togglePlayPause();
+              return KeyEventResult.handled;
+            }
+                      return KeyEventResult.ignored;
           },
           child: GestureDetector(
             onTap: _toggleControls,
@@ -796,14 +791,6 @@ bool _handlingBack = false;
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-          FocusableIconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: Icons.arrow_back,
-            size: 48,
-            iconSize: 28,
-            primaryColor: const Color(0xFFE50914),
-            tooltip: 'Back',
-          ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(

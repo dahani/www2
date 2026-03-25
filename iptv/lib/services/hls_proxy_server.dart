@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart' hide Response;
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -10,9 +11,17 @@ import 'package:tv_app/services/movie_api_service.dart'; // Add shelf_router to 
 class HlsProxyServer {
   final String localIp;
   HttpServer? _server;
-
+Timer? _idleTimer;
+static const Duration _timeout = Duration(minutes: 10);
   HlsProxyServer({ required this.localIp});
 
+void _resetIdleTimer() {
+  _idleTimer?.cancel();
+  _idleTimer = Timer(_timeout, () async {
+     FlutterForegroundTask.stopService();
+    await stop();
+  });
+}
   Future<void> start({int port = 8080}) async {
     final router = Router();
 
@@ -20,6 +29,7 @@ class HlsProxyServer {
 
     // Master Entry: /master.m3u8?id=...
     router.get('/master.m3u8', (Request request) async {
+      _resetIdleTimer();
       final id = request.url.queryParameters['id'];
       if (id == null) return Response.badRequest(body: 'Missing id');
 
@@ -35,6 +45,7 @@ class HlsProxyServer {
 
     // Segment & Sub-Playlist Proxy: /proxy/<encoded_url>
     router.get('/proxy/<url>', (Request request, String url) async {
+       _resetIdleTimer();
       final realUrl = Uri.decodeComponent(url);
       if (realUrl.toLowerCase().contains('.m3u8')) {
         return await _proxyM3u8(realUrl);
@@ -45,6 +56,7 @@ class HlsProxyServer {
 
     final handler = const Pipeline().addMiddleware(logRequests()).addHandler(router.call);
     _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, port);
+     _resetIdleTimer();
     Fluttertoast.showToast(msg:  "PROXY LIVE AT: http://$localIp:$port");
   }
 
@@ -80,5 +92,9 @@ class HlsProxyServer {
     return Response.ok(res.data, headers: {'Content-Type': 'video/MP2T'});
   }
 
-  Future<void> stop() async => await _server?.close();
+Future<void> stop() async {
+  _idleTimer?.cancel();
+  await _server?.close();
+  _server = null;
+}
 }
