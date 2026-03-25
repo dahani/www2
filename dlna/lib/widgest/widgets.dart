@@ -236,85 +236,83 @@ final imageUrl = widget.images[index];
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: Container(
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  // Dot notation instead of bracket notation
-                  NetworkImageWidget(imageUrl: movie.image, fit: BoxFit.cover),
-                  Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.transparent, Colors.black54, Colors.black],
-                        stops: [0.4, 0.7, 1.0],
-                      ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Dot notation instead of bracket notation
+                NetworkImageWidget(imageUrl: movie.image, fit: BoxFit.cover),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.transparent, Colors.black54, Colors.black],
+                      stops: [0.4, 0.7, 1.0],
                     ),
                   ),
-                  Positioned(
-                    bottom: 8,
-                    left: 8,
-                    right: 8,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Center(
-                          child: Text(
-                            movie.title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
+                ),
+                Positioned(
+                  bottom: 8,
+                  left: 8,
+                  right: 8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Center(
+                        child: Text(
+                          movie.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                              icon:  Icon(
-                                isFav?  Icons.favorite:Icons.favorite_border,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              onPressed:onclick,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            icon:  Icon(
+                              isFav?  Icons.favorite:Icons.favorite_border,
+                              color: Colors.white,
+                              size: 24,
                             ),
-                            Text(
-                              movie.duration,
-                              style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 11,
-                              ),
+                            onPressed:onclick,
+                          ),
+                          Text(
+                            movie.duration,
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 11,
                             ),
-                            IconButton(
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                              icon: const Icon(
-                                Icons.info_outline,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => MovieDetailsScreen(movieId: movie.id),
-              ),
-                        ),
+                          ),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            icon: const Icon(
+                              Icons.info_outline,
+                              color: Colors.white,
+                              size: 24,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MovieDetailsScreen(movieId: movie.id),
+            ),
+                      ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );

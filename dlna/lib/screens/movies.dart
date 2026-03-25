@@ -117,7 +117,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   }
 
   void _onReceiveTaskData(Object data) {
-    print(data);
+
     if (data is Map<String, dynamic>) {
       final proxy = data['proxy_url'];
       if(proxy!=null) {
@@ -337,7 +337,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
 
   Future<List<Movie>> _fetchMoviesAPI(int page, String query) async {
     final urlMovies="$baseUrl/channel/Movies?restriction&$order&page=$page&paginate=lengthAware&returnContentOnly=true$filters";
-    print(urlMovies);
+  
     final url = query.isNotEmpty
         ? getSearchQuery(query)
         : urlMovies;

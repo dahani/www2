@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:dio/dio.dart';
@@ -70,7 +71,6 @@ bool isFav=false;
     getCats(isFirst: true);
     VolumeController().showSystemUI = false;
      FlutterForegroundTask.addTaskDataCallback((data) {
-       print("data from homr $data");
      },);
   }
 
@@ -142,7 +142,6 @@ bool isFav=false;
 
   void startListeningToHardwareButtons() async{
        defautWebsiteApi = await ServerPreferences.getServer();
-print(defautWebsiteApi);
     _buttonSubscription = _hardwareButtonListener.listen((event) {
       if (event.buttonName.toString() == "VOLUME_UP") {
         dlnaService.volumeUp();
@@ -192,7 +191,7 @@ print(defautWebsiteApi);
       final resp = await _dio.get(JSON_URL);
 
       if (resp.statusCode == 200) {
-        final List data = resp.data;
+        final List data = jsonDecode(resp.data);
         await DatabaseService.instance.insertFullJson(data);
 
           getCats(isFirst: true);
@@ -479,6 +478,9 @@ print(defautWebsiteApi);
     if (isFirst) {
       _categories = await DatabaseService.instance.getCategoriesWithCount();
       _isLoadingChannels = false;
+      if(_categories.isEmpty){
+      await  _loadChannels();
+      }
       setState(() {});
     } else {
       showLoading("Loading cats", context);
@@ -527,7 +529,7 @@ print(defautWebsiteApi);
   }
 
   void _showControlsBottomSheetPlayer(ChannelModel ch) {
-    WakelockPlus.enable();final GlobalKey _betterPlayerKey = GlobalKey();
+    WakelockPlus.enable();final GlobalKey betterPlayerKey = GlobalKey();
     final betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
         aspectRatio: 16 / 10.5,
@@ -699,7 +701,7 @@ print(defautWebsiteApi);
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: BetterPlayer(
-                                    controller: betterPlayerController,key: _betterPlayerKey,
+                                    controller: betterPlayerController,key: betterPlayerKey,
                                   ),
                                 ),
 
@@ -1144,7 +1146,7 @@ print(defautWebsiteApi);
           ],
         ),
 
-        body: SafeArea(
+        body:_isLoadingChannels?Center(child: CircularProgressIndicator(),): SafeArea(
           child: Column(
             children: [
               // 🔍 Search bar

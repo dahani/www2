@@ -14,7 +14,6 @@ import 'package:dlna/services/dlna_service.dart';
 import 'package:dlna/services/functions.dart';
 import 'package:dlna/widgest/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'dart:ui';
 
 import 'package:provider/provider.dart';
@@ -35,7 +34,7 @@ class MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late MovieDetails movie;
   late DlnaService dlnaService;
   List<String> imagesMovie=[];
-  final List<Movie> related_movies = [];
+  final List<Movie> relatedmovies = [];
   dynamic credits;
    bool isFav = false;
    bool loadedInfos=false;
@@ -46,9 +45,7 @@ class MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
 checkFavStatus();
 _getRelatedMovies();
- FlutterForegroundTask.addTaskDataCallback((data) {
-       print("data from homr $data");
-     },);
+
   }
 
   Future<dynamic> _getRelatedMovies() async {
@@ -56,7 +53,7 @@ _getRelatedMovies();
 
     final rel= res.data['titles'].map((row) => Movie.fromJson(row)).toList();
     for (dynamic x in rel) {
-      related_movies.add(x);
+      relatedmovies.add(x);
     }
 
   }
@@ -127,9 +124,9 @@ Widget _buildBody(){
                         ),
                         const SizedBox(height: 30),
                           const SizedBox(height: 30),
-                         if(related_movies.isNotEmpty)
+                         if(relatedmovies.isNotEmpty)
                          _buildSectionTitle("Related Movies"),
-                           if(related_movies.isNotEmpty)
+                           if(relatedmovies.isNotEmpty)
                          SizedBox(
                           height: 260,
                         child: GridView.builder(
@@ -141,9 +138,9 @@ Widget _buildBody(){
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
                           ),
-                          itemCount: related_movies.length,
+                          itemCount: relatedmovies.length,
                           itemBuilder: (context, index) {
-                            final movie = related_movies[index];
+                            final movie = relatedmovies[index];
                             return buildMovieCard(
                               movie,
                               () async {

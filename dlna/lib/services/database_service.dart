@@ -173,7 +173,7 @@ Future<void> exportFavoritesToDownload() async {
 }
 
 Future<Set<String>> loadFavoritesFromDownload() async {
- var status = await Permission.manageExternalStorage.request();
+ await Permission.manageExternalStorage.request();
 
 
   final downloadPath =

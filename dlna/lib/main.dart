@@ -1,8 +1,5 @@
 
-import 'package:dlna/screens/tvhome.dart';
-import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/dlna_provider.dart';
-import 'package:dlna/services/functions.dart';
 import 'package:dlna/services/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -11,9 +8,6 @@ import 'package:provider/provider.dart';
 void main()async {
   FlutterForegroundTask.initCommunicationPort();
    WidgetsFlutterBinding.ensureInitialized();
-
- isTv = await isAndroidTv();
-
   runApp(ChangeNotifierProvider(create: (_) => DlnaProvider(), child: const  MyApp()),);
 }
 
@@ -26,7 +20,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: isTv? const DlnaTvHomePage(): const DlnaHomePage(),
+      home:  const DlnaHomePage(),
     );
   }
 }

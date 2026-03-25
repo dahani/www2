@@ -12,7 +12,7 @@ class HlsProxyServer {
   final String localIp;
   HttpServer? _server;
 Timer? _idleTimer;
-static const Duration _timeout = Duration(minutes: 10);
+static const Duration _timeout = Duration(minutes: 15);
   HlsProxyServer({ required this.localIp});
 
 void _resetIdleTimer() {

@@ -170,9 +170,7 @@ void initState() {
                 title: Text(_devices[i].name),
                 subtitle: Text(_devices[i].controlUrl),
                 onTap:  () {
-                  //dlnaService.selectedDevice=_devices[i];
-                  print(dlnaService.selectedDevice?.controlUrl);
-
+             
                 },
               ),
             ),

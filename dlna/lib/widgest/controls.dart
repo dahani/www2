@@ -34,7 +34,7 @@ Future<void> initSlider() async {
 
   seek = 0;
    playerState=await dlnaService.getTransportState()??"STOPPED";
-   print(playerState);
+
  dlnaService.statePlaying=playerState;
  setState(() {
 
@@ -301,7 +301,7 @@ class RemoteDPad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 bool isPlaying=dla.statePlaying == "PLAYING";
-print(isPlaying);
+
     return Container(
       width: 210,
       height: 210,
