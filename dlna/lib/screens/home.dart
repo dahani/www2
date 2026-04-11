@@ -8,15 +8,14 @@ import 'package:dio/dio.dart';
 import 'package:dlna/models/models.dart';
 import 'package:dlna/screens/movies.dart';
 import 'package:dlna/screens/scan_test.dart';
-import 'package:dlna/screens/server_selection_screen.dart';
 import 'package:dlna/screens/youtube_player.dart';
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/database_service.dart';
 import 'package:dlna/services/dlna_provider.dart';
 import 'package:dlna/services/dlna_service.dart';
 import 'package:dlna/services/functions.dart';
+import 'package:dlna/services/server_preferences.dart';
 import 'package:dlna/widgest/controls.dart';
-import 'package:dlna/widgest/server_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -72,6 +71,7 @@ bool isFav=false;
     VolumeController().showSystemUI = false;
      FlutterForegroundTask.addTaskDataCallback((data) {
      },);
+     _startSleepTimer(60);
   }
 
   @override
@@ -284,7 +284,9 @@ bool isFav=false;
     }
   }
 
-  void _openSettings(BuildContext context) {
+  void _openSettings(BuildContext context)async {
+    int totalBytes = await ServerPreferences.getTotalBytes();
+String text = formatBytes(totalBytes);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -335,6 +337,11 @@ bool isFav=false;
                         child: ListView(
                           controller: scrollController,
                           children: [
+                            ListTile(
+                             leading: const Icon(Icons.data_array),
+                              title:  Text("Total data  $text"),
+                             onTap: _showSleepTimerSheet,
+                           ),
                             ListTile(
                               leading: const Icon(Icons.timer),
                               title: const Text("Sleep Timer"),
@@ -408,20 +415,6 @@ bool isFav=false;
                               },
                             ),
 
-                            ListTile(
-                              leading: const Icon(
-                                Icons.stream,
-                              ),
-                              title: const Text("Select Api Server"),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => ServerSelectionScreen(),
-                                  ),
-                                );
-                              },
-                            ),
 
                              ListTile(
                               leading: const Icon(

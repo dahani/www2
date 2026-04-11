@@ -31,9 +31,9 @@ class ActorDetails {
       credits: (json['knownFor'] as List)
           .map((c) => MovieCredit.fromJson(c))
           .toList(),
-      creditsList: (json['credits']['actors'] as List)
+      creditsList:json['credits'].isNotEmpty? (json['credits']['actors'] as List)
           .map((c) => MovieCredit.fromJson(c))
-          .toList(),
+          .toList():[],
     );
   }
 }
@@ -118,6 +118,7 @@ class Movie {
   final String description;
   final String backdrop;
   final double rating;
+  final bool isActor;
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -126,6 +127,7 @@ class Movie {
       'backdrop': backdrop,
       'rating': rating,
       'description': description,
+      'isActor': isActor,
     };
   }
  factory  Movie.fromMovieDetails(MovieDetails movie) {
@@ -147,7 +149,7 @@ class Movie {
     required this.duration,
     required this.description,
     required this.backdrop,
-    required this.rating,
+    required this.rating,  this.isActor=false,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
@@ -161,6 +163,7 @@ class Movie {
       duration:json['runtime']!=null?json['runtime'] is String?json['runtime']: formatRuntime(json['runtime']):'----',
       description: json['description']??"",
        backdrop: json['backdrop']??"",
+       isActor:json['model_type'] == "person",
 
 rating:((json['rating'] as num?)?.toDouble()) ?? 0.0,
   );
@@ -230,7 +233,7 @@ Map<String, dynamic> toJson() {
       rating: (titleData['rating'] as num).toDouble(),
       year: titleData['year']??"",
       genres: (titleData['genres'] as List).map((g) => g['display_name'].toString()).toList(),
-      actors: (json['credits']['actors'] as List).map((a) => Actor.fromJson(a)).toList(),
+      actors: json['credits'].isNotEmpty ? (json['credits']['actors'] as List).map((a) => Actor.fromJson(a)).toList() : [],
       embedUrl: (titleData['videos'] as List).isNotEmpty ? titleData['videos'][0]['src'] : null,
     );
   }
@@ -253,13 +256,11 @@ class Actor {
     );
   }
 }
-enum DeviceType { dlna, chromecast }
 
 class DlnaDevice {
   final String name;
   final String controlUrl;        // pour play / AVTransport
   final String renderingUrl;      // pour volume
   final String icon;
-   final DeviceType type;
-  DlnaDevice({required this.name, required this.controlUrl, required this.renderingUrl,  this.icon="", required this.type});
+  DlnaDevice({required this.name, required this.controlUrl, required this.renderingUrl,  this.icon=""});
 }

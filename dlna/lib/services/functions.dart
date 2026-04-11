@@ -194,6 +194,14 @@ String formatRuntime(int minutes) {
   return '${hours.toString().padLeft(2, '0')}:'
          '${remainingMinutes.toString().padLeft(2, '0')}';
 }
+String formatBytes(int bytes) {
+  double mb = bytes / (1024 * 1024);
+  if (mb < 1024) {
+    return "${mb.toStringAsFixed(2)} MB";
+  }
+  double gb = mb / 1024;
+  return "${gb.toStringAsFixed(2)} GB";
+}
   Widget buildslisTile({required ChannelModel ch,required VoidCallback onClick,required VoidCallback onLongPress,required  DlnaService dlnaService,required VoidCallback setFavourite }) {
    // print( dlnaService.selectedChannel.id);
     return Container(

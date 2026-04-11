@@ -9,7 +9,9 @@ class DioService {
   ));
 
   static Future<Response> get(String url, {Map<String, String> headers=const {}, ResponseType responseType = ResponseType.json}) async {
-    debugPrint(url);
+    if(!url.contains(".ts")){
+       debugPrint(url);
+    }
 
     _dio.options.headers['Referer']=defautWebsiteApi;
      final Map<String, dynamic> mergedHeaders = {

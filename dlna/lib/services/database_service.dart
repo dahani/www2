@@ -109,7 +109,7 @@ Future<bool> isMovieFav(int movieId) async {
 
 Future<List<Movie>> getFavouriteMovies() async {
   final db = await database;
-  final result = await db.query('movies_fav');
+  final result = await db.query('movies_fav', orderBy: 'id DESC');
 
   // Return mutable list and decode genres
   return result.map((row) => Movie.fromJson(row)).toList();

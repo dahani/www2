@@ -22,17 +22,14 @@
 
 <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
 
-<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-<uses-feature android:name="android.software.leanback" android:required="false" />
 
     <application
      android:networkSecurityConfig="@xml/network_security_config"
-    android:usesCleartextTraffic="true"
+    android:usesCleartextTraffic="true" 
     android:enableOnBackInvokedCallback="true"
         android:label="@string/app_name" android:requestLegacyExternalStorage="true"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:banner="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
@@ -44,23 +41,15 @@
             android:resizeableActivity="true"
             android:theme="@style/LaunchTheme"
             android:hardwareAccelerated="true"
-
             android:windowSoftInputMode="adjustResize">
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <!-- TV Launcher -->
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
-            <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
-        </intent-filter>
-
-        <!-- Mobile Launcher -->
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <service

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart' hide Response;
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/functions.dart';
+import 'package:dlna/services/server_preferences.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shelf/shelf.dart';
@@ -91,10 +92,34 @@ void _resetIdleTimer() {
   }
 
   Future<Response> _proxyBinary(String url) async {
-    final res = await DioService.get(url, headers: egybestHeaders, responseType: ResponseType.bytes);
 
-    return Response.ok(res.data, headers: {'Content-Type': 'video/MP2T'});
-  }
+  final res = await DioService.get(
+    url,
+    headers: egybestHeaders,
+    responseType: ResponseType.bytes,
+  );
+    final header = res.headers.value('content-length');
+    final data = res.data;
+
+    int bytes = 0;
+
+    if (header != null) {
+      bytes = int.tryParse(header) ?? 0;
+    } else if (data != null && data is List) {
+      bytes = data.length;
+    }
+
+    if (bytes > 0) {
+
+      await ServerPreferences.addBytes(bytes);
+    }
+
+  return Response.ok(
+    data,
+    headers: {'Content-Type': 'video/MP2T'},
+  );
+}
+
 
  Future<void> stop() async {
   _idleTimer?.cancel();

@@ -56,7 +56,7 @@ Future<void> _fetchDeviceDetails(String xmlUrl) async {
     _addDevice(DlnaDevice(
       name: friendlyName,
       renderingUrl: xmlUrl,
-      controlUrl: xmlUrl,type: DeviceType.dlna
+      controlUrl: xmlUrl
     ));
   } catch (e) {
     debugPrint("Could not fetch details for $xmlUrl: $e");
@@ -64,7 +64,6 @@ Future<void> _fetchDeviceDetails(String xmlUrl) async {
     _addDevice(DlnaDevice(
       name: "Generic DLNA Device",
       renderingUrl: xmlUrl, controlUrl: xmlUrl,
-      type: DeviceType.dlna
     ));
   }
 }
@@ -122,7 +121,7 @@ Future<void> _scanChromecast() async {
           name: name,
           controlUrl: deviceKey,                // ex: 192.168.1.15:8009
           renderingUrl: "http://$deviceKey",
-          type: DeviceType.chromecast,
+         // type: DeviceType.chromecast,
         ));
 
         debugPrint("Chromecast: $name ($deviceKey)");
@@ -166,11 +165,11 @@ void initState() {
             child: ListView.builder(
               itemCount: _devices.length,
               itemBuilder: (context, i) => ListTile(
-                leading: Icon(_devices[i].type == DeviceType.chromecast ? Icons.cast : Icons.tv),
+                leading: Icon( Icons.tv),
                 title: Text(_devices[i].name),
                 subtitle: Text(_devices[i].controlUrl),
                 onTap:  () {
-             
+
                 },
               ),
             ),

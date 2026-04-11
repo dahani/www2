@@ -1,20 +1,26 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dlna/models/models.dart';
+import 'package:dlna/screens/actor_deatils.dart';
 import 'package:dlna/screens/movies_favourite.dart';
 import 'package:dlna/screens/movie_details.dart';
-import 'package:dlna/screens/server_selection_screen.dart';
 import 'package:dlna/services/constant.dart';
 import 'package:dlna/services/database_service.dart';
 import 'package:dlna/services/dio_service.dart';
 import 'package:dlna/services/dlna_provider.dart';
 import 'package:dlna/services/dlna_service.dart';
 import 'package:dlna/services/foreground_task_handler.dart';
+import 'package:dlna/services/functions.dart';
+import 'package:dlna/services/server_preferences.dart';
 import 'package:dlna/widgest/controls.dart';
 import 'package:dlna/widgest/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 
 import 'package:provider/provider.dart';
@@ -22,6 +28,7 @@ import 'package:provider/provider.dart';
 @pragma('vm:entry-point')
 void startCallback() {
   FlutterForegroundTask.setTaskHandler(ProxyTaskHandler());
+ FlutterForegroundTask.sendDataToTask("start_proxy");
 }
 
 class MoviesListScreen extends StatefulWidget {
@@ -55,6 +62,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   String selectedGenreId = "1";
   String filters="";
   String order="order=created_at:desc";
+    dynamic _filterData=[];
   void _initService() {
     debugPrint("_initService");
     FlutterForegroundTask.init(
@@ -101,6 +109,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
     if (await FlutterForegroundTask.isRunningService) {
       //return ServiceRequestResult()
       //return FlutterForegroundTask.restartService();
+      Fluttertoast.showToast(msg:  "PROXY LIVE AT: ${dlnaService.proxyUrl}");
       FlutterForegroundTask.sendDataToTask("start_proxy");
     } else {
       FlutterForegroundTask.startService(
@@ -121,6 +130,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
     if (data is Map<String, dynamic>) {
       final proxy = data['proxy_url'];
       if(proxy!=null) {
+        Fluttertoast.showToast(msg:  "PROXY LIVE AT: $proxy");
         dlnaService.proxyUrl = proxy;
       }
     }
@@ -149,6 +159,92 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
 
       //
     });
+    DioService.get(getFilters()).then((value) {
+    setState(() {
+        _filterData=value.data;
+     });
+   },);
+  }
+  void _changeServer() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return DraggableScrollableSheet(
+              initialChildSize: 0.4,
+              minChildSize: 0.3,
+              maxChildSize: 0.5,
+              expand: false,
+              builder: (context, scrollController) {
+                return Container(
+                  decoration: const BoxDecoration(  color: Color(0xFF1E1E1E),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(30),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      Container(
+                        width: 50,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Select Server",
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700,color: Colors.white
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: ServerConfig.servers.length,
+                          itemBuilder: (context, index) {
+                            String serverUrl=ServerConfig.servers[index];
+                            return ListTile(iconColor: Colors.white,textColor: Colors.white,
+                              leading:  Icon(defautWebsiteApi==serverUrl?Icons.check: Icons.link),
+                              title:  Text( serverUrl),
+                               onTap:()async{
+                                  Navigator.pop(context);
+                                   await ServerPreferences.saveServer(serverUrl);
+                                   setApiUrl(serverUrl);
+
+                                   setState(() {
+                                    _moviesTop10.clear();
+                                    _reload();
+                                    FlutterForegroundTask.sendDataToTask("start_proxy");
+                                   });
+
+                                },);
+
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -229,7 +325,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                               title: const Text("Genres"),
                                onTap:(){
                                   Navigator.pop(context);
-                                _showFilterBottomSheet(filterGenres,(value) {
+                                _showFilterBottomSheet(_filterData['genres'],(value) {
                                   _builFilter(value,'[{"key":"genres","value":[$value],"operator":"hasAll"}]');
                                 },);
                                },
@@ -239,7 +335,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                               title: const Text("Langues"),
                               onTap:(){
                                   Navigator.pop(context);
-                                _showFilterBottomSheet(filterLangues,(value) {
+                                _showFilterBottomSheet(_filterData['titleFilterLanguages'],(value) {
                                   _builFilter(value,'[{"key":"language","value":"$value","operator":"=","valueKey":"$value"}]');
                                 },);
                                },
@@ -249,7 +345,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                               title: const Text("Countries"),
                                onTap:(){
                                   Navigator.pop(context);
-                                _showFilterBottomSheet(filterCountries,(value) {
+                                _showFilterBottomSheet(_filterData['productionCountries'],(value) {
                                   _builFilter(value,'[{"key":"productionCountries","value":[$value],"operator":"hasAll"}]');
                                 },);
                                },
@@ -270,14 +366,14 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   }
 
   Widget _buildGenreFilter() {
-    return SizedBox(
+    return _filterData.length>0? SizedBox(
       height: 45,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
-        itemCount: filterGenres.length,
+        itemCount: _filterData['genres'].length,
         itemBuilder: (context, index) {
-          final genre = filterGenres[index];
+          final genre = _filterData['genres'][index];
           final isSelected = selectedGenreId == genre['value'].toString();
           return GestureDetector(
             onTap: () {
@@ -332,12 +428,12 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
           );
         },
       ),
-    );
+    ):Wrap();
   }
 
   Future<List<Movie>> _fetchMoviesAPI(int page, String query) async {
     final urlMovies="$baseUrl/channel/Movies?restriction&$order&page=$page&paginate=lengthAware&returnContentOnly=true$filters";
-  
+
     final url = query.isNotEmpty
         ? getSearchQuery(query)
         : urlMovies;
@@ -352,9 +448,9 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
         ? res.data['results']
         : res.data['pagination']['data'];
     for (dynamic x in resultData) {
-      if (x['model_type'] == "title") {
+     // if (x['model_type'] == "title") {
         movies.add(Movie.fromJson(x));
-      }
+     // }
     }
 
 setState(() {
@@ -366,11 +462,12 @@ setState(() {
   // --- DEBOUNCE SEARCH LOGIC ---
   void _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-
     _debounce = Timer(const Duration(milliseconds: 800), () {
       if (_searchQuery != query) {
         setState(() {
-          _searchQuery = query;
+          if(query.length>2) {
+            _searchQuery = query;
+          }
         });
         _reload();
       }
@@ -538,14 +635,7 @@ setState(() {
             },
           ),
           IconButton(icon: const Icon(Icons.refresh), onPressed: _reload),
-          IconButton(onPressed:  () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => ServerSelectionScreen(),
-                                  ),
-                                );
-                              }, icon: Icon(Icons.link))
+          IconButton(onPressed: _changeServer, icon: Icon(Icons.link))
         ],
       ),
       // Strongly typed FutureBuilder
@@ -688,7 +778,27 @@ setState(() {
       ),
     );
   }
-
+  void _navigateToActor(String personId) async {
+    showLoading("Fetching Actor Details", context);
+    try {
+      final res = await DioService.get(getActorInfos(personId));
+  //    print(res.data);
+      final actorDetails = ActorDetails.fromJson(res.data);
+      hideLoading(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ActorDetailsScreen(actor: actorDetails),
+        ),
+      );
+    } on DioException catch (e) {
+      debugPrint("Dio error: ${e.message}");
+      hideLoading(context);
+    } catch (e) {
+      hideLoading(context);
+      debugPrint("Unexpected error: $e");
+    }
+  }
   // --- UI: MOVIE CARD ---
   // Now accepts a strongly typed Movie object
   Widget _buildMovieCard(Movie movie) {
@@ -698,12 +808,16 @@ setState(() {
         bool isFav = snapshot.data ?? false;
         return GestureDetector(
           onTap: () {
+            if(movie.isActor){
+              _navigateToActor(movie.id);
+            }else{
             Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => MovieDetailsScreen(movieId: movie.id),
             ),
           ).then((value)=>{setState(() {})});
+          }
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
