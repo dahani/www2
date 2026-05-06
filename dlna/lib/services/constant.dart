@@ -28,17 +28,25 @@ void setApiUrl(String url){
 String defautWebsiteApi="https://egymovies.org/";
 String baseUrl="${defautWebsiteApi}api/v1";
 
-String egyBestTopTen(){int idREcent=64;
+String egyBestTopTen(){int idREcent=12;
   if(baseUrl.contains("dead")){
     idREcent=11;
   }else  if(baseUrl.contains("egybest")){
     idREcent=12;
   }else  if(baseUrl.contains("egymovies")){
-    idREcent=64;
+    idREcent=12;
   }
 
 
   return "$baseUrl/channel/$idREcent?channelType=channel&restriction&loader=channelPage";
+}
+
+String getNetflixChannelID(){
+  return baseUrl.contains("dead")?"6":"19";
+
+/*https://egydead.ca/api/v1/channel/6?restriction=&order=created_at:desc&page=2&paginate=lengthAware&returnContentOnly=true
+https://egybest.la/api/v1/channel/19?restriction=&order=created_at:desc&page=2&paginate=lengthAware&returnContentOnly=true
+https://egymovies.org/api/v1/channel/19?restriction&order=created_at:desc&page=1&paginate=lengthAware&returnContentOnly=true*/
 }
 String getMovieInfos(String id) =>"$baseUrl/titles/$id?loader=titlePage";
 String getRelatedMovies(String id) =>"$baseUrl/titles/$id/related";

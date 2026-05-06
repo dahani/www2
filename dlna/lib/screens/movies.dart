@@ -58,6 +58,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   int totalMovies = 0;
   DlnaDevice? selectedDevice;
   late DlnaService dlnaService;
+  bool isNetflix=false;
 
   String selectedGenreId = "1";
   String filters="";
@@ -108,9 +109,9 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   void _startService() async {
     if (await FlutterForegroundTask.isRunningService) {
       //return ServiceRequestResult()
-      //return FlutterForegroundTask.restartService();
-      Fluttertoast.showToast(msg:  "PROXY LIVE AT: ${dlnaService.proxyUrl}");
-      FlutterForegroundTask.sendDataToTask("start_proxy");
+       FlutterForegroundTask.restartService();
+      //Fluttertoast.showToast(msg:  "PROXY LIVE AT: ${dlnaService.proxyUrl}");
+      //FlutterForegroundTask.sendDataToTask("start_proxy");
     } else {
       FlutterForegroundTask.startService(
         serviceId: 257,
@@ -309,6 +310,13 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                           children: [
                              ListTile(iconColor: Colors.white,textColor: Colors.white,
                               leading: const Icon(Icons.sort),
+                              title: const Text("Netflex"),
+                               onTap:(){
+                                  Navigator.pop(context);isNetflix=!isNetflix;_reload();
+                               },
+                            ),
+                             ListTile(iconColor: Colors.white,textColor: Colors.white,
+                              leading: const Icon(Icons.sort),
                               title: const Text("Sort"),
                                onTap:(){
                                   Navigator.pop(context);
@@ -432,7 +440,8 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   }
 
   Future<List<Movie>> _fetchMoviesAPI(int page, String query) async {
-    final urlMovies="$baseUrl/channel/Movies?restriction&$order&page=$page&paginate=lengthAware&returnContentOnly=true$filters";
+    final netflixId=isNetflix?getNetflixChannelID():"Movies";
+    final urlMovies="$baseUrl/channel/$netflixId?restriction&$order&page=$page&paginate=lengthAware&returnContentOnly=true$filters";
 
     final url = query.isNotEmpty
         ? getSearchQuery(query)

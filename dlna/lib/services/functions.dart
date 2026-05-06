@@ -15,7 +15,7 @@ import 'package:dlna/services/dlna_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:network_info_plus/network_info_plus.dart';
 Future<void> openM3U(String url) async {
     final uri = Uri.parse(url);
 
@@ -124,14 +124,14 @@ void showLoading(String message,BuildContext context) {
     );
   }
   Future<String> getLocalIp() async {
-    final interfaces = await NetworkInterface.list();
-    for (var i in interfaces) {
-      for (var addr in i.addresses) {
-        if (addr.type == InternetAddressType.IPv4 && !addr.address.startsWith("127")) {
-          return addr.address;
-        }
-      }
-    }
+   final info = NetworkInfo();
+  try {
+    String? wifiIPv4 = await info.getWifiIP();
+  //  print("$wifiIPv4 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    return wifiIPv4??"127.0.0.1";
+  } catch (e) {
+    print('Failed to get Wi-Fi IP: $e');
+  }
     return "127.0.0.1";
   }
 

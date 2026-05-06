@@ -59,7 +59,7 @@ void _resetIdleTimer() {
     });
 
     final handler = Pipeline().addMiddleware(logRequests()).addHandler(router.call);
-    _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, port);
+    _server = await shelf_io.serve(handler, InternetAddress.anyIPv4, port,shared: true);
       _resetIdleTimer();
     Fluttertoast.showToast(msg:  "PROXY LIVE AT: http://$localIp:$port");
   }
@@ -123,7 +123,7 @@ void _resetIdleTimer() {
 
  Future<void> stop() async {
   _idleTimer?.cancel();
-  await _server?.close();
+  await _server?.close(force: true);
   _server = null;
 }
 }

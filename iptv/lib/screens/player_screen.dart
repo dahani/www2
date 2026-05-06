@@ -847,7 +847,6 @@ void _toggleFavorite() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
         FocusableIconButton(
           onPressed: _seekBackward,
           icon: Icons.replay_10,
@@ -866,7 +865,28 @@ void _toggleFavorite() {
         ),
 
         const SizedBox(width: 40),
-        FocusableIconButton(
+      AnimatedSwitcher(
+  duration: const Duration(milliseconds: 200),
+  child: _isBuffering
+      ?  Container(
+          width: 80,
+          height: 80,
+          decoration: const BoxDecoration(
+            color: Color(0xFFE50914), // same red
+            shape: BoxShape.circle,
+          ),
+          alignment: Alignment.center,
+          child: const SizedBox(
+            width: 40,
+            height: 40,
+            child: CircularProgressIndicator(
+              strokeWidth: 5,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          ),
+        )
+      : FocusableIconButton(
+          key: const ValueKey('button'),
           onPressed: _togglePlayPause,
           icon: _isPlaying ? Icons.pause : Icons.play_arrow,
           size: 80,
@@ -876,6 +896,7 @@ void _toggleFavorite() {
           tooltip: _isPlaying ? 'Pause' : 'Play',
           autofocus: true,
         ),
+),
          const SizedBox(width: 40),
         FocusableIconButton(
           onPressed: _nextChannel,
