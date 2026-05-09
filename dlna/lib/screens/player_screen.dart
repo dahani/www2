@@ -20,7 +20,7 @@ class PlayerScreen extends StatefulWidget {
   State<PlayerScreen> createState() => _PlayerScreenState();
 }
 
-class _PlayerScreenState extends State<PlayerScreen> {
+class _PlayerScreenState extends State<PlayerScreen>  with WidgetsBindingObserver {
   late BetterPlayerController _controller;
    final GlobalKey _betterPlayerKey = GlobalKey();
 void _onReceiveTaskData(Object data) {
@@ -44,10 +44,28 @@ void _onReceiveTaskData(Object data) {
   void initState() {
     super.initState();
     WakelockPlus.enable();
+     WidgetsBinding.instance.addObserver(this);
     setd();
      FlutterForegroundTask.addTaskDataCallback(_onReceiveTaskData);
   }
 
+ @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+
+    if (state == AppLifecycleState.inactive) {
+
+
+      final isPlaying =_controller.isPlaying()??false;
+
+      if (isPlaying) {
+        try {
+          await _controller.enablePictureInPicture(_betterPlayerKey);
+        } catch (e) {
+          debugPrint("PIP error: $e");
+        }
+      }
+    }
+  }
   @override
   void dispose() {
     WakelockPlus.disable();
@@ -67,9 +85,18 @@ void _onReceiveTaskData(Object data) {
         placeholderOnTop: false,
         expandToFill: true,
         handleLifecycle: true,
+
         fit: BoxFit.fill,
         autoDispose: true,
-        //eventListener: (event) { },
+
+        eventListener:(event) async {
+              //debugPrint(event.betterPlayerEventType);
+              print(event.betterPlayerEventType.name);
+              if (event.betterPlayerEventType ==BetterPlayerEventType.pipStart) {
+                 _controller.enablePictureInPicture(_betterPlayerKey);
+
+              }
+        },
         controlsConfiguration: BetterPlayerControlsConfiguration(
           controlBarColor: Colors.black.withAlpha(150),
           enablePlayPause: false,
@@ -88,6 +115,11 @@ void _onReceiveTaskData(Object data) {
         BetterPlayerDataSourceType.network,
         widget.url,
         title: widget.title,
+         notificationConfiguration: BetterPlayerNotificationConfiguration(
+    showNotification: true,
+    title: widget.title,
+    author: "IPTV",
+  ),
       ),
     );
   }

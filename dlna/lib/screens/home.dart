@@ -555,7 +555,9 @@ String text = formatBytes(totalBytes);
         BetterPlayerDataSourceType.network,
         ch.url,
         title: ch.name,
+
       ),
+
     );
 
     showModalBottomSheet(
@@ -570,6 +572,10 @@ String text = formatBytes(totalBytes);
           builder: (_, controller) {
             betterPlayerController.addEventsListener((event) async {
               //debugPrint(event.betterPlayerEventType);
+              if (event.betterPlayerEventType ==BetterPlayerEventType.pipStart) {
+                 betterPlayerController.enablePictureInPicture(betterPlayerKey);
+
+              }
               if (event.betterPlayerEventType ==
                   BetterPlayerEventType.customSkipBack) {
                 final ui = _changeChannel(-1);

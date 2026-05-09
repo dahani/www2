@@ -34,6 +34,13 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget> extends State
     BetterPlayerEvent(BetterPlayerEventType.customSkipBack)
   );
 }
+ void pipMode()async {
+  final isp=await betterPlayerController!.isPictureInPictureSupported();
+  betterPlayerController?.postEvent(
+
+    BetterPlayerEvent(isp? BetterPlayerEventType.pipStart:BetterPlayerEventType.pipStop)
+  );
+}
 
  void setVolune(double level) {
   betterPlayerController?.postEvent(

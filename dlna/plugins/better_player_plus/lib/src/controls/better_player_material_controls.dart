@@ -318,6 +318,9 @@ void toggleFit() {
         overflow: TextOverflow.ellipsis,style:const TextStyle(color: Colors.white),),
                     )),
                   const  Spacer(),
+                 // if (_controlsConfiguration.enablePip)
+                 _buildPipButton(),
+              //        _buildPipButtonWrapperWidget(controlsNotVisible, _onPlayerHide),
                   BetterPlayerMaterialClickableWidget(
                       onTap:() {
                          _betterPlayerController!.toggleFullScreen();
@@ -369,18 +372,36 @@ void toggleFit() {
           : const SizedBox(),
     );
   }
-/*
+
   Widget _buildPipButton() => BetterPlayerMaterialClickableWidget(
-    onTap: () {
-      betterPlayerController!.enablePictureInPicture(betterPlayerController!.betterPlayerGlobalKey!);
-    },
+    onTap: pipMode,
     child: Padding(
       padding: const EdgeInsets.all(8),
       child: Icon(betterPlayerControlsConfiguration.pipMenuIcon, color: betterPlayerControlsConfiguration.iconsColor),
     ),
   );
 
-
+ Widget _buildPipButtonWrapperWidget(bool hideStuff, void Function() onPlayerHide) => FutureBuilder<bool>(
+    future: betterPlayerController!.isPictureInPictureSupported(),
+    builder: (context, snapshot) {
+      final bool isPipSupported = snapshot.data ?? false;
+      print("xxxxxxxxxxxxxxxxxxxxxx $isPipSupported");
+      if (isPipSupported && _betterPlayerController!.betterPlayerGlobalKey != null) {
+        return AnimatedOpacity(
+          opacity: hideStuff ? 0.0 : 1.0,
+          duration: betterPlayerControlsConfiguration.controlsHideTime,
+          onEnd: onPlayerHide,
+          child: SizedBox(
+            height: betterPlayerControlsConfiguration.controlBarHeight,
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [_buildPipButton()]),
+          ),
+        );
+      } else {
+        return const SizedBox();
+      }
+    },
+  );
+/*
   Widget _buildMoreButton() => BetterPlayerMaterialClickableWidget(
     onTap: onShowMoreClicked,
     child: Padding(
