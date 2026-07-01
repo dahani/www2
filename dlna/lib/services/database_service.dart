@@ -197,28 +197,34 @@ Future<void> insertFullJson(List data) async {
   final db = await instance.database;
 
   await db.transaction((txn) async {
-    // 1️⃣ Sauvegarder les favoris existants (par nom)
     final favouriteNames = await loadFavoritesFromDownload();
 
-
-    // 2️⃣ Nettoyer les tables
     await txn.delete('channels');
     await txn.delete('categories');
 
-    // 3️⃣ Réinsertion en conservant is_fav
+    final insertedUrls = <String>{};
+
     for (var category in data) {
       final catId = await txn.insert('categories', {
         'name': category['name']
       });
 
       for (var ch in category['channels']) {
+        final url = ch['url'] ?? '';
+
+        if (insertedUrls.contains(url)) {
+          continue;
+        }
+
+        insertedUrls.add(url);
+
         final isFav = favouriteNames.contains(ch['name']) ? 1 : 0;
 
         await txn.insert('channels', {
           'category_id': catId,
           'name': ch['name'],
           'poster': ch['poster'],
-          'url': ch['url'],
+          'url': url,
           'resolutions': jsonEncode(ch['resolutions']),
           'is_fav': isFav,
         });
@@ -226,7 +232,6 @@ Future<void> insertFullJson(List data) async {
     }
   });
 }
-
   // ===============================
   // FETCH CHANNELS BY CATEGORY
   // ===============================

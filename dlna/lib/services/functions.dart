@@ -43,7 +43,7 @@ class SleepTimerSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      final durations = [10, 15, 30, 60, 90];
+      final durations = [10, 15, 30, 60, 90,120,150,200];
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(

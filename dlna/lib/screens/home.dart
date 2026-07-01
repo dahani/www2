@@ -3,10 +3,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:app_links/app_links.dart';
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:dlna/main.dart';
 import 'package:dlna/models/models.dart';
 import 'package:dlna/screens/movies.dart';
+import 'package:dlna/screens/player_screen.dart';
 import 'package:dlna/screens/scan_test.dart';
 import 'package:dlna/screens/youtube_player.dart';
 import 'package:dlna/services/constant.dart';
@@ -62,6 +65,7 @@ bool isFav=false;
   Map<String, dynamic>? _selectedCategory;
 
   bool secondPlayer = false;
+   //late final AppLinks _appLinks;
   @override
   void initState() {
     super.initState();
@@ -71,7 +75,24 @@ bool isFav=false;
     VolumeController().showSystemUI = false;
      FlutterForegroundTask.addTaskDataCallback((data) {
      },);
-     _startSleepTimer(60);
+      if (startupUrl != null) {
+      debugPrint('Received URL: $startupUrl');
+      Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PlayerScreen(
+                      title: "SHARED URL",
+                      url: startupUrl??"",
+                      isMovie: true,
+                    ),
+                  ),
+                );
+
+      if (startupUrl!.endsWith('.m3u8')) {
+        // play stream
+      }
+    }
+     _startSleepTimer(120);
   }
 
   @override
