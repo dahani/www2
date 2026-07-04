@@ -62,48 +62,111 @@ Future<void> disconnect() async {
   isConnected = false;
 }
   /// 🔹 Découverte réelle SSDP / MediaRenderer
-  Future<void> discoverDevices() async {
-    devices.clear();
-    const st = "urn:schemas-upnp-org:device:MediaRenderer:1";
-    const mx = 3;
 
-    final ssdpRequest = '''
-M-SEARCH * HTTP/1.1
-HOST: 239.255.255.250:1900
-MAN: "ssdp:discover"
-MX: $mx
-ST: $st
 
-''';
+Future<void> discoverDevices() async {
+  devices.clear();
 
-    final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
-    socket.broadcastEnabled = true;
-    socket.send(
-        utf8.encode(ssdpRequest), InternetAddress("239.255.255.250"), 1900);
+  // 1. Find your phone's actual internal local network IP address
+  String? localIp;
+  final interfaces = await NetworkInterface.list(
+    type: InternetAddressType.IPv4,
+    includeLinkLocal: false,
+    includeLoopback: false,
+  );
 
-    final discoveredLocations = <String>{};
+  for (var interface in interfaces) {
+    // Look specifically for Wi-Fi interfaces (wlan, en, wlan0)
+    if (interface.name.contains('wlan') || interface.name.contains('en')) {
+      if (interface.addresses.isNotEmpty) {
+        localIp = interface.addresses.first.address;
+        break;
+      }
+    }
+  }
 
-    socket.listen((event) async {
-      if (event == RawSocketEvent.read) {
-        final dg = socket.receive();
-        if (dg == null) return;
+  // Fallback to the first available if named search didn't match
+  localIp ??= interfaces.isNotEmpty && interfaces.first.addresses.isNotEmpty
+      ? interfaces.first.addresses.first.address
+      : null;
 
+  if (localIp == null) {
+    debugPrint("Could not determine local Wi-Fi interface IP.");
+    return;
+  }
+
+  const multicastAddress = "239.255.255.250";
+  const st = "urn:schemas-upnp-org:device:MediaRenderer:1";
+  const mx = 3;
+
+  final ssdpRequest = "M-SEARCH * HTTP/1.1\r\n"
+      "HOST: $multicastAddress:1900\r\n"
+      "MAN: \"ssdp:discover\"\r\n"
+      "MX: $mx\r\n"
+      "ST: $st\r\n\r\n";
+
+  // 2. Explicitly bind to your phone's real local IP address, NOT anyIPv4
+  final socket = await RawDatagramSocket.bind(localIp, 0);
+  socket.broadcastEnabled = true;
+  socket.multicastLoopback = false;
+
+  // 3. FORCE the OS network stack to join the UPnP multicast group on this specific interface
+  try {
+    socket.joinMulticast(InternetAddress(multicastAddress));
+  } catch (e) {
+    debugPrint("Multicast join failed, falling back to broadcast: $e");
+  }
+
+  final discoveredLocations = <String>{};
+  final List<Future> pendingFetches = [];
+
+  final subscription = socket.listen((event) {
+    if (event == RawSocketEvent.read) {
+      final dg = socket.receive();
+      if (dg == null) return;
+
+      try {
         final response = utf8.decode(dg.data);
-        final match = RegExp(r"LOCATION: (.*)", caseSensitive: false)
+        final match = RegExp(r"LOCATION:\s*(.*)", caseSensitive: false)
             .firstMatch(response);
+
         if (match != null) {
           final location = match.group(1)!.trim();
           if (!discoveredLocations.contains(location)) {
             discoveredLocations.add(location);
-            await _fetchDeviceDescription(location);
+            pendingFetches.add(_fetchDeviceDescription(location));
           }
         }
+      } catch (e) {
+        debugPrint("Error parsing datagram payload: $e");
       }
-    });
+    }
+  });
 
-    await Future.delayed(const Duration(seconds: 3));
-    socket.close();
+  // Blast out the probe multiple times to handle packet loss
+  for (int i = 0; i < 3; i++) {
+    socket.send(
+      utf8.encode(ssdpRequest),
+      InternetAddress(multicastAddress),
+      1900
+    );
+    await Future.delayed(const Duration(milliseconds: 150));
   }
+
+  // Wait for network responses
+  await Future.delayed(Duration(seconds: mx));
+
+  // Let running HTTP parsing blocks safely finish writing to the devices array
+  if (pendingFetches.isNotEmpty) {
+    await Future.wait(pendingFetches).timeout(
+      const Duration(seconds: 2),
+      onTimeout: () => []
+    );
+  }
+
+  await subscription.cancel();
+  socket.close();
+}
 
  late String renderingControlUrl; // ajouter dans DlnaDevice si besoin
 
@@ -518,25 +581,53 @@ String _escapeXml(String input) {
       .replaceAll("'", '&apos;');
 }
   /// 🔹 PlayWithTitle M3U8 / MP4 sur device sélectionné
-  Future<void> playWithTitle(String url, String title,{bool isMovie=false}) async {
-    isPlayingMovie=isMovie;
-FlutterForegroundTask.updateService(
+/// 🔹 PlayWithTitle M3U8 / MP4 sur device sélectionné
+/// 🔹 High-Compatibility Play Method (Strips metadata to prevent silent TV crashes)
+  Future<void> playWithTitle(String url, String title, {bool isMovie = false}) async {
+    isPlayingMovie = isMovie;
+    FlutterForegroundTask.updateService(
       notificationTitle: title,
       notificationText: proxyUrl,
       notificationButtons: [
-          const NotificationButton(id: 'btn_pause', text: 'Play/Pause'),
-          const NotificationButton(id: 'btn_stop', text: 'Stop Service'),
-        ],
+        const NotificationButton(id: 'btn_pause', text: 'Play/Pause'),
+        const NotificationButton(id: 'btn_stop', text: 'Stop Service'),
+      ],
     );
 
     if (selectedDevice == null) return;
 
-    final mimeType = url.endsWith(".m3u8")
-        ? "application/vnd.apple.mpegurl"
-        : "video/mp4";
+    // IMPORTANT RULE: Check your URL format!
+    // If it's HTTPS, many TVs fail silently. DLNA prefers plain http://
+    // If it's a local server on the phone, make sure it uses the phone's Wi-Fi IP (192.168.x.x), NOT localhost/127.0.0.1
+    final cleanUrl = _escapeXml(url);
 
-final protocolInfo =
-      "http-get:*:$mimeType:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000";
+    try {
+      // Step 1: Force the TV to stop whatever it's doing to clear its buffer state
+      final stopBody = '''<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+<s:Body>
+<u:Stop xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+<InstanceID>0</InstanceID>
+</u:Stop>
+</s:Body>
+</s:Envelope>''';
+
+      try {
+        await _dio.post(
+          selectedDevice!.controlUrl,
+          data: stopBody,
+          options: Options(headers: {
+            "Content-Type": 'text/xml; charset="utf-8"',
+            "SOAPAction": '"urn:schemas-upnp-org:service:AVTransport:1#Stop"',
+          }),
+        );
+      } catch (_) {
+        // Ignore errors if the TV was already stopped
+      }
+
+      await Future.delayed(const Duration(milliseconds: 300));
+       final mimeType = url.endsWith(".m3u8")? "application/vnd.apple.mpegurl": "video/mp4";
+    final protocolInfo =  "http-get:*:$mimeType:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000";
 
  final didl = '''
 <DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -544,7 +635,7 @@ xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"
 xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
   <item id="0" parentID="0" restricted="1">
     <dc:title>${_escapeXml(title)}</dc:title>
-    <upnp:class>object.item.videoItem</upnp:class>
+    <upnp:class>object.item.videoBroadcast</upnp:class>
     <res protocolInfo="$protocolInfo">
       ${_escapeXml(url)}
     </res>
@@ -555,35 +646,35 @@ xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
   // 🔥 ENCODAGE OBLIGATOIRE
   final encodedMetadata = const HtmlEscape().convert(didl);
 
- final setUriBody = '''
-<?xml version="1.0" encoding="utf-8"?>
-<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
-s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+      // Step 2: Set the URI with COMPLETELY EMPTY metadata.
+      // This skips the buggy DIDL-Lite parsing phase that breaks Samsung/LG/Sony engines.
+      final setUriBody = '''<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
 <s:Body>
 <u:SetAVTransportURI xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
 <InstanceID>0</InstanceID>
-<CurrentURI>${_escapeXml(url)}</CurrentURI>
+<CurrentURI>$cleanUrl</CurrentURI>
 <CurrentURIMetaData>$encodedMetadata</CurrentURIMetaData>
 </u:SetAVTransportURI>
 </s:Body>
-</s:Envelope>
-''';
+</s:Envelope>''';
 
-    try {
       await _dio.post(
         selectedDevice!.controlUrl,
         data: setUriBody,
         options: Options(
           headers: {
             "Content-Type": 'text/xml; charset="utf-8"',
-            "SOAPAction":
-                '"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI"',
+            "SOAPAction": '"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI"',
           },
         ),
       );
 
-      final playBody = '''
-<?xml version="1.0"?>
+      // Step 3: Give the TV a moment to process the empty metadata handoff
+      await Future.delayed(const Duration(milliseconds: 800));
+
+      // Step 4: Execute the Play command
+      final playBody = '''<?xml version="1.0" encoding="utf-8"?>
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
 <s:Body>
 <u:Play xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
@@ -591,8 +682,7 @@ s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
 <Speed>1</Speed>
 </u:Play>
 </s:Body>
-</s:Envelope>
-''';
+</s:Envelope>''';
 
       await _dio.post(
         selectedDevice!.controlUrl,
@@ -600,15 +690,17 @@ s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
         options: Options(
           headers: {
             "Content-Type": 'text/xml; charset="utf-8"',
-            "SOAPAction":
-                '"urn:schemas-upnp-org:service:AVTransport:1#Play"',
+            "SOAPAction": '"urn:schemas-upnp-org:service:AVTransport:1#Play"',
           },
         ),
       );
-      statePlaying="PLAYING";
+
+      statePlaying = "PLAYING";
+      Fluttertoast.showToast(msg: "Casting started!");
     } catch (e) {
-      statePlaying="STOPPED";
+      statePlaying = "STOPPED";
       debugPrint("DLNA playWithTitle error: $e");
+      Fluttertoast.showToast(msg: "Casting failed: $e");
     }
   }
 

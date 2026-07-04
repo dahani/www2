@@ -40,6 +40,7 @@ dependencies:
   media_cast_dlna_2: ^0.2.0
   network_info_plus: ^7.0.0
   app_links: ^7.0.0
+  connectivity_plus: ^7.2.0
 
 
 dev_dependencies:

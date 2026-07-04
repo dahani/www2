@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:app_links/app_links.dart';
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:dlna/main.dart';
@@ -359,9 +358,22 @@ String text = formatBytes(totalBytes);
                           controller: scrollController,
                           children: [
                             ListTile(
+                              leading: const Icon(
+                                Icons.perm_scan_wifi_outlined,
+                              ),
+                              title: const Text("Full scan dlna/chromecast"),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => RealScannerScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
                              leading: const Icon(Icons.data_array),
                               title:  Text("Total data  $text"),
-                             onTap: _showSleepTimerSheet,
                            ),
                             ListTile(
                               leading: const Icon(Icons.timer),
@@ -421,20 +433,7 @@ String text = formatBytes(totalBytes);
                               secondary: const Icon(Icons.notifications),
                               controlAffinity: ListTileControlAffinity.trailing,
                             ),
-                            ListTile(
-                              leading: const Icon(
-                                Icons.perm_scan_wifi_outlined,
-                              ),
-                              title: const Text("Scan test"),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => RealScannerScreen(),
-                                  ),
-                                );
-                              },
-                            ),
+
 
 
                              ListTile(
