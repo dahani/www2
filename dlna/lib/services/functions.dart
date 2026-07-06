@@ -5,8 +5,6 @@
 
 // ignore_for_file: use_build_context_synchronously
 
- import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dlna/models/models.dart';
 import 'package:dlna/services/constant.dart';
@@ -130,6 +128,7 @@ void showLoading(String message,BuildContext context) {
   //  print("$wifiIPv4 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     return wifiIPv4??"127.0.0.1";
   } catch (e) {
+    // ignore: avoid_print
     print('Failed to get Wi-Fi IP: $e');
   }
     return "127.0.0.1";

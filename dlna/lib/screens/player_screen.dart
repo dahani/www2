@@ -91,7 +91,6 @@ void _onReceiveTaskData(Object data) {
 
         eventListener:(event) async {
               //debugPrint(event.betterPlayerEventType);
-              print(event.betterPlayerEventType.name);
               if (event.betterPlayerEventType ==BetterPlayerEventType.pipStart) {
                  _controller.enablePictureInPicture(_betterPlayerKey);
 

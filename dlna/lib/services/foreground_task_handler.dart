@@ -21,6 +21,7 @@ void _startProx()async{
             await _proxy!.start(port: 8080);
             //Provider.of<DlnaProvider>(context, listen: false)
             final  proxyBaseUrl = "http://$ip:8080/master.m3u8";
+            // ignore: avoid_print
             print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww  $proxyBaseUrl");
             FlutterForegroundTask.sendDataToMain({'proxy_url':proxyBaseUrl});
              FlutterForegroundTask.updateService(
