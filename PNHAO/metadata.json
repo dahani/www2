@@ -1,0 +1,6 @@
+{
+  "name": "Parc National du Haut Atlas Oriental",
+  "description": "Portail officiel de découverte et de préservation du Parc National du Haut Atlas Oriental (PNHAO) - Biodiversité, Culture d'Imilchil et Écotourisme.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

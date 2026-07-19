@@ -1,0 +1,182 @@
+[
+  {
+    "id": "gal-fau-1",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Mouflon_manchettes1.jpg",
+    "title": "Mouflon à manchettes (Ammotragus lervia)",
+    "category": "Faune Alpine",
+    "location": "Falaises escarpées du Djebel Ayachi",
+    "description": "Le seigneur des falaises. Le parc abrite l'une des dernières grandes populations viables de ce bovidé sauvage au Maghreb.",
+    "photographer": "Équipe Scientifique PNHAO"
+  },
+  {
+    "id": "gal-fau-2",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/macaque_1.jpg",
+    "title": "Macaque de Barbarie (Singe Magot)",
+    "category": "Faune Alpine",
+    "location": "Forêts de Cèdres de Tirrhist",
+    "description": "Le seul primate sauvage d'Afrique du Nord. Très attaché aux forêts de Cèdre de l'Atlas où il trouve sa nourriture.",
+    "photographer": "Garde Forestier ANEF"
+  },
+  {
+    "id": "gal-fau-3",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Gazella_dorcas1.jpg",
+    "title": "Gazelle de Cuvier (Gazella cuvieri)",
+    "category": "Faune Alpine",
+    "location": "Steppes arbustives du piémont de Midelt",
+    "description": "Petite gazelle de montagne rare et agile, autrefois commune, aujourd'hui confinée aux zones forestières claires.",
+    "photographer": "Observatoire de la Faune Saharienne"
+  },
+  {
+    "id": "gal-fau-4",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Lutra_lutra1.jpg",
+    "title": "Loutre d'Europe (Lutra lutra)",
+    "category": "Faune Alpine",
+    "location": "Zone humide des Lacs Isly et Tislit",
+    "description": "Une incroyable curiosité dans cette zone de montagne aride : la loutre peuple les eaux claires des lacs d'Imilchil.",
+    "photographer": "Équipe de Recherche Ramsar"
+  },
+  {
+    "id": "gal-fau-6",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Aigle_royal_1.jpg",
+    "title": "Aigle royal (Aquila chrysaetos)",
+    "category": "Faune Alpine",
+    "location": "Sommets rocheux du Haut Atlas",
+    "description": "Superbe rapace diurne nichant dans les falaises inaccessibles du parc. Un maître des airs d'altitude.",
+    "photographer": "Société d'Ornithologie du Maroc"
+  },
+  {
+    "id": "gal-fau-8",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Parus_major_1.jpg",
+    "title": "Mésange noire de l'Atlas (Parus ater)",
+    "category": "Faune Alpine",
+    "location": "Clairières de Cèdres millénaires",
+    "description": "Un adorable petit passereau endémique de la région du Maghreb, particulièrement vif et inféodé aux forêts d'altitude.",
+    "photographer": "A. Benjelloun (Ornithologue)"
+  },
+  {
+    "id": "gal-fau-15",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Renard_rou_1.jpg",
+    "title": "Renard roux de l'Atlas (Vulpes vulpes)",
+    "category": "Faune Alpine",
+    "location": "Vallées et oueds d'altitude du parc",
+    "description": "Mammifère carnivore très intelligent et adaptable, habitué des zones forestières et steppes rocheuses.",
+    "photographer": "Garde Nature ANEF"
+  },
+  {
+    "id": "gal-fau-16",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Upupa_epops1.jpg",
+    "title": "Huppe fasciée (Upupa epops)",
+    "category": "Faune Alpine",
+    "location": "Vergers de pommiers d'Imilchil",
+    "description": "Oiseau élégant au plumage bigarré et à la huppe érectile spectaculaire. Elle se nourrit d'insectes au sol.",
+    "photographer": "Équipe Scientifique PNHAO"
+  },
+  {
+    "id": "gal-fau-17",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Alectoris_barbara1.jpg",
+    "title": "Perdrix de Barbarie (Alectoris barbara)",
+    "category": "Faune Alpine",
+    "location": "Pentes caillouteuses et garrigues",
+    "description": "Oiseau terrestre emblématique des montagnes maghrébines, se déplaçant en petites compagnies sur les versants.",
+    "photographer": "A. Benjelloun (Ornithologue)"
+  },
+  {
+    "id": "gal-fau-18",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Cerf_de_Berberie1.jpg",
+    "title": "Cerf de Barbarie (Cervus elaphus)",
+    "category": "Faune Alpine",
+    "location": "Réserves protégées du Haut Atlas",
+    "description": "Le seul cerf d'Afrique du Nord. Bénéficie d'un programme de réintroduction réussi dans les forêts du parc.",
+    "photographer": "Équipe Scientifique PNHAO"
+  },
+  {
+    "id": "gal-fau-19",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/sanglier_1.jpg",
+    "title": "Sanglier d'Eurasie (Sus scrofa)",
+    "category": "Faune Alpine",
+    "location": "Chênaies et lits d'oueds boisés",
+    "description": "Grand mammifère omnivore très commun dans les forêts du parc, jouant un rôle de fouisseur écologique.",
+    "photographer": "Garde Nature ANEF"
+  },
+  {
+    "id": "gal-fau-20",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Corvus_corax1.jpg",
+    "title": "Grand Corbeau (Corvus corax)",
+    "category": "Faune Alpine",
+    "location": "Crêtes du Massif Ayachi",
+    "description": "Oiseau d'une intelligence légendaire et d'une adaptabilité hors norme, régnant sur les sommets du massif.",
+    "photographer": "Équipe de Randonnée Ayachi"
+  },
+  {
+    "id": "gal-fau-21",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Chouette_hulotte1.jpg",
+    "title": "Chouette hulotte (Strix aluco)",
+    "category": "Faune Alpine",
+    "location": "Forêts de Cèdres millénaires",
+    "description": "Rapace nocturne mystérieux et élégant, trouvant refuge dans les cavités des vieux arbres forestiers du parc.",
+    "photographer": "Division de l'ANEF"
+  },
+  {
+    "id": "gal-fau-22",
+    "title": "Pic épeiche (Dendrocopos major)",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Dendrocopos_major_1.jpg",
+    "category": "Faune Alpine",
+    "location": "Forêts mixtes d'altitude",
+    "description": "Oiseau grimpeur et tambourineur emblématique des cédraies, creusant son nid dans le tronc des arbres.",
+    "photographer": "Ornithologue PNHAO"
+  },
+  {
+    "id": "gal-fau-24",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Fennec_Vulpes_zerda1.jpg",
+    "title": "Fennec (Vulpes zerda)",
+    "category": "Faune Alpine",
+    "location": "Lisières arides méridionales",
+    "description": "Le renard des sables aux oreilles démesurées. S'aventure sur les piémonts sahariens en lisière sud du parc.",
+    "photographer": "Observatoire du Sud"
+  },
+  {
+    "id": "gal-fau-25",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Herpestes_ichneumon1.jpg",
+    "title": "Mangouste ichneumon",
+    "category": "Faune Alpine",
+    "location": "Ripisylves et zones de buissons",
+    "description": "Mammifère carnivore agile surnommé 'rat des pharaons', excellent chasseur de reptiles et rongeurs.",
+    "photographer": "Équipe Scientifique PNHAO"
+  },
+  {
+    "id": "gal-fau-26",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Phoenicopterus_roseus1.jpg",
+    "title": "Flamant rose (Phoenicopterus roseus)",
+    "category": "Faune Alpine",
+    "location": "Lacs Isly et Tislit (Zone Ramsar)",
+    "description": "Oiseau d'eau somptueux, de passage migratoire régulier ou hivernant sur les grands plans d'eau d'altitude.",
+    "photographer": "Équipe de Recherche Ramsar"
+  },
+  {
+    "id": "gal-fau-28",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Pandion_haliaetus1.jpg",
+    "title": "Balbuzard pêcheur (Pandion haliaetus)",
+    "category": "Faune Alpine",
+    "location": "Eaux poissonneuses d'Imilchil",
+    "description": "Rapace piscivore d'une habileté spectaculaire, plongeant dans les eaux claires des lacs d'Imilchil.",
+    "photographer": "Ornithologue de l'Atlas"
+  },
+  {
+    "id": "gal-fau-33",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Genetta_genetta1.jpg",
+    "title": "Genette commune (Genetta genetta)",
+    "category": "Faune Alpine",
+    "location": "Chaos rocheux forestiers",
+    "description": "Petit carnivore nocturne agile au pelage tacheté et à longue queue annelée, très adroit dans les arbres.",
+    "photographer": "Division de l'ANEF"
+  },
+  {
+    "id": "gal-fau-34",
+    "url": "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Salamandra_algira_tingitana1.jpg",
+    "title": "Salamandre de l'Atlas (Salamandra algira)",
+    "category": "Faune Alpine",
+    "location": "Sources humides et sous-bois d'altitude",
+    "description": "Amphibien endémique aux motifs colorés spectaculaires, habitant les sous-bois forestiers frais.",
+    "photographer": "Équipe Herpétologique"
+  }
+]
