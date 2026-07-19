@@ -496,12 +496,12 @@ export default function FloreTab() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
+              className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 pt-16 lg:pt-4 overflow-y-auto"
               onClick={() => setSelectedFlora(null)}
             >
               {/* Top center floating navigation buttons */}
               <div 
-                className="fixed top-6 left-1/2 -translate-x-1/2 z-[110] flex items-center space-x-3 bg-[#1e2320]/95 border border-[#3e4841]/50 px-5 py-2.5 rounded-full shadow-2xl text-stone-100 backdrop-blur-md transition-all hover:border-brand-accent/50"
+                className="fixed top-0 left-0 right-0 w-full lg:w-auto lg:top-6 lg:left-1/2 lg:-translate-x-1/2 z-[110] flex items-center justify-between lg:justify-start lg:space-x-3 bg-[#1e2320]/95 border-b lg:border border-[#3e4841]/50 lg:rounded-full shadow-2xl text-stone-100 backdrop-blur-md transition-all hover:border-brand-accent/50 px-4 lg:px-5 py-2 lg:py-2.5 h-11 lg:h-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -513,14 +513,14 @@ export default function FloreTab() {
                       setModalImageIdx(0);
                     }
                   }}
-                  className="p-1.5 hover:bg-brand-accent hover:text-white rounded-full transition-all cursor-pointer flex items-center justify-center bg-white/5 border border-white/10 active:scale-95 text-stone-200"
+                  className="p-1 hover:bg-brand-accent hover:text-white rounded-full transition-all cursor-pointer flex items-center justify-center bg-white/5 border border-white/10 active:scale-95 text-stone-200"
                   title="Flore Précédente (Flèche Gauche)"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
-                <div className="flex flex-col items-center px-2 min-w-[70px] select-none">
-                  <span className="text-[8px] uppercase tracking-widest font-sans font-bold text-stone-400">FLORE</span>
-                  <span className="text-xs font-mono font-bold text-brand-accent leading-none mt-0.5">
+                <div className="flex items-center space-x-2 select-none">
+                  <span className="text-[9px] uppercase tracking-widest font-sans font-bold text-stone-400">FLORE</span>
+                  <span className="text-xs font-mono font-bold text-brand-accent leading-none">
                     {filteredFlora.findIndex(item => item.id === selectedFlora.id) + 1} / {filteredFlora.length}
                   </span>
                 </div>
@@ -533,7 +533,7 @@ export default function FloreTab() {
                       setModalImageIdx(0);
                     }
                   }}
-                  className="p-1.5 hover:bg-brand-accent hover:text-white rounded-full transition-all cursor-pointer flex items-center justify-center bg-white/5 border border-white/10 active:scale-95 text-stone-200"
+                  className="p-1 hover:bg-brand-accent hover:text-white rounded-full transition-all cursor-pointer flex items-center justify-center bg-white/5 border border-white/10 active:scale-95 text-stone-200"
                   title="Flore Suivante (Flèche Droite)"
                 >
                   <ChevronRight className="h-4 w-4" />
@@ -563,11 +563,11 @@ export default function FloreTab() {
                 initial={{ scale: 0.95, y: 15 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 15 }}
-                className="bg-white rounded-[32px] overflow-hidden max-w-5xl w-full max-h-[90vh] md:max-h-[85vh] shadow-2xl border border-brand-light-gray text-brand-text flex flex-col md:flex-row relative"
+                className="bg-white rounded-[24px] sm:rounded-[32px] overflow-hidden max-w-[95vw] w-full h-[80vh] sm:h-[85vh] max-h-[90vh] shadow-2xl border border-brand-light-gray text-brand-text flex flex-col sm:flex-row relative"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Image Section / Mini Carousel */}
-                <div className="md:w-1/2 relative bg-brand-sand h-[300px] md:h-auto min-h-[300px] flex flex-col justify-between shrink-0">
+                <div className="w-full sm:w-1/2 relative bg-brand-sand h-[30vh] sm:h-full flex flex-col justify-between shrink-0">
                   <img
                     src={getAssetUrl(gallery[modalImageIdx])}
                     alt={selectedFlora.name}
@@ -585,14 +585,14 @@ export default function FloreTab() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
 
                   {/* Header over Image */}
-                  <div className="relative p-4 flex items-center justify-between">
-                    <span className="text-[11px] font-bold font-sans uppercase tracking-widest text-white bg-brand-primary px-3.5 py-1.5 rounded-full shadow-md">
+                  <div className="relative p-2.5 sm:p-4 flex flex-col sm:flex-row gap-1.5 sm:items-center justify-between">
+                    <span className="text-[9px] sm:text-[11px] font-bold font-sans uppercase tracking-widest text-white bg-brand-primary px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full shadow-md w-fit">
                       {selectedFlora.category === 'endemic' ? 'Endémique Maroc' :
                        selectedFlora.category === 'medicinal' ? 'Plante Aromatique' :
                        'Menacée (UICN)'}
                     </span>
                     {selectedFlora.status && (
-                      <span className="text-[10px] font-bold font-sans text-white bg-brand-accent px-3 py-1.5 rounded-full shadow-md border border-brand-accent/20">
+                      <span className="text-[8px] sm:text-[10px] font-bold font-sans text-white bg-brand-accent px-2 py-0.5 sm:px-3 sm:py-1.5 rounded-full shadow-md border border-brand-accent/20 w-fit">
                         {selectedFlora.status}
                       </span>
                     )}
@@ -600,30 +600,30 @@ export default function FloreTab() {
 
                   {/* Carousel Nav arrows */}
                   {hasGallery && (
-                    <div className="relative px-3 flex justify-between items-center pointer-events-none">
+                    <div className="relative px-2 sm:px-3 flex justify-between items-center pointer-events-none">
                       <button
                         onClick={() => prevModalImage(gallery)}
-                        className="p-2 rounded-full bg-black/55 hover:bg-black/80 text-white transition-all cursor-pointer pointer-events-auto border border-white/15"
+                        className="p-1 sm:p-2 rounded-full bg-black/55 hover:bg-black/80 text-white transition-all cursor-pointer pointer-events-auto border border-white/15"
                       >
-                        <ChevronLeft className="h-6 w-6" />
+                        <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
                       </button>
                       <button
                         onClick={() => nextModalImage(gallery)}
-                        className="p-2 rounded-full bg-black/55 hover:bg-black/80 text-white transition-all cursor-pointer pointer-events-auto border border-white/15"
+                        className="p-1 sm:p-2 rounded-full bg-black/55 hover:bg-black/80 text-white transition-all cursor-pointer pointer-events-auto border border-white/15"
                       >
-                        <ChevronRight className="h-6 w-6" />
+                        <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
                       </button>
                     </div>
                   )}
 
                   {/* Slide count indicator */}
-                  <div className="relative p-4 text-xs font-sans text-stone-200 flex justify-between items-end">
-                    <div className="flex items-center space-x-1.5 bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-lg text-[11px] border border-white/10">
-                      <Compass className="h-4 w-4 text-brand-accent" />
-                      <span>Cliché du PNHAO</span>
+                  <div className="relative p-2.5 sm:p-4 text-[10px] sm:text-xs font-sans text-stone-200 flex justify-between items-end gap-1">
+                    <div className="flex items-center space-x-1 sm:space-x-1.5 bg-black/45 backdrop-blur-sm px-1.5 py-0.5 sm:px-3 sm:py-1.5 rounded-md sm:rounded-lg text-[8px] sm:text-[11px] border border-white/10">
+                      <Compass className="h-3 w-3 sm:h-4 sm:w-4 text-brand-accent" />
+                      <span className="truncate max-w-[50px] sm:max-w-none">PNHAO</span>
                     </div>
                     {hasGallery && (
-                      <span className="bg-black/60 px-3 py-1 rounded-md font-mono text-[11px]">
+                      <span className="bg-black/60 px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md font-mono text-[8px] sm:text-[11px]">
                         {modalImageIdx + 1} / {gallery.length}
                       </span>
                     )}
@@ -631,76 +631,76 @@ export default function FloreTab() {
                 </div>
 
                 {/* Content Section */}
-                <div className="md:w-1/2 p-6 sm:p-10 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-full">
-                  <div className="space-y-6">
+                <div className="w-full sm:w-1/2 p-4 sm:p-10 flex flex-col justify-between overflow-y-auto flex-1 min-h-0">
+                  <div className="space-y-4 sm:space-y-6">
                     {/* Header */}
-                    <div className="flex justify-between items-start gap-4 border-b border-brand-light-gray pb-4">
+                    <div className="flex justify-between items-start gap-2 sm:gap-4 border-b border-brand-light-gray pb-2.5 sm:pb-4">
                       <div>
-                        <h3 className="font-serif font-bold text-3xl sm:text-4xl text-brand-primary leading-tight">
+                        <h3 className="font-serif font-bold text-base sm:text-3xl md:text-4xl text-brand-primary leading-tight">
                           {selectedFlora.name}
                         </h3>
-                        <p className="text-base sm:text-lg font-mono text-brand-accent italic font-semibold mt-1">
+                        <p className="text-xs sm:text-base md:text-lg font-mono text-brand-accent italic font-semibold mt-0.5 sm:mt-1">
                           {selectedFlora.scientificName}
                         </p>
                       </div>
                       <button
                         onClick={() => setSelectedFlora(null)}
-                        className="p-2 rounded-full hover:bg-brand-sand text-stone-400 hover:text-brand-text transition-colors cursor-pointer border border-brand-light-gray"
+                        className="p-1.5 sm:p-2 rounded-full hover:bg-brand-sand text-stone-400 hover:text-brand-text transition-colors cursor-pointer border border-brand-light-gray shrink-0"
                       >
-                        <X className="h-5 w-5" />
+                        <X className="h-4 w-4 sm:h-5 sm:w-5" />
                       </button>
                     </div>
 
                     {/* Description */}
-                    <div className="space-y-2.5">
-                      <h5 className="text-xs sm:text-sm font-bold font-sans uppercase tracking-wider text-brand-primary">Présentation</h5>
-                      <p className="text-sm sm:text-base md:text-lg text-stone-700 font-sans leading-relaxed">
+                    <div className="space-y-1 sm:space-y-2.5">
+                      <h5 className="text-[10px] sm:text-xs font-bold font-sans uppercase tracking-wider text-brand-primary">Présentation</h5>
+                      <p className="text-[11px] sm:text-sm md:text-base text-stone-700 font-sans leading-relaxed">
                         {selectedFlora.description}
                       </p>
                     </div>
 
                     {/* Metadata list */}
-                    <div className="bg-brand-sand/50 p-5 rounded-2xl border border-brand-light-gray space-y-4 text-xs sm:text-sm">
+                    <div className="bg-brand-sand/50 p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-brand-light-gray space-y-2.5 sm:space-y-4 text-[10px] sm:text-xs md:text-sm">
                       <div className="flex items-center justify-between">
                         <span className="text-stone-400 font-sans">Milieu & Habitat :</span>
-                        <span className="text-brand-text font-bold font-sans text-right max-w-[220px] truncate" title={selectedFlora.habitat}>
+                        <span className="text-brand-text font-bold font-sans text-right max-w-[100px] sm:max-w-[220px] truncate" title={selectedFlora.habitat}>
                           {selectedFlora.habitat}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-stone-400 font-sans">Catégorie Botanique :</span>
-                        <span className="text-brand-text font-bold font-sans">
-                          {selectedFlora.category === 'endemic' ? 'Endémique locale' :
-                           selectedFlora.category === 'medicinal' ? 'Aromatique / Médicinale' :
-                           'Menacée d\'extinction'}
+                        <span className="text-stone-400 font-sans">Catégorie :</span>
+                        <span className="text-brand-text font-bold font-sans text-right">
+                          {selectedFlora.category === 'endemic' ? 'Endémique' :
+                           selectedFlora.category === 'medicinal' ? 'Médicinale' :
+                           'Menacée'}
                         </span>
                       </div>
                       {selectedFlora.status && (
                         <div className="flex items-center justify-between">
-                          <span className="text-stone-400 font-sans">Statut Conservation :</span>
-                          <span className="text-rose-700 font-bold font-sans">
+                          <span className="text-stone-400 font-sans">Conservation :</span>
+                          <span className="text-rose-700 font-bold font-sans text-right">
                             {selectedFlora.status}
                           </span>
                         </div>
                       )}
                     </div>
 
-                    <div className="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100/50 flex items-start space-x-4">
-                      <Sparkles className="h-6 w-6 text-brand-primary shrink-0 mt-0.5" />
-                      <div className="space-y-1.5">
-                        <h6 className="text-sm font-bold text-brand-primary font-sans">Éco-recommandation de Préservation</h6>
-                        <p className="text-xs sm:text-sm md:text-base leading-relaxed text-stone-700 font-sans">
-                          Aidez à préserver cette flore inestimable en restant exclusivement sur les sentiers de randonnée balisés lors de vos excursions.
+                    <div className="bg-emerald-50/50 p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-emerald-100/50 flex items-start space-x-2.5 sm:space-x-4">
+                      <Sparkles className="h-4 w-4 sm:h-6 sm:w-6 text-brand-primary shrink-0 mt-0.5" />
+                      <div className="space-y-1">
+                        <h6 className="text-[11px] sm:text-sm font-bold text-brand-primary font-sans">Préservation</h6>
+                        <p className="text-[10px] sm:text-xs md:text-sm leading-relaxed text-stone-700 font-sans">
+                          Aidez à préserver cette flore inestimable en restant sur les sentiers balisés.
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Close Footer */}
-                  <div className="pt-6 mt-8 border-t border-brand-light-gray flex justify-end">
+                  <div className="pt-4 mt-4 border-t border-brand-light-gray flex justify-end">
                     <button
                       onClick={() => setSelectedFlora(null)}
-                      className="px-6 py-2.5 bg-brand-primary hover:bg-[#3d4d41] transition-colors text-white text-xs font-bold font-sans rounded-xl cursor-pointer shadow-sm"
+                      className="px-4 py-2 sm:px-6 sm:py-2.5 bg-brand-primary hover:bg-[#3d4d41] transition-colors text-white text-[11px] sm:text-xs font-bold font-sans rounded-xl cursor-pointer shadow-sm"
                     >
                       Fermer la Fiche
                     </button>

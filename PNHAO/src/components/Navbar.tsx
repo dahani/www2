@@ -47,7 +47,7 @@ export default function Navbar({ currentTab, setCurrentTab, onOpenInteractiveMap
         : 'bg-brand-bg/95 backdrop-blur-md border-b border-brand-light-gray text-brand-text shadow-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-14 lg:h-20">
           {/* Logo */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setCurrentTab('overview')}>
             <div className={`p-0 overflow-hidden rounded-xl border shadow-sm flex items-center justify-center shrink-0 transition-all duration-300 ${
@@ -55,15 +55,15 @@ export default function Navbar({ currentTab, setCurrentTab, onOpenInteractiveMap
                 ? 'bg-white/10 border-white/25 shadow-none'
                 : 'bg-white border-brand-light-gray'
             }`}>
-              <img src={getAssetUrl("/images/pnhao_logo.png")} alt="PNHAO Logo" className="h-11 w-11 object-contain" referrerPolicy="no-referrer" />
+              <img src={getAssetUrl("/images/pnhao_logo.png")} alt="PNHAO Logo" className="h-9 w-9 lg:h-11 lg:w-11 object-contain" referrerPolicy="no-referrer" />
             </div>
             <div>
-              <span className={`font-serif font-bold text-base md:text-lg tracking-tight block leading-tight transition-colors duration-300 ${
+              <span className={`font-serif font-bold text-sm md:text-lg tracking-tight block leading-tight transition-colors duration-300 ${
                 isTransparent ? 'text-white' : 'text-brand-primary'
               }`}>
                 PNHAO
               </span>
-              <span className={`text-[8px] uppercase font-sans tracking-widest block font-bold leading-none transition-colors duration-300 ${
+              <span className={`text-[7px] md:text-[8px] uppercase font-sans tracking-widest block font-bold leading-none transition-colors duration-300 ${
                 isTransparent ? 'text-brand-accent/90' : 'text-brand-accent'
               }`}>
                 Haut Atlas Oriental
@@ -138,38 +138,62 @@ export default function Navbar({ currentTab, setCurrentTab, onOpenInteractiveMap
       {/* Mobile Menu */}
       {isOpen && (
         <motion.div 
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden bg-white border-b border-brand-light-gray px-4 pt-2 pb-4 space-y-1 shadow-md max-h-[80vh] overflow-y-auto"
+          className="fixed top-0 left-0 w-full z-50 bg-white border-b border-brand-light-gray p-3 shadow-xl flex flex-col"
         >
-          {navItems.map((item) => {
-            const isActive = currentTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setCurrentTab(item.id);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left block px-3 py-2 rounded-xl text-sm font-semibold transition-colors cursor-pointer ${
-                  isActive
-                    ? 'bg-brand-sand text-brand-primary border-l-4 border-brand-primary'
-                    : 'text-brand-text/85 hover:text-brand-primary hover:bg-brand-sand'
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-          <div className="pt-2">
+          {/* Header inside popup */}
+          <div className="flex items-center justify-between pb-2 border-b border-brand-light-gray/60 mb-2">
+            <div className="flex items-center space-x-2">
+              <div className="p-0 overflow-hidden rounded-xl border border-brand-light-gray shadow-sm flex items-center justify-center shrink-0 bg-white">
+                <img src={getAssetUrl("/images/pnhao_logo.png")} alt="PNHAO Logo" className="h-7 w-7 object-contain" referrerPolicy="no-referrer" />
+              </div>
+              <div>
+                <span className="font-serif font-bold text-xs tracking-tight block leading-tight text-brand-primary">PNHAO</span>
+                <span className="text-[6px] uppercase font-sans tracking-widest text-brand-accent block font-bold leading-none">Haut Atlas Oriental</span>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-1 rounded-lg text-brand-text hover:bg-brand-sand transition-colors cursor-pointer"
+            >
+              <X className="h-4.5 w-4.5" />
+            </button>
+          </div>
+
+          {/* Grid of Navigation Items - reduces height drastically */}
+          <div className="grid grid-cols-2 gap-1.5">
+            {navItems.map((item) => {
+              const isActive = currentTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setCurrentTab(item.id);
+                    setIsOpen(false);
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all text-left cursor-pointer ${
+                    isActive
+                      ? 'bg-brand-sand text-brand-primary border-l-2 border-brand-primary'
+                      : 'text-brand-text/80 hover:text-brand-primary hover:bg-brand-sand'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* CTA Button */}
+          <div className="pt-2 mt-1.5 border-t border-brand-light-gray/60">
             <button
               onClick={() => {
                 onOpenInteractiveMap();
                 setIsOpen(false);
               }}
-              className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-brand-primary hover:bg-[#3d4d41] text-white rounded-full text-xs font-bold transition-all shadow cursor-pointer"
+              className="w-full flex items-center justify-center space-x-2 py-1.5 bg-brand-primary hover:bg-[#3d4d41] text-white rounded-lg text-[11px] font-bold transition-all shadow cursor-pointer"
             >
-              <Compass className="h-4 w-4" />
+              <Compass className="h-3.5 w-3.5" />
               <span>Agir pour le Parc</span>
             </button>
           </div>

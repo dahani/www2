@@ -95,7 +95,7 @@ export default function App() {
             {currentTab === 'overview' ? (
               renderActiveTab()
             ) : (
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 lg:pt-28 pb-12">
                 {renderActiveTab()}
               </div>
             )}

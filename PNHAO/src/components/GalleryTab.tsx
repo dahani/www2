@@ -69,15 +69,6 @@ export default function GalleryTab() {
       description: "Arbre robuste d'altitude bravant le gel, la neige et les vents violents sur les versants calcaires élevés du parc.",
       photographer: "Équipe Scientifique PNHAO"
     },
-    {
-      id: 'gal-6',
-      url: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1200&q=80',
-      title: "Artisanat du Tissage Berbère",
-      category: "Vie Berbère & Douars",
-      location: "Douar d'Imilchil",
-      description: "Laine naturelle teinte à la main, tissée par les femmes de la tribu Aït H'ddidou pour confectionner les châles de mariage.",
-      photographer: "Coopérative Féminine de Tissage"
-    },
     ...(animalsData as GalleryItem[])
   ];
 
@@ -106,6 +97,27 @@ export default function GalleryTab() {
   const handlePrev = () => {
     if (selectedIdx === null) return;
     setSelectedIdx((selectedIdx - 1 + filteredItems.length) % filteredItems.length);
+  };
+
+  // Touch/swipe navigation for mobile
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.changedTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    const swipeThreshold = 50; // minimum distance in pixels
+
+    if (diff > swipeThreshold) {
+      handleNext();
+    } else if (diff < -swipeThreshold) {
+      handlePrev();
+    }
+    setTouchStartX(null);
   };
 
   return (
@@ -214,89 +226,89 @@ export default function GalleryTab() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+            className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden touch-pan-y"
             onClick={() => setSelectedIdx(null)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
+            {/* Background Fullscreen Image */}
+            <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={selectedIdx}
+                  src={getAssetUrl(filteredItems[selectedIdx].url)}
+                  alt={filteredItems[selectedIdx].title}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </AnimatePresence>
+              {/* Dark overlay gradients for text readability */}
+            </div>
+
             {/* Modal Container */}
             <div
-              className="relative max-w-5xl w-full h-full max-h-[85vh] flex flex-col items-center justify-between text-white"
+              className="relative w-full h-full flex flex-col justify-between text-white max-w-5xl mx-auto p-4 md:p-8 z-10"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header Controls */}
-              <div className="w-full flex items-center justify-between text-xs font-sans text-stone-400 py-2 border-b border-white/10 shrink-0">
-                <div className="flex items-center space-x-2">
-                  <Camera className="h-4 w-4 text-brand-accent" />
-                  <span>Crédit photo : <strong className="text-white">{filteredItems[selectedIdx].photographer}</strong></span>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <span className="font-mono text-white font-bold bg-white/10 px-2.5 py-1 rounded-full">
-                    {selectedIdx + 1} / {filteredItems.length}
-                  </span>
-                  <button
-                    onClick={() => setSelectedIdx(null)}
-                    className="p-2 rounded-full bg-white/15 hover:bg-rose-600 hover:text-white transition-all text-white cursor-pointer shadow-md"
-                    title="Fermer (Echap)"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
+              {/* Top Controls Row */}
+              <div className="w-full flex items-center justify-between z-20 shrink-0 mb-4">
+                <span className="font-mono text-xs text-white font-bold bg-black/50 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-sm">
+                  {selectedIdx + 1} / {filteredItems.length}
+                </span>
+                <button
+                  onClick={() => setSelectedIdx(null)}
+                  className="p-2 rounded-full bg-black/50 hover:bg-rose-600 border border-white/10 transition-all text-white cursor-pointer shadow-md shrink-0 backdrop-blur-sm"
+                  title="Fermer (Echap)"
+                >
+                  <X className="h-5 w-5" />
+                </button>
               </div>
 
-              {/* Main Image View */}
-              <div className="relative flex-grow flex items-center justify-center w-full my-4 overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={selectedIdx}
-                    src={getAssetUrl(filteredItems[selectedIdx].url)}
-                    alt={filteredItems[selectedIdx].title}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3 }}
-                    className="max-h-[60vh] max-w-full object-contain rounded-2xl shadow-2xl border border-white/10"
-                    referrerPolicy="no-referrer"
-                  />
-                </AnimatePresence>
-
-                {/* Left Arrow Button */}
+              {/* Navigation Chevrons Area - Vertically centered overlay over background */}
+              <div className="flex-grow flex items-center justify-between w-full pointer-events-none py-4">
+                {/* Left Navigation Chevron */}
                 <button
                   onClick={handlePrev}
-                  className="absolute left-2 md:left-4 p-3 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/10 transition-all text-white cursor-pointer"
+                  className="p-3 sm:p-4 rounded-full bg-black/50 hover:bg-white/20 active:bg-white/35 border border-white/10 transition-all text-white cursor-pointer shadow-2xl backdrop-blur-md pointer-events-auto"
                   title="Photo précédente"
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" />
                 </button>
 
-                {/* Right Arrow Button */}
+                {/* Right Navigation Chevron */}
                 <button
                   onClick={handleNext}
-                  className="absolute right-2 md:right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/10 transition-all text-white cursor-pointer"
+                  className="p-3 sm:p-4 rounded-full bg-black/50 hover:bg-white/20 active:bg-white/35 border border-white/10 transition-all text-white cursor-pointer shadow-2xl backdrop-blur-md pointer-events-auto"
                   title="Photo suivante"
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7" />
                 </button>
               </div>
 
-              {/* Caption Footer */}
-              <div className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2 shrink-0 max-w-3xl mx-auto backdrop-blur-sm text-left">
-                <div className="flex flex-wrap items-center justify-between gap-2">
+              {/* Text Infos (Floating at Bottom with high z-index and 50% transparency) */}
+              <div className="w-full bg-black/50 border border-white/10 p-4 md:p-6 rounded-2xl space-y-2.5 shrink-0 backdrop-blur-md text-left shadow-2xl z-20 mt-4">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="text-[10px] uppercase font-bold tracking-widest text-brand-accent bg-brand-accent/20 border border-brand-accent/30 px-3 py-1 rounded-full">
                     {filteredItems[selectedIdx].category}
                   </span>
-                  <div className="flex items-center space-x-1 text-xs text-stone-300 font-sans">
+                  <div className="flex items-center space-x-1.5 text-xs text-stone-300 font-sans">
                     <MapPin className="h-3.5 w-3.5 text-brand-accent shrink-0" />
                     <span>{filteredItems[selectedIdx].location}</span>
                   </div>
                 </div>
-                <h3 className="font-serif font-bold text-xl text-white">
-                  {filteredItems[selectedIdx].title}
-                </h3>
-                <p className="text-xs sm:text-sm text-stone-300 font-sans leading-relaxed">
-                  {filteredItems[selectedIdx].description}
-                </p>
-                <div className="flex items-center space-x-1.5 text-[10px] text-brand-accent font-mono pt-1">
-                  <Info className="h-3.5 w-3.5" />
-                  <span>Appuyez sur les flèches ← et → pour naviguer ou Échap pour quitter</span>
+
+                {/* Title & Description */}
+                <div className="space-y-1">
+                  <h3 className="font-serif font-bold text-lg sm:text-xl md:text-2xl text-white tracking-tight leading-tight">
+                    {filteredItems[selectedIdx].title}
+                  </h3>
+                  <p className="text-xs sm:text-sm md:text-base text-stone-200 font-sans leading-relaxed">
+                    {filteredItems[selectedIdx].description}
+                  </p>
                 </div>
               </div>
             </div>
