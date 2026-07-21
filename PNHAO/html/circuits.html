@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Circuits Écotouristiques - WordPress Ready</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght=0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#F9F7F2',
+              text: '#2D342F',
+              primary: '#4A5D4E',
+              accent: '#D68C67',
+              'light-gray': '#E2E8E0',
+              sand: '#F4F1EA',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-brand-bg text-brand-text min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE START                                           -->
+  <!-- Copy the content below into your WordPress Custom HTML Block or Elementor  -->
+  <!-- ========================================================================= -->
+  <div id="wp-pnhao-circuits" class="w-full bg-brand-bg text-brand-text font-sans antialiased py-12">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-accent">Écotourisme Solidaire</span>
+        <h2 class="font-serif font-bold text-3xl md:text-4xl text-brand-primary tracking-tight">Circuits d'Aventures & Randonnées</h2>
+        <p class="text-stone-500 text-sm leading-relaxed">
+          Le parc propose des itinéraires d'écotourisme d'une beauté sauvage à couper le souffle, encadrés par les guides certifiés de la montagne de la Province de Midelt.
+        </p>
+      </div>
+
+      <!-- Navigation / Tabs for Circuits -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Tab 1 Button -->
+        <button onclick="selectCircuit(0)" id="c-tab-0" class="flex items-center space-x-4 p-5 rounded-2xl border text-left bg-white border-brand-primary shadow-sm ring-1 ring-brand-primary/20 transition-all cursor-pointer">
+          <div class="p-3 bg-brand-sand rounded-xl text-brand-primary">
+            <i data-lucide="route" class="h-6 w-6"></i>
+          </div>
+          <div>
+            <h4 class="font-serif font-bold text-sm text-brand-primary">Route des Lacs d'Imilchil</h4>
+            <p class="text-[10px] font-mono text-stone-400">15 km • Facile • VTT / Randonnée</p>
+          </div>
+        </button>
+
+        <!-- Tab 2 Button -->
+        <button onclick="selectCircuit(1)" id="c-tab-1" class="flex items-center space-x-4 p-5 rounded-2xl border text-left bg-white border-brand-light-gray opacity-70 hover:opacity-100 hover:border-brand-primary transition-all cursor-pointer">
+          <div class="p-3 bg-brand-sand rounded-xl text-stone-500">
+            <i data-lucide="mountain" class="h-6 w-6"></i>
+          </div>
+          <div>
+            <h4 class="font-serif font-bold text-sm text-brand-primary">Trek du Jbel Ayachi</h4>
+            <p class="text-[10px] font-mono text-stone-400">22 km • Difficile • Trek de Haute Montagne</p>
+          </div>
+        </button>
+
+        <!-- Tab 3 Button -->
+        <button onclick="selectCircuit(2)" id="c-tab-2" class="flex items-center space-x-4 p-5 rounded-2xl border text-left bg-white border-brand-light-gray opacity-70 hover:opacity-100 hover:border-brand-primary transition-all cursor-pointer">
+          <div class="p-3 bg-brand-sand rounded-xl text-stone-500">
+            <i data-lucide="trees" class="h-6 w-6"></i>
+          </div>
+          <div>
+            <h4 class="font-serif font-bold text-sm text-brand-primary">Échappée Verte de Jaffar</h4>
+            <p class="text-[10px] font-mono text-stone-400">45 km • Moyen • 4x4 / Piste Équestre</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- Selected Circuit Display Panel -->
+      <div class="bg-white border border-brand-light-gray rounded-[36px] overflow-hidden shadow-sm p-6 md:p-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <!-- Column 1: Details and Timeline -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="space-y-2">
+              <span id="circuit-badge" class="inline-flex bg-[#fcf3ef] text-brand-accent border border-[#f7e0d3] text-[9px] uppercase font-sans tracking-widest font-bold px-3 py-1 rounded-full">Piste Éco-Touristique</span>
+              <h3 id="circuit-title" class="font-serif font-bold text-2xl md:text-3xl text-brand-primary tracking-tight">La Route des Lacs d'Imilchil</h3>
+              <p id="circuit-desc" class="text-stone-600 text-xs md:text-sm leading-relaxed">
+                Ce circuit vous mène à travers les deux joyaux bleus légendaires du parc national : le lac Isly et le lac Tislit. Un itinéraire accessible à pied ou en VTT, offrant de sublimes points de vue sur les plateaux d'altitude habités par les bergers nomades de la tribu des Aït H'ddidou.
+              </p>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-brand-light-gray/60">
+              <div class="space-y-1">
+                <span class="text-[9px] text-stone-400 font-bold uppercase tracking-wider block">Distance</span>
+                <p id="circuit-dist" class="font-mono text-sm font-bold text-brand-primary">15 km</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-[9px] text-stone-400 font-bold uppercase tracking-wider block">Durée Estimée</span>
+                <p id="circuit-duration" class="font-mono text-sm font-bold text-brand-primary">3-4 heures</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-[9px] text-stone-400 font-bold uppercase tracking-wider block">Difficulté</span>
+                <p id="circuit-difficulty" class="font-mono text-sm font-bold text-emerald-600">Facile</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-[9px] text-stone-400 font-bold uppercase tracking-wider block">Saison Idéale</span>
+                <p id="circuit-season" class="font-mono text-sm font-bold text-brand-primary">Printemps - Automne</p>
+              </div>
+            </div>
+
+            <!-- Timeline of Stops -->
+            <div class="space-y-4 pt-4 border-t border-brand-light-gray/60">
+              <h4 class="font-serif font-bold text-sm text-brand-primary">Étapes clés de l'Itinéraire</h4>
+              
+              <div id="circuit-timeline" class="relative pl-6 space-y-6 border-l-2 border-brand-light-gray/80 ml-3">
+                <!-- Timeline Stops will be injected by JavaScript -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Column 2: Visual & Info card -->
+          <div class="lg:col-span-5 flex flex-col justify-between space-y-6">
+            <div class="bg-stone-900 rounded-[28px] overflow-hidden h-[250px] lg:h-[300px] shadow-sm relative">
+              <img id="circuit-img" src="/images/isly_tislit_lake_1783949826439.jpg" alt="Circuit Preview" class="w-full h-full object-cover brightness-95" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=600&q=80'" />
+            </div>
+
+            <div class="bg-brand-sand border border-brand-light-gray rounded-3xl p-6 space-y-4">
+              <h4 class="font-serif font-bold text-base text-brand-primary flex items-center space-x-2">
+                <i data-lucide="info" class="h-5 w-5 text-brand-accent"></i>
+                <span>Conseils de l'Administration</span>
+              </h4>
+              <ul class="text-xs text-stone-600 space-y-2 font-sans leading-relaxed">
+                <li class="flex items-start space-x-2">
+                  <span class="text-brand-accent mt-0.5">•</span>
+                  <p>Engagez toujours un guide agréé de la montagne pour les excursions de haute altitude.</p>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <span class="text-brand-accent mt-0.5">•</span>
+                  <p>Munissez-vous de vêtements chauds et imperméables. Les températures chutent brusquement le soir.</p>
+                </li>
+                <li class="flex items-start space-x-2">
+                  <span class="text-brand-accent mt-0.5">•</span>
+                  <p>Respectez le code de conduite de l'éco-voyageur : ne laissez aucun déchet et ne prélevez aucune plante.</p>
+                </li>
+              </ul>
+              <div class="pt-2">
+                <a href="https://ifrane.pnm.ma/ecotourisme/" target="_blank" class="flex items-center justify-center space-x-2 w-full py-3 bg-brand-primary hover:bg-brand-primary/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-sm">
+                  <i data-lucide="compass" class="h-4 w-4"></i>
+                  <span>Réserver auprès des guides</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Script Block for Circuits Logic -->
+    <script>
+      // Self-contained circuits dataset
+      const CIRCUITS_DATA = [
+        {
+          title: "La Route des Lacs d'Imilchil",
+          badge: "Piste Éco-Touristique",
+          description: "Ce circuit vous mène à travers les deux joyaux bleus légendaires du parc national : le lac Isly et le lac Tislit. Un itinéraire accessible à pied ou en VTT, offrant de sublimes points de vue sur les plateaux d'altitude habités par les bergers nomades de la tribu des Aït H'ddidou.",
+          distance: "15 km",
+          duration: "3-4 heures",
+          difficulty: "Facile",
+          difficultyColor: "text-emerald-600",
+          season: "Printemps - Automne",
+          image: "/images/isly_tislit_lake_1783949826439.jpg",
+          stops: [
+            {
+              name: "Départ : Lac Tislit",
+              desc: "Contemplation du lac de la fiancée au lever du soleil, entouré de pelouses vertes humides."
+            },
+            {
+              name: "Étape : Village d'Imilchil",
+              desc: "Halte culturelle, dégustation de thé à la menthe traditionnel et visite de la coopérative de tissage des femmes."
+            },
+            {
+              name: "Arrivée : Lac Isly",
+              desc: "Découverte du lac Isly, plus profond et entouré de reliefs montagneux grandioses aux teintes lunaires."
+            }
+          ]
+        },
+        {
+          title: "Trek de l'Ascension du Jbel Ayachi",
+          badge: "Trek Alpin d'Altitude",
+          description: "Un parcours sportif mémorable réservé aux amateurs de haute montagne. L'ascension du Jbel Ayachi offre une immersion totale dans les écosystèmes forestiers et pastoraux les plus préservés du Haut Atlas, couronnée par un panorama spectaculaire s'étendant à perte de vue sur les cimes marocaines.",
+          distance: "22 km",
+          duration: "1 à 2 jours",
+          difficulty: "Difficile",
+          difficultyColor: "text-rose-600",
+          season: "Mai - Octobre",
+          image: "https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=600&q=80",
+          stops: [
+            {
+              name: "Départ : Source d'Outat",
+              desc: "Début de la randonnée au bord de l'oued Outat, traversée de petits champs irrigués en terrasses."
+            },
+            {
+              name: "Étape : Bergeries de Tirrhist",
+              desc: "Rencontre fortuite avec les pasteurs nomades de la tribu Aït Yahia et bivouac sous les cèdres."
+            },
+            {
+              name: "Arrivée : Crête Sommitale (3 164 m)",
+              desc: "Ascension finale sur le versant calcaire rocheux. Vue panoramique extraordinaire sur les montagnes de l'Atlas."
+            }
+          ]
+        },
+        {
+          title: "Échappée Verte du Cirque de Jaffar",
+          badge: "Piste Forestière & 4x4",
+          description: "Une expédition forestière à travers l'un des reliefs les plus escarpés et sauvages du parc. Vous franchirez d'étroites gorges rocheuses impressionnantes façonnées par l'érosion, avant de vous enfoncer au cœur des cédraies millénaires où s'abritent les singes Magots.",
+          distance: "45 km",
+          duration: "1 jour",
+          difficulty: "Moyen",
+          difficultyColor: "text-amber-600",
+          season: "Avril - Novembre",
+          image: "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Cedrus_atlantica1.jpg",
+          stops: [
+            {
+              name: "Départ : Midelt / Piémont",
+              desc: "Briefing de départ et début de l'ascension en véhicule tout-terrain à travers les steppes à armoise."
+            },
+            {
+              name: "Étape : Cirque de Jaffar",
+              desc: "Arrivée dans ce cirque minéral colossal dominé par l'Ayachi. Traversée des pistes abruptes entourées de falaises de calcaire."
+            },
+            {
+              name: "Arrivée : Cédraie de Mitkane",
+              desc: "Randonnée pédestre reposante à l'ombre fraîche des cèdres de l'Atlas et observation des macaques de Barbarie."
+            }
+          ]
+        }
+      ];
+
+      function selectCircuit(index) {
+        const item = CIRCUITS_DATA[index];
+        if (!item) return;
+
+        // Update active tab buttons
+        for (let i = 0; i < 3; i++) {
+          const btn = document.getElementById(`c-tab-${i}`);
+          if (!btn) continue;
+          
+          if (i === index) {
+            btn.className = "flex items-center space-x-4 p-5 rounded-2xl border text-left bg-white border-brand-primary shadow-sm ring-1 ring-brand-primary/20 transition-all cursor-pointer";
+            btn.querySelector('.p-3').className = "p-3 bg-brand-sand rounded-xl text-brand-primary";
+          } else {
+            btn.className = "flex items-center space-x-4 p-5 rounded-2xl border text-left bg-white border-brand-light-gray opacity-70 hover:opacity-100 hover:border-brand-primary transition-all cursor-pointer";
+            btn.querySelector('.p-3').className = "p-3 bg-brand-sand rounded-xl text-stone-500";
+          }
+        }
+
+        // Update content panel
+        document.getElementById('circuit-badge').innerText = item.badge;
+        document.getElementById('circuit-title').innerText = item.title;
+        document.getElementById('circuit-desc').innerText = item.description;
+        document.getElementById('circuit-dist').innerText = item.distance;
+        document.getElementById('circuit-duration').innerText = item.duration;
+        
+        const diffSpan = document.getElementById('circuit-difficulty');
+        diffSpan.innerText = item.difficulty;
+        diffSpan.className = `font-mono text-sm font-bold ${item.difficultyColor}`;
+        
+        document.getElementById('circuit-season').innerText = item.season;
+        document.getElementById('circuit-img').src = item.image;
+
+        // Re-inject stops timeline
+        const timeline = document.getElementById('circuit-timeline');
+        if (timeline) {
+          timeline.innerHTML = '';
+          item.stops.forEach((stop, i) => {
+            const stopDiv = document.createElement('div');
+            stopDiv.className = "relative space-y-1";
+            stopDiv.innerHTML = `
+              <!-- Timeline node -->
+              <span class="absolute -left-[31px] top-1.5 h-4.5 w-4.5 rounded-full bg-brand-primary border-4 border-white flex items-center justify-center"></span>
+              <h5 class="font-serif font-bold text-xs text-brand-primary">${stop.name}</h5>
+              <p class="text-stone-500 text-[11px] leading-relaxed font-sans">${stop.desc}</p>
+            `;
+            timeline.appendChild(stopDiv);
+          });
+        }
+
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      }
+
+      // Initialize with Circuit 0
+      document.addEventListener('DOMContentLoaded', () => {
+        selectCircuit(0);
+      });
+    </script>
+
+  </div>
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE END                                             -->
+  <!-- ========================================================================= -->
+
+</body>
+</html>

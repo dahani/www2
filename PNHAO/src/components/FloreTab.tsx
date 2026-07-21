@@ -291,6 +291,59 @@ export default function FloreTab() {
         </AnimatePresence>
       </section>
 
+      {/* Official Flora Inventory Statistics & IUCN Table */}
+      <section className="bg-white border border-brand-light-gray rounded-[40px] p-6 sm:p-10 shadow-sm space-y-6">
+        <div className="space-y-2">
+          <span className="text-xs font-bold font-sans uppercase tracking-widest text-brand-primary">Bilan Botanique Officiel</span>
+          <h3 className="font-serif font-bold text-2xl sm:text-3xl text-brand-text tracking-tight">Statistiques de Flore Sauvage & Raretés</h3>
+          <p className="text-sm text-stone-500 max-w-3xl font-sans">
+            L'inventaire officiel de la flore du Parc National du Haut Atlas Oriental dénombre un total de <strong className="text-brand-primary">525 espèces</strong> de plantes vasculaires, dont <strong className="text-brand-primary">85 espèces endémiques ou d'une rareté critique</strong> au niveau mondial ou national.
+          </p>
+        </div>
+
+        {/* Highlight Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-2">
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">525</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Espèces totales</span>
+          </div>
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">85</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Endémiques / Rares</span>
+          </div>
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">15</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Plantes Médicinales</span>
+          </div>
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">4</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Étages Végétaux</span>
+          </div>
+        </div>
+
+        {/* Key Endemic & Protected Species List */}
+        <div className="bg-brand-sand/30 border border-brand-light-gray/80 rounded-2xl p-5 sm:p-6 space-y-4">
+          <h4 className="font-serif font-bold text-sm text-brand-primary">Répartition de la Rareté et Menaces Botaniques</h4>
+          <p className="text-xs text-stone-600 font-sans leading-relaxed">
+            Les espèces phares du parc subissent de fortes pressions climatiques et anthropiques (surpâturage et prélèvement excessif pour l'artisanat ou les huiles essentielles). Le parc assure le suivi rigoureux de ces espèces prioritaires :
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs font-sans">
+            <div className="bg-white p-3.5 border border-brand-light-gray/60 rounded-xl space-y-1">
+              <span className="font-bold text-brand-primary">Espèces Endémiques Locales :</span>
+              <p className="text-stone-500">Germandrée de Midelt (Teucrium mideltense), Astragale de l'Atlas (Astragalus maireanus).</p>
+            </div>
+            <div className="bg-white p-3.5 border border-brand-light-gray/60 rounded-xl space-y-1">
+              <span className="font-bold text-brand-primary">Espèces en Danger Critique :</span>
+              <p className="text-stone-500">Cèdre de l'Atlas (Cedrus atlantica) en recul, Genévrier thurifère (Juniperus thurifera).</p>
+            </div>
+            <div className="bg-white p-3.5 border border-brand-light-gray/60 rounded-xl space-y-1">
+              <span className="font-bold text-brand-primary">Raretés Mondiales Présentes :</span>
+              <p className="text-stone-500">Buis des Baléares (Buxus balearica) localisé, Saxifrage à longues feuilles.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Interactive Flora Explorer (Search & Categories) */}
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -496,12 +549,12 @@ export default function FloreTab() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 pt-16 lg:pt-4 overflow-y-auto"
+              className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 pt-16 sm:pt-4 overflow-y-auto"
               onClick={() => setSelectedFlora(null)}
             >
               {/* Top center floating navigation buttons */}
               <div 
-                className="fixed top-0 left-0 right-0 w-full lg:w-auto lg:top-6 lg:left-1/2 lg:-translate-x-1/2 z-[110] flex items-center justify-between lg:justify-start lg:space-x-3 bg-[#1e2320]/95 border-b lg:border border-[#3e4841]/50 lg:rounded-full shadow-2xl text-stone-100 backdrop-blur-md transition-all hover:border-brand-accent/50 px-4 lg:px-5 py-2 lg:py-2.5 h-11 lg:h-auto"
+                className="fixed top-0 left-0  w-full sm:w-auto sm:top-6 sm:left-1/2 sm:-translate-x-1/2 z-[110] flex items-center justify-between sm:justify-start sm:space-x-3 bg-[#1e2320]/95 border-b sm:border border-[#3e4841]/50 sm:rounded-full shadow-2xl text-stone-100 backdrop-blur-md transition-all hover:border-brand-accent/50 px-4 sm:px-5 py-2 sm:py-2.5 h-11 sm:h-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -518,9 +571,9 @@ export default function FloreTab() {
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
-                <div className="flex items-center space-x-2 select-none">
-                  <span className="text-[9px] uppercase tracking-widest font-sans font-bold text-stone-400">FLORE</span>
-                  <span className="text-xs font-mono font-bold text-brand-accent leading-none">
+                <div className="flex items-center justify-center space-x-2 select-none">
+                  <span className="text-[9px] uppercase tracking-widest font-sans font-bold text-stone-400 text-center">FLORE</span>
+                  <span className="text-xs font-mono font-bold text-brand-accent leading-none text-center">
                     {filteredFlora.findIndex(item => item.id === selectedFlora.id) + 1} / {filteredFlora.length}
                   </span>
                 </div>
@@ -567,7 +620,26 @@ export default function FloreTab() {
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Image Section / Mini Carousel */}
-                <div className="w-full sm:w-1/2 relative bg-brand-sand h-[30vh] sm:h-full flex flex-col justify-between shrink-0">
+                <div 
+                  className="w-full sm:w-1/2 relative bg-brand-sand h-[30vh] sm:h-full flex flex-col justify-between shrink-0 select-none touch-pan-y"
+                  onTouchStart={(e) => {
+                    const startX = e.changedTouches[0].clientX;
+                    e.currentTarget.setAttribute('data-swipe-start', String(startX));
+                  }}
+                  onTouchEnd={(e) => {
+                    const startXStr = e.currentTarget.getAttribute('data-swipe-start');
+                    if (!startXStr) return;
+                    const startX = parseFloat(startXStr);
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+                    const threshold = 50;
+                    if (diff > threshold) {
+                      nextModalImage(gallery);
+                    } else if (diff < -threshold) {
+                      prevModalImage(gallery);
+                    }
+                  }}
+                >
                   <img
                     src={getAssetUrl(gallery[modalImageIdx])}
                     alt={selectedFlora.name}

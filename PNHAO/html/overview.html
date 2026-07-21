@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Découvrir le PNHAO - WordPress Ready</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#F9F7F2',
+              text: '#2D342F',
+              primary: '#4A5D4E',
+              accent: '#D68C67',
+              'light-gray': '#E2E8E0',
+              sand: '#F4F1EA',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-brand-bg text-brand-text min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE START                                           -->
+  <!-- Copy the content below into your WordPress Custom HTML Block or Elementor  -->
+  <!-- ========================================================================= -->
+  <div id="wp-pnhao-overview" class="w-full bg-brand-bg text-brand-text font-sans antialiased pb-16">
+    
+    <!-- Hero Slider Container -->
+    <div class="relative w-full h-[550px] overflow-hidden bg-stone-950 rounded-b-[40px] shadow-lg select-none">
+      <div id="overview-hero-slider" class="relative w-full h-full">
+        <!-- Slides will be injected dynamically via Javascript below -->
+        <div class="absolute inset-0 flex items-center justify-center text-white">
+          <p class="text-xs font-mono animate-pulse">Chargement du panorama...</p>
+        </div>
+      </div>
+
+      <!-- Arrow Controls -->
+      <button onclick="prevWPSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors cursor-pointer border border-white/10">
+        <i data-lucide="chevron-left" class="h-6 w-6"></i>
+      </button>
+      <button onclick="nextWPSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors cursor-pointer border border-white/10">
+        <i data-lucide="chevron-right" class="h-6 w-6"></i>
+      </button>
+
+      <!-- Dot Indicators -->
+      <div id="overview-slider-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+        <!-- Dots will be injected dynamically -->
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+      
+      <!-- Welcome Message & Introduction -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white border border-brand-light-gray rounded-[40px] p-8 md:p-12 shadow-sm">
+        <div class="lg:col-span-8 space-y-4">
+          <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-accent">Présentation Générale</span>
+          <h2 class="font-serif font-bold text-3xl md:text-4xl text-brand-primary tracking-tight">Le joyau montagnard du Haut Atlas Oriental</h2>
+          <p class="text-stone-600 text-sm leading-relaxed font-sans">
+            Établi en 2004, le <strong>Parc National du Haut-Atlas-Oriental (PNHAO)</strong> s’étend sur une superficie de 55 680 hectares au sein de la majestueuse province de Midelt. Ce territoire d'une richesse géographique et paysagère prodigieuse englobe les plus hauts sommets du massif cristallin de l’Ayachi (culminant à 3 164 m), ainsi que les plateaux humides légendaires d'Imilchil où reposent les lacs d'Isly et Tislit.
+          </p>
+          <p class="text-stone-600 text-sm leading-relaxed font-sans">
+            Le PNHAO constitue un écosystème montagnard d'une importance mondiale inégalée. Il abrite de vastes forêts millénaires de cèdres de l'Atlas et de genévriers thurifères, protégeant ainsi un réservoir de faune sauvage exceptionnel, incluant d’importantes hardes de Mouflons à manchettes et de Macaques de Barbarie.
+          </p>
+        </div>
+        <div class="lg:col-span-4 bg-brand-sand border border-brand-light-gray rounded-3xl p-6 space-y-4">
+          <h3 class="text-xs font-bold uppercase tracking-widest text-brand-primary border-b border-brand-light-gray pb-2 flex items-center space-x-1.5">
+            <i data-lucide="award" class="h-4 w-4 text-brand-accent"></i>
+            <span>Reconnaissances</span>
+          </h3>
+          <ul class="space-y-3.5 text-xs text-stone-700 font-sans">
+            <li class="flex items-start space-x-2">
+              <i data-lucide="check" class="h-4 w-4 text-brand-accent shrink-0 mt-0.5"></i>
+              <p><strong>Ramsar (2005)</strong> : Zone humide d'importance mondiale pour les Lacs Isly et Tislit.</p>
+            </li>
+            <li class="flex items-start space-x-2">
+              <i data-lucide="check" class="h-4 w-4 text-brand-accent shrink-0 mt-0.5"></i>
+              <p><strong>UNESCO (MAB)</strong> : Intégré au cœur de la Réserve de Biosphère des Cédraies de l'Atlas.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Quick Stats Bento Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white border border-brand-light-gray rounded-[32px] p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="bg-brand-sand p-3 rounded-2xl w-fit mb-3">
+            <i data-lucide="compass" class="h-6 w-6 text-brand-accent"></i>
+          </div>
+          <span class="text-[10px] uppercase font-sans tracking-widest text-stone-400 font-bold block mb-1">Superficie</span>
+          <p class="font-serif font-bold text-2xl text-brand-primary">55 680 Ha</p>
+          <p class="text-xs text-stone-500 mt-1">Territoire forestier et pastoral montagneux protégé</p>
+        </div>
+        <div class="bg-white border border-brand-light-gray rounded-[32px] p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="bg-brand-sand p-3 rounded-2xl w-fit mb-3">
+            <i data-lucide="mountain" class="h-6 w-6 text-brand-accent"></i>
+          </div>
+          <span class="text-[10px] uppercase font-sans tracking-widest text-stone-400 font-bold block mb-1">Altitude Max</span>
+          <p class="font-serif font-bold text-2xl text-brand-primary">3 164 m</p>
+          <p class="text-xs text-stone-500 mt-1">Sommet majestueux du Jbel Ayachi</p>
+        </div>
+        <div class="bg-white border border-brand-light-gray rounded-[32px] p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="bg-brand-sand p-3 rounded-2xl w-fit mb-3">
+            <i data-lucide="calendar" class="h-6 w-6 text-brand-accent"></i>
+          </div>
+          <span class="text-[10px] uppercase font-sans tracking-widest text-stone-400 font-bold block mb-1">Création officielle</span>
+          <p class="font-serif font-bold text-2xl text-brand-primary">2004</p>
+          <p class="text-xs text-stone-500 mt-1">Décret n° BO 5255 du 11 octobre 2004</p>
+        </div>
+        <div class="bg-white border border-brand-light-gray rounded-[32px] p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="bg-brand-sand p-3 rounded-2xl w-fit mb-3">
+            <i data-lucide="users" class="h-6 w-6 text-brand-accent"></i>
+          </div>
+          <span class="text-[10px] uppercase font-sans tracking-widest text-stone-400 font-bold block mb-1">Gouvernance</span>
+          <p class="font-serif font-bold text-2xl text-brand-primary">6 Communes</p>
+          <p class="text-xs text-stone-500 mt-1">Gouvernance territoriale participative (Province Midelt)</p>
+        </div>
+      </div>
+
+      <!-- Missions Section -->
+      <div class="space-y-6">
+        <div class="text-center max-w-xl mx-auto space-y-1.5">
+          <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-accent">Axes Stratégiques</span>
+          <h2 class="font-serif font-bold text-3xl text-brand-primary tracking-tight">Notre triple mission fondatrice</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white border border-brand-light-gray rounded-[32px] p-8 shadow-sm space-y-4">
+            <div class="bg-[#e9ece9] h-12 w-12 rounded-2xl flex items-center justify-center text-brand-primary">
+              <i data-lucide="shield-check" class="h-6 w-6"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl text-brand-primary">1. Protection de la Biodiversité</h3>
+            <p class="text-stone-600 text-xs leading-relaxed font-sans">
+              Conserver et restaurer les habitats forestiers fragiles de cèdres et de genévriers, et surveiller de manière rigoureuse les espèces phares telles que le Mouflon de l’Atlas et le Singe Magot.
+            </p>
+          </div>
+          <div class="bg-white border border-brand-light-gray rounded-[32px] p-8 shadow-sm space-y-4">
+            <div class="bg-[#fcf3ef] h-12 w-12 rounded-2xl flex items-center justify-center text-brand-accent">
+              <i data-lucide="compass" class="h-6 w-6"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl text-brand-primary">2. Éco-Développement Social</h3>
+            <p class="text-stone-600 text-xs leading-relaxed font-sans">
+              Améliorer les conditions de vie des tribus pastorales d'Aït H'ddidou et Aït Yahia à travers l'aide au chauffage (fours améliorés), la gestion durable des parcours et l'éco-tourisme solidaire.
+            </p>
+          </div>
+          <div class="bg-white border border-brand-light-gray rounded-[32px] p-8 shadow-sm space-y-4">
+            <div class="bg-[#f0f6fa] h-12 w-12 rounded-2xl flex items-center justify-center text-sky-600">
+              <i data-lucide="trees" class="h-6 w-6"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl text-brand-primary">3. Recherche & Pédagogie</h3>
+            <p class="text-stone-600 text-xs leading-relaxed font-sans">
+              Encourager le suivi scientifique universitaire de la flore d'altitude et de la faune sauvage, tout en sensibilisant les jeunes générations au respect de la montagne à l'Écomusée.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Map Promo Banner -->
+      <div class="relative bg-[#1e2320] text-stone-200 rounded-[40px] overflow-hidden p-8 md:p-12 shadow-md flex flex-col md:flex-row items-center justify-between border border-stone-800">
+        <div class="space-y-3 mb-6 md:mb-0 md:max-w-xl">
+          <span class="inline-flex bg-brand-accent text-white text-[10px] uppercase font-sans tracking-widest font-bold px-3 py-1 rounded-full">Cartographie Interactive</span>
+          <h3 class="font-serif font-bold text-2xl md:text-3xl text-white tracking-tight">Explorez le territoire protégé en 3D</h3>
+          <p class="text-stone-400 text-xs leading-relaxed font-sans">
+            Visualisez les sommets du Jbel Ayachi, le Cirque de Jaffar, les limites officielles du PNHAO ainsi que les itinéraires de randonnée directement sur la carte officielle.
+          </p>
+        </div>
+        <a href="https://ifrane.pnm.ma/cartes/" target="_blank" class="flex items-center space-x-2 px-6 py-3 bg-white hover:bg-brand-sand text-brand-primary font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer shrink-0">
+          <i data-lucide="map" class="h-4 w-4"></i>
+          <span>Ouvrir la Carte Nationale</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Script Block for the Hero Slider & Interactions -->
+    <script>
+      // Slider Slide Dataset
+      const BASE_SLIDES = [
+        {
+          image: "/images/isly_tislit_lake_1783949826439.jpg",
+          title: "Lacs d'Isly et Tislit",
+          subtitle: "Zones Humides d'importance internationale",
+          description: "Découvrez les deux joyaux bleus du parc, classés Ramsar, berceau de la légendaire histoire d'amour d'Imilchil.",
+          badge: "Lacs Ramsar"
+        },
+        {
+          image: "/images/faune/mouflon_manchettes_1783949869486.jpg",
+          title: "Faune Exceptionnelle",
+          subtitle: "Le sanctuaire du Mouflon à manchettes",
+          description: "Le parc préserve les dernières grandes populations de mouflons à manchettes et de macaques de Barbarie du Haut Atlas.",
+          badge: "Faune Sauvage"
+        },
+        {
+          image: "/images/atlas_kasbah_village_1783949848718.jpg",
+          title: "Patrimoine Culturel",
+          subtitle: "Tribus rituelles Aït H'ddidou",
+          description: "Une immersion solidaire au cœur des douars berbères, de leur architecture bioclimatique en pisé et de leur artisanat millénaire.",
+          badge: "Culture Berbère"
+        }
+      ];
+
+      const GALLERY_POOL = [
+        {
+          image: "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Cedrus_atlantica1.jpg",
+          title: "Forêt de Cèdres millénaires",
+          subtitle: "Canton forestier de Tirrhist, 2400m",
+          description: "Le Cedrus atlantica, symbole majestueux du Maroc, formant des futaies denses indispensables au climat montagnard.",
+          badge: "Forêts & Cèdres"
+        },
+        {
+          image: "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Juniperus_thurifera1.jpg",
+          title: "Genévriers thurifères sur les Crêtes",
+          subtitle: "Crêtes du Massif Ayachi, 2800m",
+          description: "Arbre robuste d'altitude bravant le gel, la neige et les vents violents sur les versants calcaires élevés du parc.",
+          badge: "Forêts & Cèdres"
+        },
+        {
+          image: "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Lutra_lutra1.jpg",
+          title: "Loutre d'Europe",
+          subtitle: "Lacs Isly et Tislit",
+          description: "Une incroyable curiosité dans cette zone de haute montagne : la loutre sédentaire des lacs.",
+          badge: "Faune Sauvage"
+        },
+        {
+          image: "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Aigle_royal_1.jpg",
+          title: "Aigle Royal",
+          subtitle: "Sommets rocheux du Haut Atlas",
+          description: "Superbe rapace diurne nichant dans les falaises inaccessibles du parc. Un maître absolu des airs.",
+          badge: "Faune Sauvage"
+        }
+      ];
+
+      // Assemble Slides dynamically (Base 3 + 3 Random Unique from Pool)
+      let finalSlides = [...BASE_SLIDES];
+      try {
+        const shuffledPool = [...GALLERY_POOL].sort(() => 0.5 - Math.random());
+        const chosenFromPool = shuffledPool.slice(0, 3);
+        finalSlides = [...BASE_SLIDES, ...chosenFromPool];
+      } catch (err) {
+        console.error("Error generating random slides:", err);
+      }
+
+      let activeWPSlideIndex = 0;
+      let wpSliderInterval;
+
+      function renderWPSlides() {
+        const sliderContainer = document.getElementById('overview-hero-slider');
+        const dotsContainer = document.getElementById('overview-slider-dots');
+        
+        if (!sliderContainer || !dotsContainer) return;
+
+        sliderContainer.innerHTML = '';
+        dotsContainer.innerHTML = '';
+
+        finalSlides.forEach((slide, idx) => {
+          // Slide markup
+          const isActive = idx === activeWPSlideIndex;
+          const slideDiv = document.createElement('div');
+          slideDiv.className = `absolute inset-0 transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'} wp-slide-item`;
+          slideDiv.innerHTML = `
+            <img src="${slide.image}" class="w-full h-full object-cover brightness-[0.55]" alt="${slide.title}" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=1200&q=80'" />
+            <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-16 max-w-7xl mx-auto text-white">
+              <span class="inline-flex self-start bg-brand-accent text-white text-[10px] uppercase font-sans tracking-widest font-bold px-3 py-1 rounded-full mb-3">${slide.badge}</span>
+              <h1 class="font-serif font-bold text-3xl md:text-5xl tracking-tight mb-2">${slide.title}</h1>
+              <p class="text-stone-300 text-xs md:text-sm max-w-2xl mb-6">${slide.description}</p>
+            </div>
+          `;
+          sliderContainer.appendChild(slideDiv);
+
+          // Dot markup
+          const dotBtn = document.createElement('button');
+          dotBtn.onclick = () => setWPSlide(idx);
+          dotBtn.className = `w-2.5 h-2.5 rounded-full bg-white transition-opacity cursor-pointer ${isActive ? 'opacity-100 scale-110' : 'opacity-40'}`;
+          dotsContainer.appendChild(dotBtn);
+        });
+      }
+
+      function showWPSlide(index) {
+        const slides = document.getElementsByClassName('wp-slide-item');
+        const dots = document.getElementById('overview-slider-dots')?.children;
+        if (!slides.length) return;
+
+        if (index >= slides.length) {
+          activeWPSlideIndex = 0;
+        } else if (index < 0) {
+          activeWPSlideIndex = slides.length - 1;
+        } else {
+          activeWPSlideIndex = index;
+        }
+
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].classList.remove('opacity-100', 'z-10');
+          slides[i].classList.add('opacity-0', 'z-0');
+          if (dots && dots[i]) {
+            dots[i].classList.remove('opacity-100', 'scale-110');
+            dots[i].classList.add('opacity-40');
+          }
+        }
+
+        slides[activeWPSlideIndex].classList.remove('opacity-0', 'z-0');
+        slides[activeWPSlideIndex].classList.add('opacity-100', 'z-10');
+        if (dots && dots[activeWPSlideIndex]) {
+          dots[activeWPSlideIndex].classList.remove('opacity-40');
+          dots[activeWPSlideIndex].classList.add('opacity-100', 'scale-110');
+        }
+      }
+
+      function nextWPSlide() {
+        showWPSlide(activeWPSlideIndex + 1);
+        resetWPSliderTimer();
+      }
+
+      function prevWPSlide() {
+        showWPSlide(activeWPSlideIndex - 1);
+        resetWPSliderTimer();
+      }
+
+      function setWPSlide(index) {
+        showWPSlide(index);
+        resetWPSliderTimer();
+      }
+
+      function resetWPSliderTimer() {
+        clearInterval(wpSliderInterval);
+        wpSliderInterval = setInterval(() => {
+          showWPSlide(activeWPSlideIndex + 1);
+        }, 5000);
+      }
+
+      // Init on load
+      document.addEventListener('DOMContentLoaded', () => {
+        renderWPSlides();
+        resetWPSliderTimer();
+        // Initialize Lucide Icons for standalone preview
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      });
+    </script>
+
+  </div>
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE END                                             -->
+  <!-- ========================================================================= -->
+
+</body>
+</html>

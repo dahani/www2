@@ -9,6 +9,7 @@ import { PARK_METADATA, VEGETATION_STAGES, FAUNA_DATA, FLORA_DATA, TOURIST_CIRCU
 import { getAssetUrl } from '../utils';
 import { FAUNA_IMAGES } from './FauneTab';
 import { FLORA_IMAGES } from './FloreTab';
+import animalsData from '../animals.json';
 import { Mountain, Trees, Waves, Users, Calendar, Award, Compass, HelpCircle, ChevronLeft, ChevronRight, ChevronDown, Download, Bird, Leaf, Eye, ArrowRight, Heart, AlertTriangle, ShieldCheck, Sparkles, Clock, Building, MapPin, Phone, Mail, ShieldAlert, Landmark, CheckCircle2, Send } from 'lucide-react';
 
 interface OverviewTabProps {
@@ -108,35 +109,89 @@ export default function OverviewTab({ setCurrentTab, onOpenInteractiveMap }: Ove
     return shuffled.slice(0, 3);
   });
 
-  const slides = [
-    {
-      image: "/images/isly_tislit_lake_1783949826439.jpg",
-      title: "Lacs d'Isly et Tislit",
-      subtitle: "Zones Humides d'importance internationale",
-      description: "Découvrez les deux joyaux bleus du parc, classés Ramsar, berceau de la légendaire histoire d'amour d'Imilchil.",
-      badge: "Lacs Ramsar",
-      actionTab: "tourism",
-      actionLabel: "Découvrir les Circuits"
-    },
-    {
-      image: "/images/faune/mouflon_manchettes_1783949869486.jpg",
-      title: "Faune Exceptionnelle",
-      subtitle: "Le sanctuaire du Mouflon à manchettes",
-      description: "Le parc préserve les dernières grandes populations de mouflons à manchettes et de macaques de Barbarie du Haut Atlas.",
-      badge: "Faune Sauvage",
-      actionTab: "faune",
-      actionLabel: "Explorer la Faune"
-    },
-    {
-      image: "/images/atlas_kasbah_village_1783949848718.jpg",
-      title: "Patrimoine Culturel",
-      subtitle: "Tribus rituelles Aït H'ddidou",
-      description: "Une immersion solidaire au cœur des douars berbères, de leur architecture bioclimatique en pisé et de leur artisanat millénaire.",
-      badge: "Culture Berbère",
-      actionTab: "culture",
-      actionLabel: "Découvrir la Culture"
-    }
-  ];
+  const [slides] = useState(() => {
+    const baseSlides = [
+      {
+        image: "/images/isly_tislit_lake_1783949826439.jpg",
+        title: "Lacs d'Isly et Tislit",
+        subtitle: "Zones Humides d'importance internationale",
+        description: "Découvrez les deux joyaux bleus du parc, classés Ramsar, berceau de la légendaire histoire d'amour d'Imilchil.",
+        badge: "Lacs Ramsar",
+        actionTab: "tourism",
+        actionLabel: "Découvrir les Circuits"
+      },
+      {
+        image: "/images/faune/mouflon_manchettes_1783949869486.jpg",
+        title: "Faune Exceptionnelle",
+        subtitle: "Le sanctuaire du Mouflon à manchettes",
+        description: "Le parc préserve les dernières grandes populations de mouflons à manchettes et de macaques de Barbarie du Haut Atlas.",
+        badge: "Faune Sauvage",
+        actionTab: "faune",
+        actionLabel: "Explorer la Faune"
+      },
+      {
+        image: "/images/atlas_kasbah_village_1783949848718.jpg",
+        title: "Patrimoine Culturel",
+        subtitle: "Tribus rituelles Aït H'ddidou",
+        description: "Une immersion solidaire au cœur des douars berbères, de leur architecture bioclimatique en pisé et de leur artisanat millénaire.",
+        badge: "Culture Berbère",
+        actionTab: "culture",
+        actionLabel: "Découvrir la Culture"
+      }
+    ];
+
+    const galleryPool = [
+      {
+        image: "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Cedrus_atlantica1.jpg",
+        title: "Forêt de Cèdres millénaires",
+        subtitle: "Canton forestier de Tirrhist, 2400m",
+        description: "Le Cedrus atlantica, symbole majestueux du Maroc, formant des futaies denses indispensables au climat montagnard.",
+        badge: "Forêts & Cèdres",
+        actionTab: "flore",
+        actionLabel: "Explorer la Flore"
+      },
+      {
+        image: "https://ifrane.pnm.ma/wp-content/uploads/2025/11/Juniperus_thurifera1.jpg",
+        title: "Genévriers thurifères sur les Crêtes",
+        subtitle: "Crêtes du Massif Ayachi, 2800m",
+        description: "Arbre robuste d'altitude bravant le gel, la neige et les vents violents sur les versants calcaires élevés du parc.",
+        badge: "Forêts & Cèdres",
+        actionTab: "flore",
+        actionLabel: "Explorer la Flore"
+      },
+      ...animalsData
+        .filter((item: any) => item.id !== 'gal-fau-1') // Exclude mouflon to avoid duplicate
+        .map((item: any) => {
+          let actionTab = "faune";
+          let actionLabel = "Explorer la Faune";
+          if (item.category === "Forêts & Cèdres") {
+            actionTab = "flore";
+            actionLabel = "Explorer la Flore";
+          } else if (item.category === "Vie Berbère & Douars") {
+            actionTab = "culture";
+            actionLabel = "Découvrir la Culture";
+          } else if (item.category === "Lacs & Zones Humides") {
+            actionTab = "tourism";
+            actionLabel = "Découvrir les Circuits";
+          }
+          return {
+            image: item.url,
+            title: item.title,
+            subtitle: item.location || "Faune du Haut Atlas Oriental",
+            description: item.description,
+            badge: item.category || "Faune Sauvage",
+            actionTab,
+            actionLabel
+          };
+        })
+    ];
+
+    // Select 3 random unique items from the gallery pool
+    const shuffled = [...galleryPool].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 3);
+
+    return [...baseSlides, ...selected];
+  });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -731,7 +786,7 @@ export default function OverviewTab({ setCurrentTab, onOpenInteractiveMap }: Ove
             Agence Nationale des Eaux et Forêts (ANEF)
           </h3>
           <p className="text-sm text-stone-600 leading-relaxed font-sans">
-            La gestion du Parc National du Haut Atlas Oriental est assurée par l'ANEF, avec une double vocation fondamentale : d'une part la <span className="font-bold text-brand-primary">protection</span> et la réhabilitation des écosystèmes forestiers millénaires, et d'autre part le <span className="font-bold text-brand-primary">progrès social</span> participatif au service des populations locales.
+            La gestion du Parc National du Haut Atlas Oriental est assurée par l'ANEF, avec une double vocation fondamentale : d'une part la <span className="font-bold text-brand-primary">protection</span> et la réhabilitation des écosystèmes forestiers millénaires, et d'autre part le <span className="font-bold text-brand-primary">progrès social</span> participatif au service des populations locales. Le parc s'étend administrativement sur les cercles de Midelt et d'Imilchil (Province de Midelt, Région Drâa-Tafilalet) et regroupe <span className="font-bold text-brand-primary">quatre cantons forestiers majeurs</span> et quatre communes (Boumia, Itzer, Tonfite et Imilchil).
           </p>
           <p className="text-sm text-stone-600 leading-relaxed font-sans">
             Dans le cadre de la stratégie nationale <span className="font-bold text-brand-primary">Green-Génération (2020-2030)</span>, des actions concrètes sont menées : distribution de fours solaires/gaz pour alléger la pression sur le bois de feu, plantations d'arbres fruitiers, et formation des jeunes ruraux à l'éco-tourisme et l'artisanat.

@@ -101,6 +101,84 @@ export default function PreservationTab() {
         </div>
       </section>
 
+      {/* Socio-Economic Profile section */}
+      <section className="bg-white border border-brand-light-gray rounded-[40px] p-6 sm:p-10 shadow-sm space-y-6">
+        <div className="space-y-2">
+          <span className="text-xs font-bold font-sans uppercase tracking-widest text-brand-primary">Profil Humain & Démographie</span>
+          <h3 className="font-serif font-bold text-2xl sm:text-3xl text-brand-text tracking-tight">Le Profil Socio-Économique des Populations Locales</h3>
+          <p className="text-sm text-stone-500 max-w-3xl font-sans">
+            La population résidant sur le territoire du Parc National du Haut Atlas Oriental se compose d'environ <strong className="text-brand-primary">10 000 ménages</strong> (soit environ <strong className="text-brand-primary">60 000 habitants</strong>), répartis sur des douars traditionnels et conservant un mode de vie profondément ancré dans le pastoralisme de montagne.
+          </p>
+        </div>
+
+        {/* Highlight Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
+          <div className="bg-brand-sand/40 border border-brand-light-gray p-5 rounded-2xl space-y-2">
+            <span className="text-3xl font-serif font-bold text-brand-primary">~60 000</span>
+            <p className="text-xs font-bold font-sans uppercase tracking-wider text-stone-400">Habitants sédentarisés</p>
+            <p className="text-xs text-stone-600 font-sans leading-relaxed">
+              Une population répartie le long des vallées de l'oued Melloulou et de l'oued Ansegmir, vivant principalement d'agriculture de subsistance, d'élevage extensif et d'artisanat.
+            </p>
+          </div>
+          <div className="bg-brand-sand/40 border border-brand-light-gray p-5 rounded-2xl space-y-2">
+            <span className="text-3xl font-serif font-bold text-brand-primary">~300</span>
+            <p className="text-xs font-bold font-sans uppercase tracking-wider text-stone-400">Familles Nomades</p>
+            <p className="text-xs text-stone-600 font-sans leading-relaxed">
+              Des éleveurs transhumants fidèles aux parcours ancestraux d'altitude (Agdals) durant la période estivale, incarnant une culture nomade millénaire.
+            </p>
+          </div>
+          <div className="bg-brand-sand/40 border border-brand-light-gray p-5 rounded-2xl space-y-2">
+            <span className="text-3xl font-serif font-bold text-brand-primary">&gt; 400 000</span>
+            <p className="text-xs font-bold font-sans uppercase tracking-wider text-stone-400">Têtes de Cheptel</p>
+            <p className="text-xs text-stone-600 font-sans leading-relaxed">
+              Un effectif de bétail important (ovins et caprins) qui engendre une pression de surpâturage critique sur les jeunes pousses de cèdres et de genévriers.
+            </p>
+          </div>
+        </div>
+
+        {/* Factions list */}
+        <div className="border border-brand-light-gray rounded-2xl overflow-hidden bg-brand-sand/10">
+          <div className="bg-brand-sand/30 px-5 py-4 border-b border-brand-light-gray font-serif font-bold text-sm text-brand-primary">
+            Les 6 Grandes Factions / Tribus du Territoire
+          </div>
+          <div className="p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-xs font-sans">
+            <div className="bg-white p-3 border border-brand-light-gray/60 rounded-xl text-center shadow-xs">
+              <span className="font-bold text-brand-primary text-sm">Aït Yahia</span>
+            </div>
+            <div className="bg-white p-3 border border-brand-light-gray/60 rounded-xl text-center shadow-xs">
+              <span className="font-bold text-brand-primary text-sm">Aït Merghad</span>
+            </div>
+            <div className="bg-white p-3 border border-brand-light-gray/60 rounded-xl text-center shadow-xs">
+              <span className="font-bold text-brand-primary text-sm">Aït Haddidou</span>
+            </div>
+            <div className="bg-white p-3 border border-brand-light-gray/60 rounded-xl text-center shadow-xs">
+              <span className="font-bold text-brand-primary text-sm">Aït Said</span>
+            </div>
+            <div className="bg-white p-3 border border-brand-light-gray/60 rounded-xl text-center shadow-xs">
+              <span className="font-bold text-brand-primary text-sm">Aït Ayach</span>
+            </div>
+            <div className="bg-white p-3 border border-brand-light-gray/60 rounded-xl text-center shadow-xs">
+              <span className="font-bold text-brand-primary text-sm">Aït Izdeg</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Vulnerability factors */}
+        <div className="bg-rose-50/40 border border-rose-100 rounded-2xl p-5 sm:p-6 space-y-3">
+          <h4 className="font-serif font-bold text-sm text-rose-800 flex items-center space-x-2">
+            <AlertTriangle className="h-4 w-4 text-rose-600" />
+            <span>Indicateurs de Fragilité & Dépendances</span>
+          </h4>
+          <p className="text-xs text-stone-600 font-sans leading-relaxed">
+            Les communautés locales font face à un enclavement physique rigoureux pendant les mois d'hiver. Le taux d'analphabétisme reste supérieur à la moyenne nationale et l'accès aux services de base (santé, eau courante) est complexe. En conséquence, les populations dépendent fortement des ressources naturelles du parc pour assurer leur subsistance :
+          </p>
+          <ul className="list-disc pl-5 text-xs text-stone-600 font-sans space-y-1.5 leading-normal">
+            <li><strong>Chauffage & Énergie :</strong> Une consommation annuelle moyenne de bois de feu atteignant <strong>10 tonnes par foyer</strong> pour affronter les hivers glaciaux, menaçant directement l'intégrité de la cédraie.</li>
+            <li><strong>Surcharge Pastorale :</strong> L'élevage extensif est la principale source de subsistance, ce qui pousse à utiliser les jeunes repousses forestières comme fourrage lors des années de sécheresse.</li>
+          </ul>
+        </div>
+      </section>
+
       {/* Grid of Main Threats with solutions tabs */}
       <section className="space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-2">
@@ -199,6 +277,68 @@ export default function PreservationTab() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Historical Milestones and Governance Framework */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left Card: Prior Management & Legal Milestones */}
+        <div className="bg-white border border-brand-light-gray rounded-[36px] p-6 sm:p-8 space-y-5 shadow-sm">
+          <div className="space-y-1.5">
+            <span className="text-brand-accent uppercase tracking-widest text-[10px] font-bold font-sans">§3 Chronologie Institutionnelle</span>
+            <h4 className="font-serif font-bold text-xl text-brand-text tracking-tight">
+              Gestion Antérieure & Cadre Légal
+            </h4>
+            <p className="text-xs text-stone-500 font-sans">
+              La structuration administrative du domaine forestier du Haut Atlas Oriental s'est construite sur plus de huit décennies de jalons législatifs.
+            </p>
+          </div>
+
+          <div className="relative border-l border-brand-light-gray/80 pl-5 space-y-4 text-xs font-sans">
+            <div className="relative">
+              <div className="absolute -left-[26px] top-0.5 bg-brand-primary h-2 w-2 rounded-full border border-white" />
+              <span className="font-bold text-brand-primary block font-mono">1941</span>
+              <p className="text-stone-600 mt-0.5 leading-relaxed">Mise en défens historique et délimitation des premiers cantons de protection de la cédraie d'Ansegmir par l'administration des Eaux et Forêts protectorale.</p>
+            </div>
+            <div className="relative">
+              <div className="absolute -left-[26px] top-0.5 bg-brand-primary h-2 w-2 rounded-full border border-white" />
+              <span className="font-bold text-brand-primary block font-mono">1997</span>
+              <p className="text-stone-600 mt-0.5 leading-relaxed">Arrêté d'identification officielle de la zone humide de haute montagne d'Imilchil et classement d'Isly et Tislit comme sites d'intérêt biologique et écologique (SIBE).</p>
+            </div>
+            <div className="relative">
+              <div className="absolute -left-[26px] top-0.5 bg-brand-primary h-2 w-2 rounded-full border border-white" />
+              <span className="font-bold text-brand-primary block font-mono">2004</span>
+              <p className="text-stone-600 mt-0.5 leading-relaxed">Décret de création officiel du Parc National du Haut Atlas Oriental (Décret n° 2-04-504 du 16 Décembre 2004) fixant les contours administratifs sur 55 252 Ha.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Card: Governance & Co-Management */}
+        <div className="bg-white border border-brand-light-gray rounded-[36px] p-6 sm:p-8 space-y-5 shadow-sm">
+          <div className="space-y-1.5">
+            <span className="text-brand-accent uppercase tracking-widest text-[10px] font-bold font-sans">§7 Gestion Partenariale</span>
+            <h4 className="font-serif font-bold text-xl text-brand-text tracking-tight">
+              Gouvernance, Concertation & Partenariat
+            </h4>
+            <p className="text-xs text-stone-500 font-sans">
+              La gestion durable du parc est participative, fédérant les institutions publiques, les coopératives et les associations communautaires.
+            </p>
+          </div>
+
+          <div className="space-y-4 text-xs font-sans leading-relaxed text-stone-600">
+            <div className="bg-brand-sand/40 border border-brand-light-gray/60 p-4 rounded-xl space-y-1">
+              <span className="font-bold text-brand-primary">Partenariat Forestier (ANEF & Communes)</span>
+              <p className="text-stone-500 text-[11px]">Un comité de pilotage réunit régulièrement l'Agence Nationale des Eaux et Forêts (ANEF), la Province de Midelt et les 4 communes locales (Boumia, Itzer, Tonfite, Imilchil) pour coordonner les actions d'aménagement de l'espace.</p>
+            </div>
+            <div className="bg-brand-sand/40 border border-brand-light-gray/60 p-4 rounded-xl space-y-1">
+              <span className="font-bold text-brand-primary">Coopératives Pastorales</span>
+              <p className="text-stone-500 text-[11px]">Fédération des éleveurs locaux en groupements de gestion pastorale d'altitude pour réglementer le parcours du bétail et minimiser les dégâts de broutement sur les cèdres.</p>
+            </div>
+            <div className="bg-brand-sand/40 border border-brand-light-gray/60 p-4 rounded-xl space-y-1">
+              <span className="font-bold text-brand-primary">Filières Apicoles & Éco-Guides</span>
+              <p className="text-stone-500 text-[11px]">Promotion des produits du terroir (Miel de thym du parc) auprès des coopératives d'apiculteurs et encadrement des jeunes via l'association des guides d'Imilchil.</p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -61,9 +61,12 @@ export const FAUNA_IMAGES: Record<string, { image: string, gallery: string[] }> 
     ]
   },
   "fau-7": {
-    image: "/images/faune/photo-1528114039593-4366cc08227d_cd76b6.jpg",
+     image: "/images/faune/vautour.fauve.dape.7g.jpg",
     gallery: [
-      "/images/faune/photo-1528114039593-4366cc08227d_199d97.jpg"
+          "/images/faune/vautour.fauve.adel.1g.jpg",
+          "/images/faune/vautour.fauve.dico.10g.jpg",
+          "/images/faune/vautour.fauve.mafa.4g.jpg",
+          "/images/faune/vautour.fauve.dape.7g.jpg"
     ]
   },
   "fau-8": {
@@ -442,6 +445,76 @@ export default function FauneTab() {
         </motion.div>
       )}
 
+      {/* Official Inventory Statistics & IUCN Table */}
+      <section className="bg-white border border-brand-light-gray rounded-[40px] p-6 sm:p-10 shadow-sm space-y-6">
+        <div className="space-y-2">
+          <span className="text-xs font-bold font-sans uppercase tracking-widest text-brand-primary">Bilan Patrimonial Officiel</span>
+          <h3 className="font-serif font-bold text-2xl sm:text-3xl text-brand-text tracking-tight">Statistiques d'Inventaire et Statuts de Conservation</h3>
+          <p className="text-sm text-stone-500 max-w-3xl font-sans">
+            L'inventaire officiel de la faune sauvage du Parc National du Haut Atlas Oriental recense un total de <strong className="text-brand-primary">640 espèces</strong>. Ce patrimoine précieux est suivi de près dans le cadre de la protection des écosystèmes montagnards marocains.
+          </p>
+        </div>
+
+        {/* Highlight Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-2">
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">640</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Espèces totales</span>
+          </div>
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">65</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Mammifères</span>
+          </div>
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">110</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Espèces d'Oiseaux</span>
+          </div>
+          <div className="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span className="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">30</span>
+            <span className="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Reptiles & Amphibiens</span>
+          </div>
+        </div>
+
+        {/* IUCN Classification and Protected Status Table */}
+        <div className="border border-brand-light-gray/80 rounded-2xl overflow-hidden bg-brand-sand/10">
+          <div className="bg-brand-sand/30 px-5 py-4 border-b border-brand-light-gray font-serif font-bold text-sm text-brand-primary">
+            Classification UICN & Statuts de Conservation Remarquables
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm font-sans">
+              <thead>
+                <tr className="bg-brand-sand/40 text-[11px] text-stone-500 uppercase tracking-wider border-b border-brand-light-gray">
+                  <th className="py-3 px-5 font-semibold">Groupe Taxonomique</th>
+                  <th className="py-3 px-5 font-semibold">En Danger Critique (CR) / En Danger (EN)</th>
+                  <th className="py-3 px-5 font-semibold">Vulnérable (VU) / Quasi Menacé (NT)</th>
+                  <th className="py-3 px-5 font-semibold">Espèces Sédentaires Protégées du Parc</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-brand-light-gray/60 text-stone-600">
+                <tr>
+                  <td className="py-3 px-5 font-bold text-brand-primary">Mammifères</td>
+                  <td className="py-3 px-5">Macaque de Barbarie (EN)</td>
+                  <td className="py-3 px-5">Mouflon à manchettes (VU), Gazelle Dorcas (VU), Loutre d'Europe (NT)</td>
+                  <td className="py-3 px-5 font-semibold">Mouflon à manchettes, Macaque de Barbarie, Loutre, Hyène rayée</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-5 font-bold text-brand-primary">Oiseaux</td>
+                  <td className="py-3 px-5">Vautour percnoptère (EN)</td>
+                  <td className="py-3 px-5">Aigle de Bonelli (VU), Faucon lanier (NT), Faucon de Barbarie (NT)</td>
+                  <td className="py-3 px-5 font-semibold">Aigle de Bonelli, Faucon lanier, Grand-duc ascalaphe, Gypaète barbu</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-5 font-bold text-brand-primary">Reptiles & Amphibiens</td>
+                  <td className="py-3 px-5">Vipère de l'Atlas (EN), Psammodrome vert (EN)</td>
+                  <td className="py-3 px-5">Tortue mauresque (VU), Crapaud de Mauritanie (LC)</td>
+                  <td className="py-3 px-5 font-semibold">Tortue mauresque, Gecko diurne de l'Atlas, Salamandre d'Algérie</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       {/* Interactive Controls (Search & Filters) */}
       <section className="bg-brand-sand/50 border border-brand-light-gray rounded-[28px] p-5 flex flex-col lg:flex-row lg:items-center gap-4 shadow-sm">
         {/* Search Input */}
@@ -639,12 +712,12 @@ export default function FauneTab() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 pt-16 lg:pt-4 overflow-y-auto"
+              className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 pt-16 sm:pt-4 overflow-y-auto"
               onClick={() => setSelectedAnimal(null)}
             >
               {/* Top center floating navigation buttons */}
               <div 
-                className="fixed top-0 left-0 right-0 w-full lg:w-auto lg:top-6 lg:left-1/2 lg:-translate-x-1/2 z-[110] flex items-center justify-between lg:justify-start lg:space-x-3 bg-[#1e2320]/95 border-b lg:border border-[#3e4841]/50 lg:rounded-full shadow-2xl text-stone-100 backdrop-blur-md transition-all hover:border-brand-accent/50 px-4 lg:px-5 py-2 lg:py-2.5 h-11 lg:h-auto"
+                className="fixed top-0 left-0 w-full sm:w-auto sm:top-6 sm:left-1/2 sm:-translate-x-1/2 z-[110] flex items-center justify-between sm:justify-start sm:space-x-3 bg-[#1e2320]/95 border-b sm:border border-[#3e4841]/50 sm:rounded-full shadow-2xl text-stone-100 backdrop-blur-md transition-all hover:border-brand-accent/50 px-4 sm:px-5 py-2 sm:py-2.5 h-11 sm:h-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -661,9 +734,9 @@ export default function FauneTab() {
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
-                <div className="flex items-center space-x-2 select-none">
-                  <span className="text-[9px] uppercase tracking-widest font-sans font-bold text-stone-400">FAUNE</span>
-                  <span className="text-xs font-mono font-bold text-brand-accent leading-none">
+                <div className="flex items-center justify-center space-x-2 select-none">
+                  <span className="text-[9px] uppercase tracking-widest font-sans font-bold text-stone-400 text-center">FAUNE</span>
+                  <span className="text-xs font-mono font-bold text-brand-accent leading-none text-center">
                     {filteredFauna.findIndex(item => item.id === selectedAnimal.id) + 1} / {filteredFauna.length}
                   </span>
                 </div>
@@ -710,7 +783,26 @@ export default function FauneTab() {
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Image Section / Mini Carousel */}
-                <div className="w-full sm:w-1/2 relative bg-brand-sand h-[30vh] sm:h-full flex flex-col justify-between shrink-0">
+                <div 
+                  className="w-full sm:w-1/2 relative bg-brand-sand h-[30vh] sm:h-full flex flex-col justify-between shrink-0 select-none touch-pan-y"
+                  onTouchStart={(e) => {
+                    const startX = e.changedTouches[0].clientX;
+                    e.currentTarget.setAttribute('data-swipe-start', String(startX));
+                  }}
+                  onTouchEnd={(e) => {
+                    const startXStr = e.currentTarget.getAttribute('data-swipe-start');
+                    if (!startXStr) return;
+                    const startX = parseFloat(startXStr);
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+                    const threshold = 50;
+                    if (diff > threshold) {
+                      nextModalImage(gallery);
+                    } else if (diff < -threshold) {
+                      prevModalImage(gallery);
+                    }
+                  }}
+                >
                   <img
                     src={getAssetUrl(gallery[modalImageIdx])}
                     alt={selectedAnimal.name}

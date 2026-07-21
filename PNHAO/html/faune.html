@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Faune Sauvage du PNHAO - WordPress Ready</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght=0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#F9F7F2',
+              text: '#2D342F',
+              primary: '#4A5D4E',
+              accent: '#D68C67',
+              'light-gray': '#E2E8E0',
+              sand: '#F4F1EA',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-brand-bg text-brand-text min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE START                                           -->
+  <!-- Copy the content below into your WordPress Custom HTML Block or Elementor  -->
+  <!-- ========================================================================= -->
+  <div id="wp-pnhao-faune" class="w-full bg-brand-bg text-brand-text font-sans antialiased py-12">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-accent">Biodiversité Exceptionnelle</span>
+        <h2 class="font-serif font-bold text-3xl md:text-4xl text-brand-primary tracking-tight">La Faune Sauvage du PNHAO</h2>
+        <p class="text-stone-500 text-sm leading-relaxed">
+          Le parc constitue le dernier refuge pour de nombreuses espèces phares de la haute montagne marocaine, s'étendant des sommets escarpés du Jbel Ayachi aux lacs d'Imilchil.
+        </p>
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="bg-white border border-brand-light-gray rounded-[28px] p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Filter Tabs -->
+        <div id="fauna-filters" class="flex flex-wrap gap-2">
+          <button onclick="setFaunaFilter('all')" id="f-btn-all" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray bg-brand-primary text-white">
+            Tout
+          </button>
+          <button onclick="setFaunaFilter('mammal')" id="f-btn-mammal" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+            Mammifères
+          </button>
+          <button onclick="setFaunaFilter('bird')" id="f-btn-bird" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+            Oiseaux
+          </button>
+          <button onclick="setFaunaFilter('reptile')" id="f-btn-reptile" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+            Reptiles & Amphibiens
+          </button>
+        </div>
+
+        <!-- Search input -->
+        <div class="relative max-w-sm w-full">
+          <input type="text" id="fauna-search-input" oninput="handleFaunaSearch()" placeholder="Rechercher une espèce (Mouflon, Aigle...)" class="w-full bg-brand-bg border border-brand-light-gray px-4 py-2.5 rounded-xl text-xs font-sans placeholder-stone-400 focus:outline-none focus:border-brand-primary" />
+          <i data-lucide="search" class="absolute right-3.5 top-3 h-4 w-4 text-stone-400"></i>
+        </div>
+      </div>
+
+      <!-- No Results State -->
+      <div id="fauna-no-results" class="hidden text-center py-16 bg-white border border-brand-light-gray rounded-[32px] space-y-3">
+        <div class="p-3 bg-brand-sand w-fit rounded-full mx-auto text-stone-400">
+          <i data-lucide="info" class="h-6 w-6"></i>
+        </div>
+        <p class="font-serif font-bold text-lg text-brand-primary">Aucune espèce trouvée</p>
+        <p class="text-xs text-stone-500">Essayez d'ajuster votre recherche ou filtre.</p>
+      </div>
+
+      <!-- Dynamic Grid of Animals -->
+      <div id="fauna-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Injected by JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- Interactive Animal Detail Lightbox (Modal) -->
+    <div id="fauna-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+      <div class="relative bg-white w-full max-w-3xl rounded-[32px] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+        
+        <!-- Close Button -->
+        <button onclick="closeFaunaModal()" class="absolute top-4 right-4 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-all cursor-pointer">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+
+        <div class="overflow-y-auto flex-grow">
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- Left: Photo/Gallery Section -->
+            <div class="bg-stone-900 relative h-[250px] md:h-full min-h-[300px]">
+              <img id="modal-main-img" src="" class="w-full h-full object-cover" alt="Selected Animal" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=600&q=80'" />
+              
+              <!-- Gallery Thumbnail dots -->
+              <div id="modal-gallery-thumbs" class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10 px-4">
+                <!-- Thumbs injected dynamically -->
+              </div>
+            </div>
+
+            <!-- Right: Content details -->
+            <div class="p-8 space-y-5">
+              <div class="space-y-1">
+                <span id="modal-group" class="text-[9px] uppercase font-mono font-bold tracking-widest text-brand-accent">Mammifère</span>
+                <h3 id="modal-title" class="font-serif font-bold text-2xl text-brand-primary">Mouflon à manchettes</h3>
+                <p id="modal-sciname" class="text-xs font-mono italic text-stone-500">Ammotragus lervia</p>
+              </div>
+
+              <div class="space-y-3 font-sans text-xs">
+                <div>
+                  <span class="font-bold text-stone-400 block uppercase text-[9px] tracking-wider mb-0.5">Statut de Protection</span>
+                  <span id="modal-status" class="inline-flex px-2.5 py-1 rounded-md bg-rose-50 text-rose-700 font-bold border border-rose-100">Vulnérable (VU) / Protégé</span>
+                </div>
+                <div>
+                  <span class="font-bold text-stone-400 block uppercase text-[9px] tracking-wider mb-0.5">Habitat Naturel</span>
+                  <p id="modal-habitat" class="text-stone-700 font-medium">Falaises rocheuses, ravins profonds et zones semi-désertiques d'altitude.</p>
+                </div>
+                <div class="pt-2 border-t border-brand-light-gray">
+                  <span class="font-bold text-stone-400 block uppercase text-[9px] tracking-wider mb-1">Description</span>
+                  <p id="modal-desc" class="text-stone-600 leading-relaxed">Le seigneur des falaises...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Script Block for Animals Logic -->
+    <script>
+      // Raw Self-Contained Dataset to allow instant copy-paste into WordPress
+      const FAUNA_ITEMS = [
+        {
+          id: "fau-1",
+          name: "Mouflon à manchettes",
+          scientificName: "Ammotragus lervia",
+          group: "mammal",
+          description: "Le seigneur des falaises. Le parc abrite l'une des dernières grandes populations viables de ce bovidé sauvage au Maghreb. Ses cornes impressionnantes et sa capacité à grimper les pentes escarpées sont légendaires.",
+          status: "Vulnérable (VU) / Protégé",
+          habitat: "Reliefs accidentés, falaises, crêtes rocheuses et éboulis",
+          image: "/images/faune/mouflon_manchettes1_b6edba.jpg",
+          gallery: [
+            "/images/faune/mouflon_manchettes1_b6edba.jpg",
+            "/images/faune/mouflon_manchettes2_fdccbf.jpg",
+            "/images/faune/mouflon_manchettes3_10d6b4.jpg"
+          ]
+        },
+        {
+          id: "fau-2",
+          name: "Macaque de Barbarie (Singe Magot)",
+          scientificName: "Macaca sylvanus",
+          group: "mammal",
+          description: "Le seul macaque vivant en dehors d'Asie et le seul primate sauvage d'Europe/Afrique du Nord. Il est très attaché aux forêts de Cèdre de l'Atlas (Cedrus atlantica) où il trouve sa nourriture.",
+          status: "En Danger (EN) / Annexe II CITES",
+          habitat: "Forêts de cèdres de l'Atlas et falaises adjacentes",
+          image: "/images/faune/macaque_1_e1a371.jpg",
+          gallery: [
+            "/images/faune/macaque_1_e1a371.jpg",
+            "/images/faune/macaque_2_da4814.jpg",
+            "/images/faune/macaque_3_c1860e.jpg",
+            "/images/faune/macaque_4_e4f748.jpg",
+            "/images/faune/macaque_5_389bb5.jpg"
+          ]
+        },
+        {
+          id: "fau-3",
+          name: "Gazelle de Cuvier",
+          scientificName: "Gazella cuvieri",
+          group: "mammal",
+          description: "Petite gazelle de montagne, autrefois commune, aujourd'hui confinée aux lisières du parc et zones de steppes arborées. Elle fait l'objet d'un plan de conservation strict.",
+          status: "En Danger (EN) / Annexe I CITES",
+          habitat: "Pentes semi-arides et steppes arbustives",
+          image: "/images/faune/gazella_dorcas1_08e87c.jpg",
+          gallery: [
+            "/images/faune/gazella_dorcas1_08e87c.jpg",
+            "/images/faune/gazella_dorcas2_942ddc.jpg",
+            "/images/faune/gazella_dorcas3_f003f9.jpg"
+          ]
+        },
+        {
+          id: "fau-4",
+          name: "Loutre d'Europe",
+          scientificName: "Lutra lutra",
+          group: "mammal",
+          description: "Une incroyable curiosité dans cette zone de haute montagne aride : la loutre a été observée de façon régulière dans les eaux des légendaires lacs de montagne Isly et Tislit.",
+          status: "Vulnérable (VU) au Maroc",
+          habitat: "Lacs de montagne et oueds permanents",
+          image: "/images/faune/lutra_lutra1_51887e.jpg",
+          gallery: [
+            "/images/faune/lutra_lutra1_51887e.jpg",
+            "/images/faune/lutra_lutra2_7c5f77.jpg",
+            "/images/faune/lutra_lutra3_087199.jpg",
+            "/images/faune/lutra_lutra4_fa02b3.jpg",
+            "/images/faune/lutra_lutra5_49c172.jpg"
+          ]
+        },
+        {
+          id: "fau-5",
+          name: "Porc-épic à crête",
+          scientificName: "Hystrix cristata",
+          group: "mammal",
+          description: "Grand rongeur nocturne couvert de piquants bicolores. Bien que discret, il joue un rôle écologique majeur en retournant la terre à la recherche de bulbes.",
+          status: "En Danger (EN) au Maroc",
+          habitat: "Zones de buissons, thalwegs et terriers rocheux",
+          image: "/images/faune/porc-epic_3b6595.webp",
+          gallery: [
+            "/images/faune/porc-epic_3b6595.webp"
+          ]
+        },
+        {
+          id: "fau-6",
+          name: "Aigle royal",
+          scientificName: "Aquila chrysaetos",
+          group: "bird",
+          description: "Superbe rapace diurne nichant dans les falaises inaccessibles du parc. Sa population est actuellement en déclin au Maroc, faisant du parc un refuge crucial.",
+          status: "Nicheur sédentaire en déclin / Protégé",
+          habitat: "Milieux escarpés, crêtes, zones de chasse ouvertes",
+          image: "/images/faune/aigle_royal_1_96b6c9.jpg",
+          gallery: [
+            "/images/faune/aigle_royal_1_96b6c9.jpg",
+            "/images/faune/aigle_royal_2_d1a951.jpg"
+          ]
+        },
+        {
+          id: "fau-7",
+          name: "Vautour fauve",
+          scientificName: "Gyps fulvus",
+          group: "bird",
+          description: "Immense planeur qui utilise les courants thermiques des montagnes. Il est menacé de disparition au Maroc et bénéficie d'une surveillance particulière du parc.",
+          status: "Menacé de disparition au Maroc",
+          habitat: "Gorges rocheuses, hautes falaises de montagne",
+          image: "/images/faune/vautour.fauve.dape.7g.jpg",
+          gallery: [
+            "/images/faune/vautour.fauve.adel.1g.jpg",
+            "/images/faune/vautour.fauve.dico.10g.jpg",
+            "/images/faune/vautour.fauve.mafa.4g.jpg",
+            "/images/faune/vautour.fauve.dape.7g.jpg"
+          ]
+        },
+        {
+          id: "fau-8",
+          name: "Mésange noire de l'Atlas",
+          scientificName: "Parus ater atlas",
+          group: "bird",
+          description: "Un adorable petit passereau endémique de la région du Maghreb, particulièrement vif et inféodé aux forêts de cèdres de l'Atlas.",
+          status: "Endémique du Maghreb / Protégé",
+          habitat: "Cédraies et pinèdes d'altitude",
+          image: "/images/faune/parus_major_1_62b1c6.jpg",
+          gallery: [
+            "/images/faune/parus_major_1_62b1c6.jpg",
+            "/images/faune/parus_major_2_cf5cc5.jpg"
+          ]
+        },
+        {
+          id: "fau-9",
+          name: "Tadorne casarca",
+          scientificName: "Tadorna ferruginea",
+          group: "bird",
+          description: "Magnifique canard au plumage roux orangé et tête claire. Il est une figure emblématique des oiseaux d'eaux des lacs Isly et Tislit, y nichant de manière sédentaire.",
+          status: "Rare comme nicheur au Maroc",
+          habitat: "Lacs de montagne Isly et Tislit (Ramsar)",
+          image: "/images/faune/tadorne-casarca4_390718.jpg",
+          gallery: [
+            "/images/faune/tadorne-casarca3_782405.jpg",
+            "/images/faune/tadorne-casarca_98c436.jpg",
+            "/images/faune/tadorne-casarca1_c50c97.jpg"
+          ]
+        },
+        {
+          id: "fau-10",
+          name: "Vautour percnoptère",
+          scientificName: "Neophron percnopterus",
+          group: "bird",
+          description: "Aussi appelé 'Poule de Pharaon', ce petit vautour migrateur blanc et noir à face jaune est en danger critique en Europe et menacé au Maroc.",
+          status: "Menacé au Maroc / En Danger (EN) UICN",
+          habitat: "Falaises à proximité des habitations pastorales",
+          image: "/images/faune/neophron_percnopterus_vautour_1784117973147.jpg",
+          gallery: [
+            "/images/faune/neophron_percnopterus_vautour_1784117973147.jpg"
+          ]
+        },
+        {
+          id: "fau-11",
+          name: "Vipère de l'Atlas",
+          scientificName: "Vipera monticola",
+          group: "reptile",
+          description: "Petite vipère endémique très localisée du Haut Atlas. Elle vit cachée sous les roches des sommets froids au-dessus de 2500 m d'altitude.",
+          status: "Endémique du Haut Atlas / Menacée",
+          habitat: "Steppes épineuses d'altitude et pierriers",
+          image: "/images/faune/vipera-monticola_7fd785.jpg",
+          gallery: [
+            "/images/faune/vipera-monticola_7fd785.jpg",
+            "/images/faune/vipera-monticola1_3e8305.jpg"
+          ]
+        },
+        {
+          id: "fau-12",
+          name: "Lézard d'Andreanszky",
+          scientificName: "Atlantolacerta andreanskyi",
+          group: "reptile",
+          description: "Petit lézard de haute montagne extrêmement rare, inféodé aux sommets froids du Haut Atlas. C'est un véritable relique glaciaire.",
+          status: "Endémique du Haut Atlas / En Danger (EN)",
+          habitat: "Pierriers froids de haute altitude (Oroméditerranéen)",
+          image: "/images/faune/psammodrome-vert_b4ac02.jpg",
+          gallery: [
+            "/images/faune/psammodrome-vert_b4ac02.jpg"
+          ]
+        },
+        {
+          id: "fau-13",
+          name: "Discoglosse peint du Maroc",
+          scientificName: "Discoglossus scovazzi",
+          group: "reptile",
+          description: "Amphibien endémique du Maroc de la famille des Alytidés. Il peuple les petites mares temporaires, sources et oueds du parc.",
+          status: "Endémique du Maroc / Protégé",
+          habitat: "Sources d'eau douce, petites mares et ripisylves",
+          image: "/images/faune/discoglossus-scovazzi_f09d42.jpg",
+          gallery: [
+            "/images/faune/discoglossus-scovazzi_f09d42.jpg"
+          ]
+        },
+        {
+          id: "fau-14",
+          name: "Tortue grecque",
+          scientificName: "Testudo graeca",
+          group: "reptile",
+          description: "Tortue terrestre herbivore emblématique. Elle subit une forte pression due à la dégradation des habitats et aux prélèvements illégaux.",
+          status: "Vulnérable (VU) UICN / Protégée",
+          habitat: "Steppes arbustives sèches et friches agricoles",
+          image: "/images/faune/testudo-graeca_ba910e.jpg",
+          gallery: [
+            "/images/faune/testudo-graeca_ba910e.jpg",
+            "/images/faune/testudo-graeca2_2a3c7c.jpg",
+            "/images/faune/testudo-graeca3_ba0c52.jpg"
+          ]
+        },
+        {
+          id: "fau-15",
+          name: "Renard roux de l'Atlas",
+          scientificName: "Vulpes vulpes",
+          group: "mammal",
+          description: "Mammifère carnivore très intelligent et adaptable, habitué des zones forestières et steppes rocheuses du parc national.",
+          status: "Commun / Protégé",
+          habitat: "Forêts de cèdres, oueds et piémonts rocheux",
+          image: "/images/faune/renard_rou_1_c3b49e.jpg",
+          gallery: [
+            "/images/faune/renard_rou_1_c3b49e.jpg",
+            "/images/faune/renard_rou_2_f1e381.jpg",
+            "/images/faune/renard_rou_3_e8f74d.jpg"
+          ]
+        },
+        {
+          id: "fau-16",
+          name: "Huppe fasciée",
+          scientificName: "Upupa epops",
+          group: "bird",
+          description: "Oiseau élégant au plumage bigarré et à la huppe érectile spectaculaire. Elle affectionne les milieux ouverts et forestiers du parc, s'y nourrissant d'insectes au sol.",
+          status: "Nicheur sédentaire / Protégé",
+          habitat: "Clairières, vergers d'altitude et lisières de forêts",
+          image: "/images/faune/upupa_epops1_829f20.jpg",
+          gallery: [
+            "/images/faune/upupa_epops1_829f20.jpg",
+            "/images/faune/upupa_epops2_d1acf4.jpg",
+            "/images/faune/upupa_epops3_e4ad22.jpg",
+            "/images/faune/upupa_epops4_df4886.jpg",
+            "/images/faune/upupa_epops5_b61d41.jpg"
+          ]
+        },
+        {
+          id: "fau-17",
+          name: "Perdrix de Barbarie",
+          scientificName: "Alectoris barbara",
+          group: "bird",
+          description: "Oiseau terrestre emblématique des montagnes maghrébines. Elle peuple les versants caillouteux et les forêts claires de cèdres ou de genévriers.",
+          status: "Nicheur sédentaire / Protégé",
+          habitat: "Pentes rocheuses, garrigues et forêts de montagne",
+          image: "/images/faune/alectoris_barbara1_d4bbae.jpg",
+          gallery: [
+            "/images/faune/alectoris_barbara1_d4bbae.jpg",
+            "/images/faune/alectoris_barbara2_a63e93.jpg",
+            "/images/faune/alectoris_barbara3_b74520.jpg",
+            "/images/faune/alectoris_barbara4_91f64b.jpg",
+            "/images/faune/alectoris_barbara5_7f67fd.jpg"
+          ]
+        },
+        {
+          id: "fau-18",
+          name: "Aigle de Bonelli",
+          scientificName: "Aquila fasciata",
+          group: "bird",
+          description: "Superbe rapace diurne nichant sur les falaises rocheuses abruptes du massif de l'Ayachi. C'est un chasseur redoutable et hautement menacé.",
+          status: "Rare / Protégé Maroc",
+          habitat: "Milieux escarpés, crêtes, zones rocheuses",
+          image: "/images/faune/cerf_de_berberie1_232788.jpg",
+          gallery: [
+            "/images/faune/cerf_de_berberie1_232788.jpg",
+            "/images/faune/cerf_de_berberie2_2d1a7f.jpg",
+            "/images/faune/cervus_elaphus_barbarus_11601c.jpg"
+          ]
+        },
+        {
+          id: "fau-19",
+          name: "Sanglier d'Eurasie",
+          scientificName: "Sus scrofa",
+          group: "mammal",
+          description: "Grand mammifère omnivore très commun dans les forêts du parc. Son rôle de fouisseur aide à retourner les sols forestiers pour la germination.",
+          status: "Commun",
+          habitat: "Forêts d'altitude, fourrés et lits d'oueds",
+          image: "/images/faune/sanglier_1_8bdbf6.jpg",
+          gallery: [
+            "/images/faune/sanglier_1_8bdbf6.jpg",
+            "/images/faune/sanglier_2_0b76c0.jpg",
+            "/images/faune/sanglier_3_d2164a.jpg"
+          ]
+        },
+        {
+          id: "fau-20",
+          name: "Grand Corbeau",
+          scientificName: "Corvus corax",
+          group: "bird",
+          description: "Oiseau d'une intelligence légendaire et d'une adaptabilité hors norme, régnant sur les sommets escarpés du massif de l'Ayachi.",
+          status: "Sédentaire / Commun",
+          habitat: "Hautes crêtes, falaises rocheuses et plateaux d'altitude",
+          image: "/images/faune/corvus_corax1_d313c0.jpg",
+          gallery: [
+            "/images/faune/corvus_corax1_d313c0.jpg",
+            "/images/faune/corvus_corax2_b7bce1.jpg",
+            "/images/faune/corvus_corax3_79108a.jpg",
+            "/images/faune/corvus_corax4_d535b7.jpg",
+            "/images/faune/corvus_corax5_d80984.jpg",
+            "/images/faune/corvus_corax6_33dc9f.jpg",
+            "/images/faune/corvus_corax7_523948.jpg"
+          ]
+        },
+        {
+          id: "fau-21",
+          name: "Chouette hulotte",
+          scientificName: "Strix aluco",
+          group: "bird",
+          description: "Rapace nocturne mystérieux et élégant, trouvant refuge dans les cavités des vieux cèdres millénaires du parc.",
+          status: "Nicheur sédentaire / Protégé",
+          habitat: "Forêts de cèdres denses et chênaies",
+          image: "/images/faune/chouette_hulotte1_09b6fc.jpg",
+          gallery: [
+            "/images/faune/chouette_hulotte1_09b6fc.jpg",
+            "/images/faune/chouette_hulotte2_f244e9.jpg",
+            "/images/faune/chouette_hulotte3_e5ba0e.jpg"
+          ]
+        },
+        {
+          id: "fau-22",
+          name: "Pic épeiche",
+          scientificName: "Dendrocopos major",
+          group: "bird",
+          description: "Oiseau grimpeur et tambourineur emblématique des cédraies de l'Atlas. Il creuse son nid dans le tronc des arbres sénescents.",
+          status: "Nicheur sédentaire",
+          habitat: "Forêts de conifères et forêts mixtes",
+          image: "/images/faune/dendrocopos_major_1_3758be.jpg",
+          gallery: [
+            "/images/faune/dendrocopos_major_1_3758be.jpg",
+            "/images/faune/dendrocopos_major_2_2b2520.jpg"
+          ]
+        },
+        {
+          id: "fau-23",
+          name: "Mésange charbonnière",
+          scientificName: "Parus major",
+          group: "bird",
+          description: "Petit passereau vif et coloré, grand consommateur de chenilles processionnaires, jouant un rôle de protecteur biologique des forêts de cèdre.",
+          status: "Sédentaire / Utile aux forêts",
+          habitat: "Forêts mixtes, jardins d'altitude et vergers",
+          image: "/images/faune/parus_major_1_62b1c6.jpg",
+          gallery: [
+            "/images/faune/parus_major_1_62b1c6.jpg",
+            "/images/faune/parus_major_2_cf5cc5.jpg"
+          ]
+        },
+        {
+          id: "fau-24",
+          name: "Faucon lanier",
+          scientificName: "Falco biarmicus",
+          group: "bird",
+          description: "Superbe rapace de haute montagne, particulièrement adapté aux anfractuosités des parois rocheuses et falaises escarpées du parc pour sa nidification.",
+          status: "Rare / Protégé Maroc",
+          habitat: "Falaises et canyons d'altitude",
+          image: "/images/faune/fennec_vulpes_zerda1_0e5d88.jpg",
+          gallery: [
+            "/images/faune/fennec_vulpes_zerda1_0e5d88.jpg",
+            "/images/faune/fennec_vulpes_zerda2_cf04d8.jpg",
+            "/images/faune/fennec_vulpes_zerda3_996fb4.jpg",
+            "/images/faune/fennec_vulpes_zerda4_a0efe2.jpg",
+            "/images/faune/fennec_vulpes_zerda5_4e362d.jpg",
+            "/images/faune/fennec_vulpes_zerda6_511006.jpg"
+          ]
+        },
+        {
+          id: "fau-25",
+          name: "Faucon de Barbarie",
+          scientificName: "Falco peregrinus pelegrinoides",
+          group: "bird",
+          description: "Prestigieux rapace des falaises et milieux rocheux ouverts du Haut Atlas, doté d'une agilité aérienne et d'une vélocité de piqué extrêmes.",
+          status: "Très Rare / Protégé",
+          habitat: "Milieux escarpés et gorges rocheuses",
+          image: "/images/faune/herpestes_ichneumon1_b03245.jpg",
+          gallery: [
+            "/images/faune/herpestes_ichneumon1_b03245.jpg",
+            "/images/faune/herpestes_ichneumon2_a406fb.jpg",
+            "/images/faune/herpestes_ichneumon3_ba81a4.jpg",
+            "/images/faune/herpestes_ichneumon4_72a277.jpg",
+            "/images/faune/herpestes_ichneumon5_dec947.jpg"
+          ]
+        },
+        {
+          id: "fau-26",
+          name: "Grand-duc ascalaphe",
+          scientificName: "Bubo ascalaphus",
+          group: "bird",
+          description: "Le grand rapace nocturne des falaises et canyons du parc. Chasseur crépusculaire remarquable, il est repérable à ses grands disques oculaires et son hululement sourd.",
+          status: "Sédentaire / Protégé Maroc",
+          habitat: "Canyons, falaises et escarpements rocheux",
+          image: "/images/faune/phoenicopterus_roseus1_2aa57d.jpg",
+          gallery: [
+            "/images/faune/phoenicopterus_roseus1_2aa57d.jpg",
+            "/images/faune/phoenicopterus_roseus2_5b57e7.jpg",
+            "/images/faune/phoenicopterus_roseus3_d24995.jpg",
+            "/images/faune/phoenicopterus_roseus4_2231a8.jpg",
+            "/images/faune/phoenicopterus_roseus5_7dcbea.jpg"
+          ]
+        },
+        {
+          id: "fau-27",
+          name: "Gecko diurne de l'Atlas",
+          scientificName: "Quedenfeldtia trachyblepharus",
+          group: "reptile",
+          description: "Petit lézard diurne endémique des très hautes altitudes du Haut Atlas. C'est un joyau herpétologique capable d'activité sous des températures proches du gel.",
+          status: "Endémique du Haut Atlas / Protégé",
+          habitat: "Pierriers froids et hauts sommets oroméditerranéens",
+          image: "/images/faune/larus_michahellis1_302f06.jpg",
+          gallery: [
+            "/images/faune/larus_michahellis1_302f06.jpg",
+            "/images/faune/larus_michahellis2_786cb7.jpg",
+            "/images/faune/larus_michahellis3_0faac5.jpg",
+            "/images/faune/larus_michahellis4_6197b7.jpg",
+            "/images/faune/larus_michahellis5_828ba0.jpg",
+            "/images/faune/larus_michahellis6_61ed7c.jpg"
+          ]
+        },
+        {
+          id: "fau-28",
+          name: "Orvet du Maroc",
+          scientificName: "Ophisaurus koellikeri",
+          group: "reptile",
+          description: "Seul lézard apode (sans pattes) du Maroc, ressemblant extérieurement à un serpent mais totalement inoffensif. Il affectionne l'humidité des litières de forêts.",
+          status: "Endémique du Maroc / Protégé",
+          habitat: "Zones boisées de chênes et de cèdres",
+          image: "/images/faune/pandion_haliaetus1_754f4c.jpg",
+          gallery: [
+            "/images/faune/pandion_haliaetus1_754f4c.jpg",
+            "/images/faune/pandion_haliaetus2_e0971b.jpg",
+            "/images/faune/pandion_haliaetus3_a6a2b5.jpg",
+            "/images/faune/pandion_haliaetus4_023f08.jpg"
+          ]
+        },
+        {
+          id: "fau-29",
+          name: "Chacal doré / Loup d'Égypte",
+          scientificName: "Canis anthus",
+          group: "mammal",
+          description: "Canidé sauvage repéré de façon régulière dans les grands cantons du parc. Il joue un rôle de régulateur primordial pour les populations de micromammifères.",
+          status: "Vulnérable Maroc / Protégé",
+          habitat: "Forêts de cèdres, oueds et steppes arbustives",
+          image: "/images/faune/monachus_monachus1_682f1e.jpg",
+          gallery: [
+            "/images/faune/monachus_monachus1_682f1e.jpg",
+            "/images/faune/monachus_monachus2_17eec5.jpg"
+          ]
+        },
+        {
+          id: "fau-30",
+          name: "Goéland d’Audouin",
+          scientificName: "Ichthyaetus audouinii",
+          group: "bird",
+          description: "Goéland élégant de taille moyenne, endémique de la Méditerranée et de ses côtes rocheuses proches, suivi scientifiquement pour sa préservation globale au Maroc.",
+          status: "Vulnérable (VU) / Suivi de près",
+          habitat: "Milieux côtiers, estuaires et lagunes",
+          image: "/images/faune/ichthyaetus_audouinii1_1faeb0.jpg",
+          gallery: [
+            "/images/faune/ichthyaetus_audouinii1_1faeb0.jpg",
+            "/images/faune/ichthyaetus_audouinii2_c0c3fb.jpg",
+            "/images/faune/ichthyaetus_audouinii3_052b0e.jpg"
+          ]
+        },
+        {
+          id: "fau-31",
+          name: "Outarde houbara",
+          scientificName: "Chlamydotis undulata",
+          group: "bird",
+          description: "Grand oiseau terrestre des steppes arides. Sa présence en limite sud du parc fait l'objet d'efforts conjoints de protection des biotopes steppiques.",
+          status: "Vulnérable (VU) / Plan de sauvegarde",
+          habitat: "Plaines steppiques arides et semi-désertiques",
+          image: "/images/faune/outarde_houbara_1_f8b16d.jpg",
+          gallery: [
+            "/images/faune/outarde_houbara_1_f8b16d.jpg",
+            "/images/faune/outarde_houbara_2_d4ae1f.jpg",
+            "/images/faune/outarde_houbara_3_9c9233.jpg"
+          ]
+        },
+        {
+          id: "fau-32",
+          name: "Hyène rayée",
+          scientificName: "Hyaena hyaena",
+          group: "mammal",
+          description: "Grand carnivore nécrophage discret et nocturne, extrêmement rare et menacé, trouvant refuge dans les grottes les plus secrètes de l'Atlas.",
+          status: "Quasi menacée (NT) / Protégée au Maroc",
+          habitat: "Gorges rocheuses, grottes et collines escarpées",
+          image: "/images/faune/hyaena_hyaena1_369b77.jpg",
+          gallery: [
+            "/images/faune/hyaena_hyaena1_369b77.jpg",
+            "/images/faune/hyaena_hyaena2_0e7232.jpg",
+            "/images/faune/hyaena_hyaena3_62aee7.jpg"
+          ]
+        },
+        {
+          id: "fau-33",
+          name: "Genette commune",
+          scientificName: "Genetta genetta",
+          group: "mammal",
+          description: "Petit carnivore nocturne agile au pelage tacheté et à longue queue annelée, très habile pour grimper dans les chênes et les cèdres.",
+          status: "Discrète / Protégée",
+          habitat: "Forêts d'altitude, thalwegs boisés et chaos rocheux",
+          image: "/images/faune/genetta_genetta1_a43bb8.jpg",
+          gallery: [
+            "/images/faune/genetta_genetta1_a43bb8.jpg",
+            "/images/faune/genetta_genetta2_b45ff7.jpg",
+            "/images/faune/genetta_genetta3_a2e6f9.jpg",
+            "/images/faune/genetta_genetta4_0601c8.jpg"
+          ]
+        },
+        {
+          id: "fau-34",
+          name: "Salamandre du Rif (et de l'Atlas)",
+          scientificName: "Salamandra algira tingitana",
+          group: "reptile",
+          description: "Amphibien endémique d'Afrique du Nord aux motifs colorés spectaculaires, habitant les sous-bois forestiers humides et très sensible à l'altération de son habitat.",
+          status: "Endémique du Maghreb / Protégée",
+          habitat: "Sous-bois forestiers humides, litières et près des sources",
+          image: "/images/faune/salamandra_algira_tingitana1_a1bb6f.jpg",
+          gallery: [
+            "/images/faune/salamandra_algira_tingitana1_a1bb6f.jpg",
+            "/images/faune/salamandra_algira_tingitana2_2215bd.jpg",
+            "/images/faune/salamandra_algira_tingitana3_e2f6d8.jpg",
+            "/images/faune/salamandra_algira_tingitana4_96d5c1.jpg",
+            "/images/faune/salamandra_algira_tingitana5_9d9cb0.jpg"
+          ]
+        }
+      ];
+
+      let currentFaunaFilter = 'all';
+      let currentFaunaSearch = '';
+
+      function setFaunaFilter(group) {
+        currentFaunaFilter = group;
+        
+        // Update Active Button styling
+        const buttons = ['all', 'mammal', 'bird', 'reptile'];
+        buttons.forEach(b => {
+          const btn = document.getElementById(`f-btn-${b}`);
+          if (!btn) return;
+          if (b === group) {
+            btn.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray bg-brand-primary text-white";
+          } else {
+            btn.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand";
+          }
+        });
+
+        renderFaunaList();
+      }
+
+      function handleFaunaSearch() {
+        const searchInput = document.getElementById('fauna-search-input');
+        if (searchInput) {
+          currentFaunaSearch = searchInput.value.toLowerCase().trim();
+        }
+        renderFaunaList();
+      }
+
+      function renderFaunaList() {
+        const grid = document.getElementById('fauna-grid');
+        const noResults = document.getElementById('fauna-no-results');
+        if (!grid || !noResults) return;
+
+        grid.innerHTML = '';
+
+        // Filter & Search application
+        const filtered = FAUNA_ITEMS.filter(item => {
+          const matchesFilter = (currentFaunaFilter === 'all') || (item.group === currentFaunaFilter);
+          const matchesSearch = item.name.toLowerCase().includes(currentFaunaSearch) || 
+                                item.scientificName.toLowerCase().includes(currentFaunaSearch) ||
+                                item.habitat.toLowerCase().includes(currentFaunaSearch);
+          return matchesFilter && matchesSearch;
+        });
+
+        if (filtered.length === 0) {
+          noResults.classList.remove('hidden');
+          return;
+        }
+        noResults.classList.add('hidden');
+
+        filtered.forEach(item => {
+          const card = document.createElement('div');
+          card.onclick = () => openFaunaModal(item.id);
+          card.className = "group bg-white border border-brand-light-gray rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col cursor-pointer select-none";
+          
+          card.innerHTML = `
+            <div class="h-48 overflow-hidden relative bg-stone-100">
+              <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+              <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-primary px-3 py-1 rounded-full text-[9px] uppercase tracking-wider font-mono font-bold shadow-sm">
+                ${item.group === 'mammal' ? 'Mammifère' : item.group === 'bird' ? 'Oiseau' : 'Reptile / Amphibien'}
+              </span>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+              <div class="space-y-1">
+                <h3 class="font-serif font-bold text-lg text-brand-primary group-hover:text-brand-accent transition-colors">${item.name}</h3>
+                <p class="text-[11px] font-mono italic text-stone-400">${item.scientificName}</p>
+              </div>
+              <p class="text-stone-500 text-xs leading-relaxed line-clamp-2">${item.description}</p>
+              <div class="pt-3 border-t border-brand-light-gray/60 flex items-center justify-between text-[11px]">
+                <span class="text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded border border-rose-100 font-sans">${item.status.split('/')[0]}</span>
+                <span class="text-brand-primary font-bold flex items-center space-x-1">
+                  <span>En savoir plus</span>
+                  <i data-lucide="arrow-right" class="h-3 w-3"></i>
+                </span>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      }
+
+      // Modal Logic
+      function openFaunaModal(id) {
+        const item = FAUNA_ITEMS.find(f => f.id === id);
+        if (!item) return;
+
+        const modal = document.getElementById('fauna-modal');
+        const mainImg = document.getElementById('modal-main-img');
+        const groupSpan = document.getElementById('modal-group');
+        const titleH = document.getElementById('modal-title');
+        const scinameP = document.getElementById('modal-sciname');
+        const statusSpan = document.getElementById('modal-status');
+        const habitatP = document.getElementById('modal-habitat');
+        const descP = document.getElementById('modal-desc');
+        const thumbsDiv = document.getElementById('modal-gallery-thumbs');
+
+        if (!modal || !mainImg || !titleH) return;
+
+        // Set static fields
+        mainImg.src = item.image;
+        groupSpan.innerText = item.group === 'mammal' ? 'Mammifère' : item.group === 'bird' ? 'Oiseau' : 'Reptile & Amphibien';
+        titleH.innerText = item.name;
+        scinameP.innerText = item.scientificName;
+        statusSpan.innerText = item.status;
+        habitatP.innerText = item.habitat;
+        descP.innerText = item.description;
+
+        // Set up Gallery Thumbs
+        thumbsDiv.innerHTML = '';
+        if (item.gallery && item.gallery.length > 1) {
+          item.gallery.forEach((pic, i) => {
+            const btn = document.createElement('button');
+            btn.onclick = () => {
+              mainImg.src = pic;
+              const dots = thumbsDiv.children;
+              for (let d of dots) d.className = "w-2.5 h-2.5 rounded-full bg-white opacity-40 hover:opacity-80 transition-all";
+              btn.className = "w-2.5 h-2.5 rounded-full bg-white opacity-100 scale-110 transition-all";
+            };
+            btn.className = `w-2.5 h-2.5 rounded-full bg-white transition-all cursor-pointer ${i === 0 ? 'opacity-100 scale-110' : 'opacity-40 hover:opacity-80'}`;
+            thumbsDiv.appendChild(btn);
+          });
+        }
+
+        // Show Modal with Fade-In
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          modal.classList.remove('opacity-0');
+        }, 10);
+      }
+
+      function closeFaunaModal() {
+        const modal = document.getElementById('fauna-modal');
+        if (!modal) return;
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
+
+      // Close modal on click outside content
+      window.onclick = function(event) {
+        const modal = document.getElementById('fauna-modal');
+        if (event.target === modal) {
+          closeFaunaModal();
+        }
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        renderFaunaList();
+      });
+    </script>
+
+  </div>
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE END                                             -->
+  <!-- ========================================================================= -->
+
+</body>
+</html>

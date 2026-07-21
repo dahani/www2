@@ -217,12 +217,12 @@ export const FLORA_DATA: FloraItem[] = [
   },
   {
     id: "flo-18",
-    name: "Sapin du Maroc",
-    scientificName: "Abies maroccana",
+    name: "Astragale d'Ibrahim",
+    scientificName: "Astragalus ibrahimianus",
     category: "protected",
-    description: "Conifère rare d'une grande valeur biogéographique, endémique du nord du Maroc et présent dans certaines stations de l'Atlas. Il est protégé pour éviter son extinction.",
-    status: "En Danger Critique (CR) / Protégé",
-    habitat: "Versants ombragés frais d'altitude (>2000m)"
+    description: "Plante en coussinet épineux endémique de la haute montagne marocaine, essentielle pour lutter contre le glissement des sols de l'Ayachi face aux vents violents.",
+    status: "Endémique / Rare & Protégée",
+    habitat: "Éboulis rocheux et sommets oroméditerranéens (>2600m)"
   },
   {
     id: "flo-19",
@@ -244,12 +244,12 @@ export const FLORA_DATA: FloraItem[] = [
   },
   {
     id: "flo-21",
-    name: "Arganier",
-    scientificName: "Argania spinosa",
-    category: "endemic",
-    description: "Arbre mythique endémique du Maroc, d'une résistance exceptionnelle à la sécheresse. Bien que typique du Sud-Ouest, des stations reliques existent dans les zones d'influence continentale.",
-    status: "Patrimoine Mondial UNESCO / Protégé",
-    habitat: "Zones semi-arides et thalwegs pierreux"
+    name: "Cytise d'Algérie (Trèfle de l'Atlas)",
+    scientificName: "Cytisus fontanesii",
+    category: "protected",
+    description: "Arbrisseau d'une grande valeur biogéographique, aux rameaux élancés et fleurs jaunes d'une grande rareté dans le Moyen et Haut Atlas.",
+    status: "Espèce rare / Protégée",
+    habitat: "Pentes calcaires semi-arides d'altitude"
   }
 ];
 
@@ -431,13 +431,13 @@ export const FAUNA_DATA: FaunaItem[] = [
   },
   {
     id: "fau-18",
-    name: "Cerf de Barbarie",
-    scientificName: "Cervus elaphus barbarus",
-    group: "mammal",
-    description: "Le seul cerf d'Afrique du Nord. Autrefois disparu du parc, il bénéficie de programmes de réintroduction réussis dans les forêts d'altitude de l'Atlas.",
-    status: "En Danger (EN) / Protégé",
-    isEndemic: true,
-    habitat: "Forêts de chêne vert et clairières de cédraies"
+    name: "Aigle de Bonelli",
+    scientificName: "Aquila fasciata",
+    group: "bird",
+    description: "Superbe rapace diurne nichant sur les falaises rocheuses abruptes du massif de l'Ayachi. C'est un chasseur redoutable et hautement menacé.",
+    status: "Rare / Protégé Maroc",
+    isEndemic: false,
+    habitat: "Milieux escarpés, crêtes, zones rocheuses"
   },
   {
     id: "fau-19",
@@ -491,63 +491,63 @@ export const FAUNA_DATA: FaunaItem[] = [
   },
   {
     id: "fau-24",
-    name: "Fennec",
-    scientificName: "Vulpes zerda",
-    group: "mammal",
-    description: "Le renard des sables aux oreilles démesurées. Bien que typique du désert, il s'aventure parfois sur les piémonts sahariens arides en lisière sud du parc.",
-    status: "Protégé / Annexe II CITES",
+    name: "Faucon lanier",
+    scientificName: "Falco biarmicus",
+    group: "bird",
+    description: "Superbe rapace de haute montagne, particulièrement adapté aux anfractuosités des parois rocheuses et falaises escarpées du parc pour sa nidification.",
+    status: "Rare / Protégé Maroc",
     isEndemic: false,
-    habitat: "Zones sableuses et steppes désertiques de transition"
+    habitat: "Falaises et canyons d'altitude"
   },
   {
     id: "fau-25",
-    name: "Mangouste ichneumon",
-    scientificName: "Herpestes ichneumon",
-    group: "mammal",
-    description: "Mammifère carnivore agile surnommé 'rat des pharaons'. C'est un chasseur redoutable de serpents et de petits rongeurs.",
-    status: "Espèce remarquable",
+    name: "Faucon de Barbarie",
+    scientificName: "Falco peregrinus pelegrinoides",
+    group: "bird",
+    description: "Prestigieux rapace des falaises et milieux rocheux ouverts du Haut Atlas, doté d'une agilité aérienne et d'une vélocité de piqué extrêmes.",
+    status: "Très Rare / Protégé",
     isEndemic: false,
-    habitat: "Bordures de cours d'eau, friches et zones arbustives"
+    habitat: "Milieux escarpés et gorges rocheuses"
   },
   {
     id: "fau-26",
-    name: "Flamant rose",
-    scientificName: "Phoenicopterus roseus",
+    name: "Grand-duc ascalaphe",
+    scientificName: "Bubo ascalaphus",
     group: "bird",
-    description: "Oiseau d'eau somptueux, de passage migratoire régulier ou hivernant sur les grands plans d'eau d'altitude du parc national.",
-    status: "Migrateur remarquable / Protégé",
+    description: "Le grand rapace nocturne des falaises et canyons du parc. Chasseur crépusculaire remarquable, il est repérable à ses grands disques oculaires et son hululement sourd.",
+    status: "Sédentaire / Protégé Maroc",
     isEndemic: false,
-    habitat: "Lacs Isly et Tislit, zones humides d'altitude"
+    habitat: "Canyons, falaises et escarpements rocheux"
   },
   {
     id: "fau-27",
-    name: "Goéland leucophée",
-    scientificName: "Larus michahellis",
-    group: "bird",
-    description: "Grand oiseau aquatique opportuniste, naviguant entre les côtes marocaines et les plans d'eau intérieurs de l'Atlas.",
-    status: "Visiteur régulier",
-    isEndemic: false,
-    habitat: "Lacs de montagne et grands réservoirs d'eau"
+    name: "Gecko diurne de l'Atlas",
+    scientificName: "Quedenfeldtia trachyblepharus",
+    group: "reptile",
+    description: "Petit lézard diurne endémique des très hautes altitudes du Haut Atlas. C'est un joyau herpétologique capable d'activité sous des températures proches du gel.",
+    status: "Endémique du Haut Atlas / Protégé",
+    isEndemic: true,
+    habitat: "Pierriers froids et hauts sommets oroméditerranéens"
   },
   {
     id: "fau-28",
-    name: "Balbuzard pêcheur",
-    scientificName: "Pandion haliaetus",
-    group: "bird",
-    description: "Rapace piscivore d'une habileté spectaculaire, plongeant dans les eaux claires des lacs d'Imilchil pour capturer ses proies.",
-    status: "Rare / De passage / Protégé",
-    isEndemic: false,
-    habitat: "Lacs de montagne, grands oueds poissonneux"
+    name: "Orvet du Maroc",
+    scientificName: "Ophisaurus koellikeri",
+    group: "reptile",
+    description: "Seul lézard apode (sans pattes) du Maroc, ressemblant extérieurement à un serpent mais totalement inoffensif. Il affectionne l'humidité des litières de forêts.",
+    status: "Endémique du Maroc / Protégé",
+    isEndemic: true,
+    habitat: "Zones boisées de chênes et de cèdres"
   },
   {
     id: "fau-29",
-    name: "Phoque moine de Méditerranée",
-    scientificName: "Monachus monachus",
+    name: "Chacal doré / Loup d'Égypte",
+    scientificName: "Canis anthus",
     group: "mammal",
-    description: "L'un des mammifères marins les plus menacés au monde. Mentionné à des fins d'éducation environnementale ou de comparaison sur les espèces côtières marocaines hautement protégées.",
-    status: "En Danger Critique (CR) au Maroc",
+    description: "Canidé sauvage repéré de façon régulière dans les grands cantons du parc. Il joue un rôle de régulateur primordial pour les populations de micromammifères.",
+    status: "Vulnérable Maroc / Protégé",
     isEndemic: false,
-    habitat: "Grottes marines et plages côtières sauvages"
+    habitat: "Forêts de cèdres, oueds et steppes arbustives"
   },
   {
     id: "fau-30",
@@ -703,22 +703,26 @@ export const CULTURAL_HERITAGE = [
   {
     title: "Le Moussem d'Imilchil",
     description: "Une célébration culturelle unique au monde. Au-delà du commerce de bétail et de laine, c'est une fête sociale de réconciliation et de mariage collectif pour les tribus Aït H'ddidou et Aït Yahia.",
-    icon: "Heart"
+    icon: "Heart",
+    image: "/images/Le Moussem d'Imilchil.avif"
   },
   {
     title: "La Danse d'Ahidous",
     description: "Danse collective ancestrale où hommes et femmes, épaule contre épaule en cercle, chantent des poèmes berbères rythmés par le tambour d'allure sacrée (Alloun).",
-    icon: "Music"
+    icon: "Music",
+    image: "/images/La Danse d'Ahidous.webp"
   },
   {
     title: "Architecture des Ksour et Kasbahs",
     description: "L'habitat traditionnel est une merveille d'adaptation bioclimatique. Construit en pisé (terre crue compressée et paille) et pierres locales, il conserve la chaleur en hiver et la fraîcheur en été.",
-    icon: "Home"
+    icon: "Home",
+    image: "/images/Architecture des Ksour et Kasbahs.jpg"
   },
   {
     title: "L'Artisanat & Tissage de la laine",
     description: "Les femmes berbères excellent dans la fabrication des tentes nomades, des tapis traditionnels aux motifs géométriques mystiques et du célèbre 'Handira' (cape de mariage rayée blanche et bleue).",
-    icon: "Activity"
+    icon: "Activity",
+    image: "/images/L'Artisanat & Tissage de la laine.webp"
   }
 ];
 

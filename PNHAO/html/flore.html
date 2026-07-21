@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Flore & Forêts du PNHAO - WordPress Ready</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght=0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#F9F7F2',
+              text: '#2D342F',
+              primary: '#4A5D4E',
+              accent: '#D68C67',
+              'light-gray': '#E2E8E0',
+              sand: '#F4F1EA',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-brand-bg text-brand-text min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE START                                           -->
+  <!-- Copy the content below into your WordPress Custom HTML Block or Elementor  -->
+  <!-- ========================================================================= -->
+  <div id="wp-pnhao-flore" class="w-full bg-brand-bg text-brand-text font-sans antialiased py-12">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-accent">Forêts Résilientes & Steppes</span>
+        <h2 class="font-serif font-bold text-3xl md:text-4xl text-brand-primary tracking-tight">La Flore Sauvage du PNHAO</h2>
+        <p class="text-stone-500 text-sm leading-relaxed">
+          Entre forêts de cèdres millénaires et steppes aromatiques à xérophytes épineux, explorez une biodiversité floristique d'exception adaptée aux climats montagnards extrêmes.
+        </p>
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="bg-white border border-brand-light-gray rounded-[28px] p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Filter Tabs -->
+        <div id="flora-filters" class="flex flex-wrap gap-2">
+          <button onclick="setFloraFilter('all')" id="fl-btn-all" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray bg-brand-primary text-white">
+            Tout
+          </button>
+          <button onclick="setFloraFilter('Arbre')" id="fl-btn-Arbre" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+            Arbres & Conifères
+          </button>
+          <button onclick="setFloraFilter('Plante aromatique')" id="fl-btn-Plante-aromatique" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+            Plantes Médicinales / Aromatiques
+          </button>
+          <button onclick="setFloraFilter('Xérophyte')" id="fl-btn-Xerophyte" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+            Plantes de Crête & Steppes
+          </button>
+        </div>
+
+        <!-- Search input -->
+        <div class="relative max-w-sm w-full">
+          <input type="text" id="flora-search-input" oninput="handleFloraSearch()" placeholder="Rechercher une plante (Cèdre, Thym...)" class="w-full bg-brand-bg border border-brand-light-gray px-4 py-2.5 rounded-xl text-xs font-sans placeholder-stone-400 focus:outline-none focus:border-brand-primary" />
+          <i data-lucide="search" class="absolute right-3.5 top-3 h-4 w-4 text-stone-400"></i>
+        </div>
+      </div>
+
+      <!-- No Results State -->
+      <div id="flora-no-results" class="hidden text-center py-16 bg-white border border-brand-light-gray rounded-[32px] space-y-3">
+        <div class="p-3 bg-brand-sand w-fit rounded-full mx-auto text-stone-400">
+          <i data-lucide="info" class="h-6 w-6"></i>
+        </div>
+        <p class="font-serif font-bold text-lg text-brand-primary">Aucune plante trouvée</p>
+        <p class="text-xs text-stone-500">Essayez d'ajuster votre recherche ou filtre.</p>
+      </div>
+
+      <!-- Dynamic Grid of Flora -->
+      <div id="flora-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Injected by JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- Interactive Flora Detail Lightbox (Modal) -->
+    <div id="flora-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+      <div class="relative bg-white w-full h-full rounded-none overflow-hidden shadow-2xl flex flex-col">
+        
+        <!-- Close Button -->
+        <button onclick="closeFloraModal()" class="absolute top-4 right-4 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-all cursor-pointer border border-white/10 shadow-sm">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+
+        <div class="overflow-y-auto flex-grow">
+          <div class="relative min-h-full h-full bg-stone-900">
+            <!-- Full-width background image -->
+            <img id="modal-flora-img" src="" class="absolute inset-0 w-full h-full object-cover" alt="Selected Flora" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=1200&q=80'" />
+
+            <!-- Gradient overlay for text legibility -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/10"></div>
+            <div class="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/40 to-transparent"></div>
+
+            <!-- Gallery Thumbnail dots (top, out of the way of the text overlay) -->
+            <div id="modal-flora-thumbs" class="absolute top-5 left-0 right-0 flex justify-center space-x-2 z-20 px-4">
+              <!-- Thumbs injected dynamically -->
+            </div>
+
+            <!-- Text description overlay, anchored to the bottom of the image -->
+            <div class="relative z-10 flex flex-col justify-end min-h-full h-full p-8 sm:p-10 space-y-5 max-w-3xl">
+              <div class="space-y-1.5">
+                <span id="modal-flora-category" class="text-[9px] sm:text-[10px] uppercase font-mono font-bold tracking-widest text-brand-accent bg-white/10 backdrop-blur-sm px-2.5 py-1 rounded-md w-fit block">Arbre</span>
+                <h3 id="modal-flora-title" class="font-serif font-bold text-2xl sm:text-3xl text-white tracking-tight drop-shadow-sm">Cèdre de l'Atlas</h3>
+                <p id="modal-flora-sciname" class="text-xs sm:text-sm font-mono italic text-white/70 font-medium">Cedrus atlantica</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/20">
+                <div>
+                  <span class="font-bold text-white/60 block uppercase text-[9px] tracking-wider mb-1">Statut de Conservation</span>
+                  <span id="modal-flora-status" class="inline-flex px-2.5 py-1 rounded-md bg-emerald-50/90 text-emerald-900 font-bold border border-emerald-100/50 text-xs">En Danger (EN) au niveau mondial</span>
+                </div>
+                <div>
+                  <span class="font-bold text-white/60 block uppercase text-[9px] tracking-wider mb-1">Habitat Écologique</span>
+                  <p id="modal-flora-habitat" class="text-white/90 font-medium text-xs leading-relaxed">Zones montagneuses humides et subhumides fraîches.</p>
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-white/20 space-y-1.5">
+                <span class="font-bold text-white/60 block uppercase text-[9px] tracking-wider">Description Botanique</span>
+                <p id="modal-flora-desc" class="text-white/90 leading-relaxed text-xs sm:text-sm font-sans">Le souverain des forêts marocaines...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Script Block for Flora Logic -->
+    <script>
+      // Raw Self-Contained Dataset to allow instant copy-paste into WordPress
+      const FLORA_ITEMS = [
+        {
+          id: "flo-1",
+          name: "Thym du Maroc",
+          scientificName: "Thymus maroccanus",
+          category: "Plante aromatique",
+          description: "Arbrisseau aromatique très recherché, endémique du Maroc. Il forme des coussinets denses et parfumés utilisés en phytothérapie locale.",
+          status: "Espèce remarquable (Endémique)",
+          habitat: "Rochers, steppes arbustives",
+          image: "/images/flore/thymus_maroccanus_1784114509918.jpg",
+          gallery: ["/images/flore/thymus_maroccanus_1784114509918.jpg"]
+        },
+        {
+          id: "flo-2",
+          name: "Saxifrage à longues feuilles",
+          scientificName: "Saxifrage longifolia",
+          category: "Xérophyte",
+          description: "Plante rupicole spectaculaire formant de grandes rosettes de feuilles argentées, produisant une inflorescence pyramidale blanche majestueuse.",
+          status: "Rare et protégée (Endémique)",
+          habitat: "Falaises calcaires calcicoles d'altitude",
+          image: "/images/flore/saxifraga_longifolia_1784114522079.jpg",
+          gallery: ["/images/flore/saxifraga_longifolia_1784114522079.jpg"]
+        },
+        {
+          id: "flo-3",
+          name: "Germandrée de Midelt",
+          scientificName: "Teucrium mideltense",
+          category: "Xérophyte",
+          description: "Plante ligneuse naine endémique de la région de Midelt et du Haut Atlas oriental. Elle est parfaitement adaptée à la rigueur des sécheresses hivernales.",
+          status: "Endémique locale (Très Rare)",
+          habitat: "Pentes rocheuses et marnes d'altitude",
+          image: "/images/flore/teucrium_mideltense_1784114535027.jpg",
+          gallery: ["/images/flore/teucrium_mideltense_1784114535027.jpg"]
+        },
+        {
+          id: "flo-4",
+          name: "Marrube de Litardière",
+          scientificName: "Marrubium litardierei",
+          category: "Plante aromatique",
+          description: "Plante herbacée tomenteuse de la famille des Lamiacées, remarquable pour son feuillage laineux gris-blanc qui la protège du rayonnement solaire extrême.",
+          status: "Endémique remarquable",
+          habitat: "Éboulis rocheux et clairières forestières",
+          image: "/images/flore/marrubium_litardierei_1784114547260.jpg",
+          gallery: ["/images/flore/marrubium_litardierei_1784114547260.jpg"]
+        },
+        {
+          id: "flo-5",
+          name: "Carum de l'Atlas",
+          scientificName: "Carum atlanticum",
+          category: "Xérophyte",
+          description: "Ombellifère endémique des hautes montagnes de l'Atlas marocain, faisant partie de la biodiversité précieuse du parc.",
+          status: "Rare (Endémique)",
+          habitat: "Pelouses d'altitude et fissures de roches",
+          image: "/images/flore/carum_atlanticum_1784114558726.jpg",
+          gallery: ["/images/flore/carum_atlanticum_1784114558726.jpg"]
+        },
+        {
+          id: "flo-6",
+          name: "Sabline de la Drise",
+          scientificName: "Arenaria dyris",
+          category: "Xérophyte",
+          description: "Petite plante en coussinet à fleurs blanches étoilées, habituée des climats rigoureux des sommets dépassant 2800 m.",
+          status: "Spécifique d'altitude (Endémique)",
+          habitat: "Pelouses oroméditerranéennes",
+          image: "/images/flore/arenaria_dyris_1784114570208.jpg",
+          gallery: ["/images/flore/arenaria_dyris_1784114570208.jpg"]
+        },
+        {
+          id: "flo-7",
+          name: "Thym à feuilles de sarriette",
+          scientificName: "Thymus saturejoides",
+          category: "Plante aromatique",
+          description: "Connu localement sous le nom d'Azoukni. Il est traditionnellement récolté par les populations locales d'Aït H'ddidou pour ses vertus antiseptiques et digestives exceptionnelles.",
+          status: "Exploitée durablement (Médicinale)",
+          habitat: "Steppes rocailleuses de basse à moyenne altitude",
+          image: "/images/flore/thymus_saturejoides_1784114583855.jpg",
+          gallery: ["/images/flore/thymus_saturejoides_1784114583855.jpg"]
+        },
+        {
+          id: "flo-8",
+          name: "Lavande dentée",
+          scientificName: "Lavandula dentata",
+          category: "Plante aromatique",
+          description: "Lavande sauvage aux feuilles découpées et épis violets très parfumés. Utilisée pour l'extraction d'huiles essentielles et la médecine traditionnelle.",
+          status: "Abondante (Médicinale)",
+          habitat: "Versants ensoleillés du mésoméditerranéen",
+          image: "/images/flore/lavandula_dentata1_5ed5f5.jpg",
+          gallery: [
+            "/images/flore/lavandula_dentata1_5ed5f5.jpg",
+            "/images/flore/lavandula_dentata2_66c738.jpg",
+            "/images/flore/lavandula_dentata3_8a6ac0.jpg"
+          ]
+        },
+        {
+          id: "flo-9",
+          name: "Menthe à longues feuilles",
+          scientificName: "Mentha longifolia",
+          category: "Plante aromatique",
+          description: "Menthe sauvage poussant le long des oueds et des zones humides. Elle possède une odeur de menthe poivrée intense très appréciée.",
+          status: "Liée aux milieux humides (Médicinale)",
+          habitat: "Bords de cours d'eau, sources chaudes, ripisylves",
+          image: "/images/flore/mentha_longifolia_1784114603247.jpg",
+          gallery: ["/images/flore/mentha_longifolia_1784114603247.jpg"]
+        },
+        {
+          id: "flo-10",
+          name: "Buis des Baléares",
+          scientificName: "Buxus balearica",
+          category: "Arbre",
+          description: "Arbuste persistant rare formant des peuplements remarquables dans les vallées abritées du parc. Ses feuilles contiennent des alcaloïdes précieux.",
+          status: "Remarquable / Fragile (Médicinale)",
+          habitat: "Thalwegs humides et ombragés",
+          image: "/images/flore/buxus_balearica_1784114615141.jpg",
+          gallery: ["/images/flore/buxus_balearica_1784114615141.jpg"]
+        },
+        {
+          id: "flo-11",
+          name: "Renoncule du M'goun",
+          scientificName: "Ranunculus mgounicus",
+          category: "Xérophyte",
+          description: "Plante herbacée extrêmement rare, en danger critique d'extinction selon la liste rouge de l'UICN. Unique représentante d'une lignée alpine marocaine.",
+          status: "Danger Critique d'Extinction (CR)",
+          habitat: "Fissures humides des sommets rocheux calcaires",
+          image: "/images/flore/ranunculus_mgounicus_1784114628960.jpg",
+          gallery: ["/images/flore/ranunculus_mgounicus_1784114628960.jpg"]
+        },
+        {
+          id: "flo-12",
+          name: "Deverra d'Espagne",
+          scientificName: "Deverra juncea",
+          category: "Xérophyte",
+          description: "Espèce de la liste rouge menacée par le surpâturage dans les zones semi-arides. Elle possède des tiges jonciformes vertes.",
+          status: "En Danger (EN) (Protégée)",
+          habitat: "Sols érodés et steppes de piémont",
+          image: "/images/flore/deverra_juncea_1784114641094.jpg",
+          gallery: ["/images/flore/deverra_juncea_1784114641094.jpg"]
+        },
+        {
+          id: "flo-13",
+          name: "Astragale de Maire",
+          scientificName: "Astragalus maireanus",
+          category: "Xérophyte",
+          description: "Espèce vulnérable de légumineuse épineuse formant des coussins denses qui protègent le sol contre l'érosion éolienne et hydrique.",
+          status: "Vulnérable (VU) (Protégée)",
+          habitat: "Steppes à xérophytes épineux des sommets",
+          image: "/images/flore/astragalus_maireanus_1784114652366.jpg",
+          gallery: ["/images/flore/astragalus_maireanus_1784114652366.jpg"]
+        },
+        {
+          id: "flo-14",
+          name: "Laser d'Émilien",
+          scientificName: "Laserpitium emilianum",
+          category: "Plante aromatique",
+          description: "Grande ombellifère endémique du Haut Atlas, classée comme quasi menacée en raison de la collecte incontrôlée et du pâturage.",
+          status: "Quasi menacée (NT) (Protégée)",
+          habitat: "Clairières de cédraies et falaises calcaires",
+          image: "/images/flore/laserpitium_emilianum_1784114665445.jpg",
+          gallery: ["/images/flore/laserpitium_emilianum_1784114665445.jpg"]
+        },
+        {
+          id: "flo-15",
+          name: "Cèdre de l'Atlas",
+          scientificName: "Cedrus atlantica",
+          category: "Arbre",
+          description: "Arbre majestueux emblématique du Maroc, pouvant vivre plusieurs siècles. Il forme l'ossature des forêts d'altitude et constitue un refuge vital pour le singe Magot.",
+          status: "En Danger (EN) / Protégé",
+          habitat: "Montagnard méditerranéen (2200m - 2700m)",
+          image: "/images/flore/cedrus_atlantica1_c50f03.jpg",
+          gallery: [
+            "/images/flore/cedrus_atlantica1_c50f03.jpg",
+            "/images/flore/cedrus_atlantica2_3aed6d.jpg",
+            "/images/flore/cedrus_atlantica3_5e6510.jpg"
+          ]
+        },
+        {
+          id: "flo-16",
+          name: "Genévrier thurifère",
+          scientificName: "Juniperus thurifera",
+          category: "Arbre",
+          description: "Conifère relique d'une résistance exceptionnelle, s'élevant jusqu'à la limite supérieure des arbres. Ses troncs noueux millénaires retiennent les sols face à l'érosion extrême.",
+          status: "Très rare / Fortement protégé",
+          habitat: "Étage oroméditerranéen de haute altitude (>2700m)",
+          image: "/images/flore/juniperus_thurifera1_841ce9.jpg",
+          gallery: [
+            "/images/flore/juniperus_thurifera1_841ce9.jpg",
+            "/images/flore/juniperus_thurifera2_8d9234.jpg",
+            "/images/flore/juniperus_thurifera3_2d4c60.jpg"
+          ]
+        },
+        {
+          id: "flo-17",
+          name: "Chêne vert de l'Atlas",
+          scientificName: "Quercus ilex ssp. rotundifolia",
+          category: "Arbre",
+          description: "Espèce forestière sempervirente dominante de la région méditerranéenne d'altitude. Son feuillage dense protège les bassins versants contre les rayonnements intenses.",
+          status: "Espèce structurante",
+          habitat: "Étage supraméditerranéen et transition montagnarde (1800m - 2400m)",
+          image: "/images/flore/quercus_ilex1_91c254.jpg",
+          gallery: [
+            "/images/flore/quercus_ilex1_91c254.jpg",
+            "/images/flore/quercus_ilex2_070a12.jpg",
+            "/images/flore/quercus_ilex3_5fd7d6.jpg"
+          ]
+        },
+        {
+          id: "flo-18",
+          name: "Astragale d'Ibrahim",
+          scientificName: "Astragalus ibrahimianus",
+          category: "Xérophyte",
+          description: "Plante en coussinet épineux endémique de la haute montagne marocaine, essentielle pour lutter contre le glissement des sols de l'Ayachi face aux vents violents.",
+          status: "Endémique / Rare & Protégée",
+          habitat: "Éboulis rocheux et sommets oroméditerranéens (>2600m)",
+          image: "/images/flore/abies_maroccana_1_1784115608724.jpg",
+          gallery: [
+            "/images/flore/abies_maroccana_1_1784115608724.jpg"
+          ]
+        },
+        {
+          id: "flo-19",
+          name: "Genêt à balais",
+          scientificName: "Spartium junceum",
+          category: "Arbre",
+          description: "Arbuste vigoureux à fleurs d'un jaune d'or éclatant. Il est réputé pour sa résilience et ses vertus médicinales cardiotoniques et diurétiques.",
+          status: "Espèce remarquable",
+          habitat: "Versants ensoleillés et lisières forestières",
+          image: "/images/flore/spartium_junceum1_975890.jpg",
+          gallery: [
+            "/images/flore/spartium_junceum1_975890.jpg",
+            "/images/flore/spartium_junceum2_bd4559.jpg",
+            "/images/flore/spartium_junceum3_09473a.jpg"
+          ]
+        },
+        {
+          id: "flo-20",
+          name: "Tamaris de l'Atlas",
+          scientificName: "Tamarix africana",
+          category: "Arbre",
+          description: "Petit arbre ou arbuste parfaitement adapté aux sols saumâtres et humides. Ses racines stabilisent efficacement les berges des oueds.",
+          status: "Espèce protectrice",
+          habitat: "Lits des oueds, zones humides et salines",
+          image: "/images/flore/tamaris_tamarix_africana1_c23014.jpg",
+          gallery: [
+            "/images/flore/tamaris_tamarix_africana1_c23014.jpg",
+            "/images/flore/tamaris_tamarix_africana2_87e823.jpg",
+            "/images/flore/tamaris_tamarix_africana3_9d7dba.jpg"
+          ]
+        },
+        {
+          id: "flo-21",
+          name: "Cytise d'Algérie (Trèfle de l'Atlas)",
+          scientificName: "Cytisus fontanesii",
+          category: "Xérophyte",
+          description: "Arbrisseau d'une grande valeur biogéographique, aux rameaux élancés et fleurs jaunes d'une grande rareté dans le Moyen et Haut Atlas.",
+          status: "En Danger / Protégée",
+          habitat: "Eboulis, versants calcaires d'altitude",
+          image: "/images/flore/arganier_argania_spinosa1_9e45fd.jpg",
+          gallery: [
+            "/images/flore/arganier_argania_spinosa1_9e45fd.jpg",
+            "/images/flore/arganier_argania_spinosa2_709cf1.jpg",
+            "/images/flore/arganier_argania_spinosa3_bfcafa.jpg",
+            "/images/flore/arganier_argania_spinosa4_b3bd57.jpg"
+          ]
+        }
+      ];
+
+      let currentFloraFilter = 'all';
+      let currentFloraSearch = '';
+
+      function setFloraFilter(category) {
+        currentFloraFilter = category;
+        
+        // Update Active Button styling
+        const filterIds = ['all', 'Arbre', 'Plante-aromatique', 'Xerophyte'];
+        filterIds.forEach(f => {
+          const btn = document.getElementById(`fl-btn-${f}`);
+          if (!btn) return;
+          
+          let cleanFilterName = f;
+          if (f === 'Plante-aromatique') cleanFilterName = 'Plante aromatique';
+          if (f === 'Xerophyte') cleanFilterName = 'Xérophyte';
+
+          if (cleanFilterName === category) {
+            btn.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray bg-brand-primary text-white";
+          } else {
+            btn.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand";
+          }
+        });
+
+        renderFloraList();
+      }
+
+      function handleFloraSearch() {
+        const searchInput = document.getElementById('flora-search-input');
+        if (searchInput) {
+          currentFloraSearch = searchInput.value.toLowerCase().trim();
+        }
+        renderFloraList();
+      }
+
+      function renderFloraList() {
+        const grid = document.getElementById('flora-grid');
+        const noResults = document.getElementById('flora-no-results');
+        if (!grid || !noResults) return;
+
+        grid.innerHTML = '';
+
+        // Filter & Search application
+        const filtered = FLORA_ITEMS.filter(item => {
+          const matchesFilter = (currentFloraFilter === 'all') || (item.category === currentFloraFilter);
+          const matchesSearch = item.name.toLowerCase().includes(currentFloraSearch) || 
+                                item.scientificName.toLowerCase().includes(currentFloraSearch) ||
+                                item.habitat.toLowerCase().includes(currentFloraSearch);
+          return matchesFilter && matchesSearch;
+        });
+
+        if (filtered.length === 0) {
+          noResults.classList.remove('hidden');
+          return;
+        }
+        noResults.classList.add('hidden');
+
+        filtered.forEach(item => {
+          const card = document.createElement('div');
+          card.onclick = () => openFloraModal(item.id);
+          card.className = "group bg-white border border-brand-light-gray rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col cursor-pointer select-none";
+          
+          card.innerHTML = `
+            <div class="h-48 overflow-hidden relative bg-stone-100">
+              <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+              <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-primary px-3 py-1 rounded-full text-[9px] uppercase tracking-wider font-mono font-bold shadow-sm">
+                ${item.category}
+              </span>
+            </div>
+            <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+              <div class="space-y-1">
+                <h3 class="font-serif font-bold text-lg text-brand-primary group-hover:text-brand-accent transition-colors">${item.name}</h3>
+                <p class="text-[11px] font-mono italic text-stone-400">${item.scientificName}</p>
+              </div>
+              <p class="text-stone-500 text-xs leading-relaxed line-clamp-2">${item.description}</p>
+              <div class="pt-3 border-t border-brand-light-gray/60 flex items-center justify-between text-[11px]">
+                <span class="text-emerald-800 font-bold bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-100 font-sans truncate max-w-[150px]">${item.status.split('(')[0]}</span>
+                <span class="text-brand-primary font-bold flex items-center space-x-1 shrink-0">
+                  <span>En savoir plus</span>
+                  <i data-lucide="arrow-right" class="h-3 w-3"></i>
+                </span>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      }
+
+      // Modal Logic
+      function openFloraModal(id) {
+        const item = FLORA_ITEMS.find(f => f.id === id);
+        if (!item) return;
+
+        const modal = document.getElementById('flora-modal');
+        const mainImg = document.getElementById('modal-flora-img');
+        const catSpan = document.getElementById('modal-flora-category');
+        const titleH = document.getElementById('modal-flora-title');
+        const scinameP = document.getElementById('modal-flora-sciname');
+        const statusSpan = document.getElementById('modal-flora-status');
+        const habitatP = document.getElementById('modal-flora-habitat');
+        const descP = document.getElementById('modal-flora-desc');
+        const thumbsDiv = document.getElementById('modal-flora-thumbs');
+
+        if (!modal || !mainImg || !titleH) return;
+
+        // Set static fields
+        mainImg.src = item.image;
+        catSpan.innerText = item.category;
+        titleH.innerText = item.name;
+        scinameP.innerText = item.scientificName;
+        statusSpan.innerText = item.status;
+        habitatP.innerText = item.habitat;
+        descP.innerText = item.description;
+
+        // Set up Gallery Thumbs
+        thumbsDiv.innerHTML = '';
+        if (item.gallery && item.gallery.length > 1) {
+          item.gallery.forEach((pic, i) => {
+            const btn = document.createElement('button');
+            btn.onclick = () => {
+              mainImg.src = pic;
+              const dots = thumbsDiv.children;
+              for (let d of dots) d.className = "w-2.5 h-2.5 rounded-full bg-white opacity-40 hover:opacity-80 transition-all";
+              btn.className = "w-2.5 h-2.5 rounded-full bg-white opacity-100 scale-110 transition-all";
+            };
+            btn.className = `w-2.5 h-2.5 rounded-full bg-white transition-all cursor-pointer ${i === 0 ? 'opacity-100 scale-110' : 'opacity-40 hover:opacity-80'}`;
+            thumbsDiv.appendChild(btn);
+          });
+        }
+
+        // Show Modal with Fade-In
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          modal.classList.remove('opacity-0');
+        }, 10);
+      }
+
+      function closeFloraModal() {
+        const modal = document.getElementById('flora-modal');
+        if (!modal) return;
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
+
+      // Close modal on click outside content
+      window.onclick = function(event) {
+        const modal = document.getElementById('flora-modal');
+        if (event.target === modal) {
+          closeFloraModal();
+        }
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        renderFloraList();
+      });
+    </script>
+
+  </div>
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE END                                             -->
+  <!-- ========================================================================= -->
+
+</body>
+</html>

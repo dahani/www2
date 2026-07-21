@@ -3,20 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { LAKES_LEGEND, CULTURAL_HERITAGE, PARK_METADATA } from '../data';
 import { getAssetUrl } from '../utils';
-import { Heart, Music, Home, Sparkles, HelpCircle, Flame, MapPin } from 'lucide-react';
+import { Heart, Music, Home, Sparkles, Flame, MapPin, Activity } from 'lucide-react';
 
 export default function CultureTab() {
-  const [showStoryDetail, setShowStoryDetail] = useState(false);
-
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'Heart': return <Heart className="h-5 w-5 text-brand-accent" />;
       case 'Music': return <Music className="h-5 w-5 text-brand-primary" />;
       case 'Home': return <Home className="h-5 w-5 text-[#82614E]" />;
+      case 'Activity': return <Activity className="h-5 w-5 text-[#9E8259]" />;
       default: return <Sparkles className="h-5 w-5 text-[#9E8259]" />;
     }
   };
@@ -99,30 +98,13 @@ export default function CultureTab() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-8 space-y-4">
-            <p className="text-sm text-stone-700 leading-relaxed font-sans italic">
-              « Deux amants de tribus rivales s'aimaient d'un amour impossible. Leurs parents refusant catégoriquement leur mariage, les jeunes s'enfuirent dans la montagne. Leurs larmes de chagrin furent si abondantes qu'elles formèrent les deux lacs jumeaux d'Isly (le fiancé) et de Tislit (la fiancée)... »
+          <div className="lg:col-span-8 space-y-4 text-sm text-stone-700 leading-relaxed font-sans">
+            <p className="italic">
+              « Selon la mémoire collective locale, deux jeunes amants de tribus rivales (les Aït Yaaza d'Aït H'ddidou et une autre fraction) s'aimaient d'un amour pur mais impossible, leurs familles respectives refusant catégoriquement leur union. Désespérés, ils s'enfuirent dans la montagne et pleurèrent tant de larmes de chagrin qu'ils créèrent deux lacs jumeaux : <strong>Isly</strong> (le fiancé) et <strong>Tislit</strong> (la fiancée), s'y noyant pour sceller leur union éternelle. »
             </p>
-            
-            {showStoryDetail ? (
-              <motion.p
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="text-sm text-stone-600 leading-relaxed font-sans"
-              >
-                Touchées par ce drame, les tribus conclurent la paix pour de bon. Afin d'éviter qu'une telle tragédie ne se reproduise, elles décidèrent de fonder un rassemblement annuel — le fameux <strong>Moussem des Fiançailles d'Imilchil</strong>. Sous la bénédiction de Sidi Ahmed Oulmeghni, chaque année en septembre, les jeunes des différentes fractions tribales peuvent se rencontrer, s'aimer et s'engager librement dans un mariage collectif sacré.
-              </motion.p>
-            ) : null}
-
-            <div>
-              <button
-                onClick={() => setShowStoryDetail(!showStoryDetail)}
-                className="text-sm text-brand-accent hover:text-[#b8714b] font-bold inline-flex items-center space-x-1.5 underline"
-              >
-                <span>{showStoryDetail ? "Réduire l'histoire" : "Lire la suite de la légende"}</span>
-                <span>&rarr;</span>
-              </button>
-            </div>
+            <p>
+              Touchées par ce drame, les tribus conclurent une paix durable pour de bon. Afin d'éviter qu'une telle tragédie ne se reproduise, elles décidèrent de fonder un rassemblement annuel — le fameux <strong>Moussem des Fiançailles d'Imilchil</strong>. Sous la bénédiction de Sidi Ahmed Oulmeghni, chaque année en septembre, les jeunes des différentes fractions tribales peuvent se rencontrer, s'aimer et s'engager librement dans un mariage collectif sacré.
+            </p>
           </div>
 
           <div className="lg:col-span-4 h-[220px] rounded-[32px] overflow-hidden shadow-sm border border-brand-light-gray">
@@ -144,25 +126,38 @@ export default function CultureTab() {
           <p className="text-sm text-stone-500 font-sans">Un art de vivre séculaire, fruit de la cohésion et du respect de la montagne.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {CULTURAL_HERITAGE.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white border border-brand-light-gray rounded-[28px] p-6 shadow-sm flex items-start space-x-4"
+              className="bg-white border border-brand-light-gray rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
             >
-              <div className="bg-brand-sand p-3.5 rounded-full border border-brand-light-gray shrink-0">
-                {getIcon(item.icon)}
+              {/* Card Image */}
+              <div className="h-100 w-full overflow-hidden relative bg-brand-sand border-b border-brand-light-gray/60">
+                <img
+                  src={getAssetUrl((item as any).image)}
+                  alt={item.title}
+                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md p-2.5 rounded-full border border-brand-light-gray/50 shadow-sm shrink-0">
+                  {getIcon(item.icon)}
+                </div>
               </div>
-              <div className="space-y-2">
-                <h4 className="font-serif font-bold text-lg text-brand-text tracking-tight">
-                  {item.title}
-                </h4>
-                <p className="text-sm text-stone-600 leading-relaxed font-sans">
-                  {item.description}
-                </p>
+
+              {/* Card Content */}
+              <div className="p-6 sm:p-7 space-y-3 flex-grow flex flex-col justify-between">
+                <div className="space-y-2">
+                  <h4 className="font-serif font-bold text-xl text-brand-text tracking-tight">
+                    {item.title}
+                  </h4>
+                  <p className="text-sm text-stone-600 leading-relaxed font-sans">
+                    {item.description}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}

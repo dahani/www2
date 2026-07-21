@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galerie Photographique - WordPress Ready</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght=0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#F9F7F2',
+              text: '#2D342F',
+              primary: '#4A5D4E',
+              accent: '#D68C67',
+              'light-gray': '#E2E8E0',
+              sand: '#F4F1EA',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-brand-bg text-brand-text min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE START                                           -->
+  <!-- Copy the content below into your WordPress Custom HTML Block or Elementor  -->
+  <!-- ========================================================================= -->
+  <div id="wp-pnhao-gallery" class="w-full bg-brand-bg text-brand-text font-sans antialiased py-12">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-accent">Immersion Visuelle</span>
+        <h2 class="font-serif font-bold text-3xl md:text-4xl text-brand-primary tracking-tight">Galerie Photographique du PNHAO</h2>
+        <p class="text-stone-500 text-sm leading-relaxed">
+          Traversez à travers l'objectif les panoramas sauvages, la biodiversité forestière et faunique secrète, ainsi que la vie humaine authentique du parc national.
+        </p>
+      </div>
+
+      <!-- Filters Tab Bar -->
+      <div class="bg-white border border-brand-light-gray rounded-[24px] p-4 shadow-sm flex flex-wrap gap-2 justify-center">
+        <button onclick="setGalleryFilter('all')" id="g-btn-all" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray bg-brand-primary text-white">
+          Tout
+        </button>
+        <button onclick="setGalleryFilter('faune')" id="g-btn-faune" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+          Faune Sauvage
+        </button>
+        <button onclick="setGalleryFilter('flore')" id="g-btn-flore" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+          Forêts & Flore
+        </button>
+        <button onclick="setGalleryFilter('lacs')" id="g-btn-lacs" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+          Lacs d'Imilchil
+        </button>
+        <button onclick="setGalleryFilter('douars')" id="g-btn-douars" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand">
+          Douars & Ksour
+        </button>
+      </div>
+
+      <!-- Gallery Grid: every item is static HTML (no JS data array) -->
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="lacs" data-title="Les Lacs Jumeaux d'Isly et Tislit" data-photographer="Division de l'ANEF" data-date="2025"
+             data-location="Lacs Isly et Tislit (Zone Ramsar)" data-badge="Lacs"
+             data-description="Classés Ramsar d'importance mondiale, ces deux miroirs bleus reflètent l'immensité du ciel de l'Atlas."
+             onclick="openGalleryLightbox(this)">
+          <img src="/images/isly_tislit_lake_1783949826439.jpg" alt="Les Lacs Jumeaux d'Isly et Tislit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Lacs</span>
+            <h5 class="font-serif font-bold text-sm text-white">Les Lacs Jumeaux d'Isly et Tislit</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Division de l'ANEF</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Le Mouflon à manchettes en altitude" data-photographer="Équipe Scientifique PNHAO" data-date="2024"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Grimpant agile des versants abrupts, photographié lors d'un recensement hivernal de la faune sauvage."
+             onclick="openGalleryLightbox(this)">
+          <img src="/images/faune/mouflon_manchettes_1783949869486.jpg" alt="Le Mouflon à manchettes en altitude" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Le Mouflon à manchettes en altitude</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe Scientifique PNHAO</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="douars" data-title="Ksour Traditionnels de la Vallée" data-photographer="Observatoire du Patrimoine de l'Atlas" data-date="2024"
+             data-location="Vallées & Douars d'Imilchil" data-badge="Douars"
+             data-description="Des habitations d'une authenticité préservée construites en pisé, assurant un confort thermique ancestral."
+             onclick="openGalleryLightbox(this)">
+          <img src="/images/atlas_kasbah_village_1783949848718.jpg" alt="Ksour Traditionnels de la Vallée" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Douars</span>
+            <h5 class="font-serif font-bold text-sm text-white">Ksour Traditionnels de la Vallée</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Observatoire du Patrimoine de l'Atlas</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="flore" data-title="Forêt de Cèdres millénaires" data-photographer="Service Forestier de l'ANEF" data-date="2025"
+             data-location="Forêts d'altitude de l'Atlas, PNHAO" data-badge="Flore"
+             data-description="Le Cedrus atlantica, symbole majestueux du Maroc, formant des futaies denses indispensables au climat montagnard."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Cedrus_atlantica1.jpg" alt="Forêt de Cèdres millénaires" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Flore</span>
+            <h5 class="font-serif font-bold text-sm text-white">Forêt de Cèdres millénaires</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Service Forestier de l'ANEF</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="flore" data-title="Genévriers thurifères sur les Crêtes" data-photographer="Équipe Scientifique PNHAO" data-date="2024"
+             data-location="Forêts d'altitude de l'Atlas, PNHAO" data-badge="Flore"
+             data-description="Arbre robuste d'altitude bravant le gel, la neige et les vents violents sur les versants calcaires élevés du parc."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Juniperus_thurifera1.jpg" alt="Genévriers thurifères sur les Crêtes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Flore</span>
+            <h5 class="font-serif font-bold text-sm text-white">Genévriers thurifères sur les Crêtes</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe Scientifique PNHAO</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Mouflon à manchettes" data-photographer="Équipe Scientifique PNHAO" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Le seigneur des falaises. Le parc abrite l'une des dernières grandes populations viables de ce bovidé sauvage au Maghreb."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Mouflon_manchettes1.jpg" alt="Mouflon à manchettes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Mouflon à manchettes</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe Scientifique PNHAO</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Macaque de Barbarie (Singe Magot)" data-photographer="Garde Forestier ANEF" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Le seul primate sauvage d'Afrique du Nord. Très attaché aux forêts de Cèdre de l'Atlas où il trouve sa nourriture."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/macaque_1.jpg" alt="Macaque de Barbarie (Singe Magot)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Macaque de Barbarie (Singe Magot)</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Garde Forestier ANEF</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Gazelle de Cuvier" data-photographer="Observatoire de la Faune Saharienne" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Petite gazelle de montagne rare et agile, autrefois commune, aujourd'hui confinée aux zones forestières claires."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Gazella_dorcas1.jpg" alt="Gazelle de Cuvier" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Gazelle de Cuvier</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Observatoire de la Faune Saharienne</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Loutre d'Europe" data-photographer="Équipe de Recherche Ramsar" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Une incroyable curiosité dans cette zone de montagne aride : la loutre peuple les eaux claires des lacs d'Imilchil."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Lutra_lutra1.jpg" alt="Loutre d'Europe" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Loutre d'Europe</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe de Recherche Ramsar</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Aigle royal" data-photographer="Société d'Ornithologie du Maroc" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Superbe rapace diurne nichant dans les falaises inaccessibles du parc. Un maître des airs d'altitude."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Aigle_royal_1.jpg" alt="Aigle royal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Aigle royal</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Société d'Ornithologie du Maroc</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Mésange noire de l'Atlas" data-photographer="A. Benjelloun (Ornithologue)" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Un adorable petit passereau endémique de la région du Maghreb, particulièrement vif et inféodé aux forêts d'altitude."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Parus_major_1.jpg" alt="Mésange noire de l'Atlas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Mésange noire de l'Atlas</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : A. Benjelloun (Ornithologue)</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Renard roux de l'Atlas" data-photographer="Garde Nature ANEF" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Mammifère carnivore très intelligent et adaptable, habitué des zones forestières et steppes rocheuses."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Renard_rou_1.jpg" alt="Renard roux de l'Atlas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Renard roux de l'Atlas</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Garde Nature ANEF</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Huppe fasciée" data-photographer="Équipe Scientifique PNHAO" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Oiseau élégant au plumage bigarré et à la huppe érectile spectaculaire. Elle se nourrit d'insectes au sol."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Upupa_epops1.jpg" alt="Huppe fasciée" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Huppe fasciée</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe Scientifique PNHAO</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Perdrix de Barbarie" data-photographer="A. Benjelloun (Ornithologue)" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Oiseau terrestre emblématique des montagnes maghrébines, se déplaçant en petites compagnies sur les versants."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Alectoris_barbara1.jpg" alt="Perdrix de Barbarie" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Perdrix de Barbarie</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : A. Benjelloun (Ornithologue)</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Cerf de Barbarie" data-photographer="Équipe Scientifique PNHAO" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Le seul cerf d'Afrique du Nord. Bénéficie d'un programme de réintroduction réussi dans les forêts du parc."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Cerf_de_Berberie1.jpg" alt="Cerf de Barbarie" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Cerf de Barbarie</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe Scientifique PNHAO</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Sanglier d'Eurasie" data-photographer="Garde Nature ANEF" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Grand mammifère omnivore très commun dans les forêts du parc, jouant un rôle de fouisseur écologique."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/sanglier_1.jpg" alt="Sanglier d'Eurasie" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Sanglier d'Eurasie</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Garde Nature ANEF</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Grand Corbeau" data-photographer="Équipe de Randonnée Ayachi" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Oiseau d'une intelligence légendaire et d'une adaptabilité hors norme, régnant sur les sommets du massif."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Corvus_corax1.jpg" alt="Grand Corbeau" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Grand Corbeau</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe de Randonnée Ayachi</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Chouette hulotte" data-photographer="Division de l'ANEF" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Rapace nocturne mystérieux et élégant, trouvant refuge dans les cavités des vieux arbres forestiers du parc."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Chouette_hulotte1.jpg" alt="Chouette hulotte" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Chouette hulotte</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Division de l'ANEF</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Pic épeiche" data-photographer="Ornithologue PNHAO" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Oiseau grimpeur et tambourineur emblématique des cédraies, creusant son nid dans le tronc des arbres."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Dendrocopos_major_1.jpg" alt="Pic épeiche" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Pic épeiche</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Ornithologue PNHAO</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Fennec" data-photographer="Observatoire du Sud" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Le renard des sables aux oreilles démesurées. S'aventure sur les piémonts sahariens en lisière sud du parc."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Fennec_Vulpes_zerda1.jpg" alt="Fennec" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Fennec</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Observatoire du Sud</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Mangouste ichneumon" data-photographer="Équipe Scientifique PNHAO" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Mammifère carnivore agile surnommé 'rat des pharaons', excellent chasseur de reptiles et rongeurs."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Herpestes_ichneumon1.jpg" alt="Mangouste ichneumon" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Mangouste ichneumon</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe Scientifique PNHAO</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Flamant rose" data-photographer="Équipe de Recherche Ramsar" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Oiseau d'eau somptueux, de passage migratoire régulier ou hivernant sur les grands plans d'eau d'altitude."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Phoenicopterus_roseus1.jpg" alt="Flamant rose" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Flamant rose</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe de Recherche Ramsar</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Balbuzard pêcheur" data-photographer="Ornithologue de l'Atlas" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Rapace piscivore d'une habileté spectaculaire, plongeant dans les eaux claires des lacs d'Imilchil."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Pandion_haliaetus1.jpg" alt="Balbuzard pêcheur" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Balbuzard pêcheur</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Ornithologue de l'Atlas</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Genette commune" data-photographer="Division de l'ANEF" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Petit carnivore nocturne agile au pelage tacheté et à longue queue annelée, très adroit dans les arbres."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Genetta_genetta1.jpg" alt="Genette commune" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Genette commune</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Division de l'ANEF</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card group relative aspect-square bg-stone-900 rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer select-none border border-brand-light-gray/60"
+             data-category="faune" data-title="Salamandre de l'Atlas" data-photographer="Équipe Herpétologique" data-date="2025"
+             data-location="Milieux d'altitude sauvages, PNHAO" data-badge="Faune"
+             data-description="Amphibien endémique aux motifs colorés spectaculaires, habitant les sous-bois forestiers frais."
+             onclick="openGalleryLightbox(this)">
+          <img src="https://ifrane.pnm.ma/wp-content/uploads/2025/11/Salamandra_algira_tingitana1.jpg" alt="Salamandre de l'Atlas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=400&q=80'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+            <span class="text-[8px] font-mono text-brand-accent uppercase tracking-widest font-bold mb-1">Faune</span>
+            <h5 class="font-serif font-bold text-sm text-white">Salamandre de l'Atlas</h5>
+            <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono mt-2 pt-2 border-t border-white/10">
+              <span>Par : Équipe Herpétologique</span>
+              <i data-lucide="expand" class="h-3 w-3 text-white"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Interactive Lightbox Modal -->
+    <!-- Full-bleed photo fills the entire viewport; controls & caption float on top as overlays -->
+    <div id="gallery-lightbox" class="fixed inset-0 z-50 bg-neutral-950 hidden opacity-0 transition-opacity duration-300 select-none overflow-hidden">
+
+      <!-- Full-width / full-height background photo -->
+      <img id="lightbox-bg-img" src="" class="absolute inset-0 w-full h-full object-cover" alt="Selected Gallery Frame" />
+
+      <!-- Readability scrim: darkens top (for controls) and bottom (for caption) without hiding the photo -->
+      <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/0 to-black/80 pointer-events-none"></div>
+
+      <!-- Top Controls Overlay -->
+      <div class="absolute top-0 inset-x-0 z-30 flex items-center justify-between px-4 py-4 md:px-8 md:py-8 max-w-5xl mx-auto">
+        <span id="lightbox-counter" class="font-mono text-xs text-white font-bold bg-black/50 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-sm">
+          1 / 10
+        </span>
+        <button onclick="closeGalleryLightbox()" class="p-2.5 rounded-full bg-black/50 hover:bg-rose-600 border border-white/10 transition-all text-white cursor-pointer shadow-md shrink-0 backdrop-blur-sm">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Prev / Next Navigation Overlay -->
+      <button onclick="prevGalleryImage()" class="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/50 hover:bg-white/20 active:bg-white/35 border border-white/10 transition-all text-white cursor-pointer shadow-2xl backdrop-blur-md">
+        <i data-lucide="chevron-left" class="h-6 w-6 sm:h-7 sm:w-7"></i>
+      </button>
+      <button onclick="nextGalleryImage()" class="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/50 hover:bg-white/20 active:bg-white/35 border border-white/10 transition-all text-white cursor-pointer shadow-2xl backdrop-blur-md">
+        <i data-lucide="chevron-right" class="h-6 w-6 sm:h-7 sm:w-7"></i>
+      </button>
+
+      <!-- Caption Overlay: floats over the bottom of the full-width photo -->
+      <div class="absolute bottom-0 inset-x-0 z-30 p-4 md:p-8">
+        <div class="max-w-3xl mx-auto bg-black/50 border border-white/10 p-4 md:p-6 rounded-2xl space-y-2.5 backdrop-blur-md text-left shadow-2xl">
+          <div class="flex flex-wrap items-center gap-3">
+            <span id="lightbox-badge" class="text-[10px] uppercase font-bold tracking-widest text-brand-accent bg-brand-accent/20 border border-brand-accent/30 px-3 py-1 rounded-full">
+              Faune
+            </span>
+            <div class="flex items-center space-x-1.5 text-xs text-stone-300 font-sans">
+              <i data-lucide="map-pin" class="h-3.5 w-3.5 text-brand-accent shrink-0"></i>
+              <span id="lightbox-location">Parc National du Haut Atlas Oriental</span>
+            </div>
+          </div>
+
+          <!-- Title & Description -->
+          <div class="space-y-1 text-white">
+            <h3 id="lightbox-title" class="font-serif font-bold text-lg sm:text-xl md:text-2xl tracking-tight leading-tight">
+              Mouflon à manchettes
+            </h3>
+            <p id="lightbox-desc" class="text-xs sm:text-sm text-stone-200 font-sans leading-relaxed">
+              Le seigneur agile des falaises calcaires du Jbel Ayachi.
+            </p>
+          </div>
+
+          <!-- Additional Meta (Photographer, Date) -->
+          <div class="flex flex-wrap justify-between pt-3 border-t border-white/10 text-[10px] sm:text-xs text-stone-400 font-mono">
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="camera" class="h-3.5 w-3.5 shrink-0"></i>
+              <span>Crédit : <strong id="lightbox-author" class="text-stone-200">A. Benjelloun</strong></span>
+            </span>
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="calendar" class="h-3.5 w-3.5 shrink-0"></i>
+              <span>Année : <strong id="lightbox-date" class="text-stone-200">2025</strong></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Script Block for Gallery logic (no data array — reads straight from the DOM) -->
+    <script>
+      let currentGalleryFilter = 'all';
+      let lightboxActiveIndex = 0;
+
+      // Returns the cards currently matching the active filter, in DOM order
+      function getVisibleCards() {
+        return Array.from(document.querySelectorAll('#gallery-grid .gallery-card')).filter(card => {
+          return currentGalleryFilter === 'all' || card.dataset.category === currentGalleryFilter;
+        });
+      }
+
+      function setGalleryFilter(category) {
+        currentGalleryFilter = category;
+
+        // Update filter button styles
+        const filterIds = ['all', 'faune', 'flore', 'lacs', 'douars'];
+        filterIds.forEach(id => {
+          const btn = document.getElementById(`g-btn-${id}`);
+          if (!btn) return;
+          if (id === category) {
+            btn.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray bg-brand-primary text-white";
+          } else {
+            btn.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-brand-light-gray text-stone-600 hover:bg-brand-sand";
+          }
+        });
+
+        // Show/hide static cards instead of re-rendering them
+        document.querySelectorAll('#gallery-grid .gallery-card').forEach(card => {
+          const matches = category === 'all' || card.dataset.category === category;
+          card.classList.toggle('hidden', !matches);
+        });
+
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      }
+
+      // Lightbox Logic — reads data-* attributes straight off the clicked card
+      function openGalleryLightbox(cardEl) {
+        const visible = getVisibleCards();
+        lightboxActiveIndex = visible.indexOf(cardEl);
+        showLightboxImage();
+
+        const lightbox = document.getElementById('gallery-lightbox');
+        if (!lightbox) return;
+
+        lightbox.classList.remove('hidden');
+        setTimeout(() => {
+          lightbox.classList.remove('opacity-0');
+        }, 10);
+      }
+
+      function showLightboxImage() {
+        const visible = getVisibleCards();
+        const card = visible[lightboxActiveIndex];
+        if (!card) return;
+
+        const bgImg = document.getElementById('lightbox-bg-img');
+        const counter = document.getElementById('lightbox-counter');
+        const location = document.getElementById('lightbox-location');
+        const badge = document.getElementById('lightbox-badge');
+        const title = document.getElementById('lightbox-title');
+        const desc = document.getElementById('lightbox-desc');
+        const author = document.getElementById('lightbox-author');
+        const date = document.getElementById('lightbox-date');
+
+        const imgSrc = card.querySelector('img')?.src || '';
+
+        if (bgImg) bgImg.src = imgSrc;
+        if (counter) counter.innerText = `${lightboxActiveIndex + 1} / ${visible.length}`;
+        if (location) location.innerText = card.dataset.location || '';
+        if (badge) badge.innerText = card.dataset.badge || '';
+        if (title) title.innerText = card.dataset.title || '';
+        if (desc) desc.innerText = card.dataset.description || '';
+        if (author) author.innerText = card.dataset.photographer || '';
+        if (date) date.innerText = card.dataset.date || '';
+      }
+
+      function closeGalleryLightbox() {
+        const lightbox = document.getElementById('gallery-lightbox');
+        if (!lightbox) return;
+        lightbox.classList.add('opacity-0');
+        setTimeout(() => {
+          lightbox.classList.add('hidden');
+        }, 300);
+      }
+
+      function nextGalleryImage() {
+        const visible = getVisibleCards();
+        if (visible.length <= 1) return;
+        lightboxActiveIndex = (lightboxActiveIndex + 1) % visible.length;
+        showLightboxImage();
+      }
+
+      function prevGalleryImage() {
+        const visible = getVisibleCards();
+        if (visible.length <= 1) return;
+        lightboxActiveIndex = (lightboxActiveIndex - 1 + visible.length) % visible.length;
+        showLightboxImage();
+      }
+
+      // Close modal on click outside content
+      window.onclick = function(event) {
+        const lightbox = document.getElementById('gallery-lightbox');
+        if (event.target === lightbox) {
+          closeGalleryLightbox();
+        }
+      }
+
+      // Keyboard navigation support
+      document.addEventListener('keydown', (e) => {
+        const lightbox = document.getElementById('gallery-lightbox');
+        if (lightbox && !lightbox.classList.contains('hidden')) {
+          if (e.key === 'ArrowRight') nextGalleryImage();
+          if (e.key === 'ArrowLeft') prevGalleryImage();
+          if (e.key === 'Escape') closeGalleryLightbox();
+        }
+      });
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        setGalleryFilter('all');
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      });
+    </script>
+
+  </div>
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE END                                             -->
+  <!-- ========================================================================= -->
+
+</body>
+</html>
