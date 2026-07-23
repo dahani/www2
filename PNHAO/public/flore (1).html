@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Flore & Écosystèmes Forestiers - PNHAO</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght=0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#F9F7F2',
+              text: '#2D342F',
+              primary: '#4A5D4E',
+              accent: '#D68C67',
+              'light-gray': '#E2E8E0',
+              sand: '#F4F1EA',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Clickable image styling */
+    #wp-pnhao-flore img {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-brand-bg text-brand-text min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE START                                           -->
+  <!-- ========================================================================= -->
+  <div id="wp-pnhao-flore" class="w-full bg-brand-bg text-brand-text font-sans antialiased py-12">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <!-- SECTION 1: Page Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div class="space-y-1.5">
+          <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-accent">Patrimoine Sylvestre & Endémisme</span>
+          <h2 class="font-serif font-bold text-3xl sm:text-4xl text-brand-text tracking-tight">La Flore & les Écosystèmes Forestiers</h2>
+          <p class="text-sm text-stone-500 max-w-2xl font-sans">
+            La richesse botanique du PNHAO s'élève à 234 taxons de plantes vasculaires. C'est le royaume du majestueux Cèdre de l'Atlas et de nombreuses plantes aromatiques très convoitées.
+          </p>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Grid of the 4 Vegetation Stages -->
+      <section class="bg-white border border-brand-light-gray rounded-[36px] p-6 sm:p-8 space-y-6 shadow-sm">
+        <div class="flex items-center space-x-3">
+          <i data-lucide="layers" class="h-5 w-5 text-brand-accent"></i>
+          <h3 class="font-serif font-bold text-xl text-brand-text">Les 4 Étages Climatologiques du Parc</h3>
+        </div>
+        <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+          La grande amplitude d'altitude (de 1654 m à 3164 m) couplée aux variations thermiques engendre un étagement végétal d'une pure beauté.
+        </p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          
+          <!-- Stage 1 -->
+          <div class="p-5 rounded-2xl border border-brand-light-gray bg-brand-sand/40 text-brand-text flex flex-col justify-between h-[170px] shadow-sm">
+            <div class="space-y-1">
+              <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-stone-400">
+                1654 m - 1800 m
+              </span>
+              <h4 class="font-serif font-bold text-sm text-brand-primary">
+                Étage Mésoméditerranéen
+              </h4>
+              <p class="text-[11px] text-stone-500 font-sans line-clamp-2">
+                Genévrier rouge, Buxus balearica et Stipa tenacissima (Alfa).
+              </p>
+            </div>
+            <div class="flex items-center justify-between mt-2 pt-2 border-t border-brand-light-gray/60">
+              <span class="text-xs font-sans font-bold">Part: 5%</span>
+              <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-md bg-brand-sand text-brand-primary">
+                2 961 ha
+              </span>
+            </div>
+          </div>
+
+          <!-- Stage 2 -->
+          <div class="p-5 rounded-2xl border border-brand-light-gray bg-brand-sand/40 text-brand-text flex flex-col justify-between h-[170px] shadow-sm">
+            <div class="space-y-1">
+              <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-stone-400">
+                1800 m - 2200 m
+              </span>
+              <h4 class="font-serif font-bold text-sm text-brand-primary">
+                Étage Supraméditerranéen
+              </h4>
+              <p class="text-[11px] text-stone-500 font-sans line-clamp-2">
+                Chêne vert (Quercus rotundifolia) associé au Genévrier de Phénicie.
+              </p>
+            </div>
+            <div class="flex items-center justify-between mt-2 pt-2 border-t border-brand-light-gray/60">
+              <span class="text-xs font-sans font-bold">Part: 28%</span>
+              <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-md bg-brand-sand text-brand-primary">
+                15 847 ha
+              </span>
+            </div>
+          </div>
+
+          <!-- Stage 3 (Featured) -->
+          <div class="p-5 rounded-2xl border border-brand-primary bg-brand-primary text-white flex flex-col justify-between h-[170px] shadow-md transform -translate-y-1">
+            <div class="space-y-1">
+              <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-brand-accent">
+                2200 m - 2700 m
+              </span>
+              <h4 class="font-serif font-bold text-sm text-white">
+                Étage Montagnard Méditerranéen
+              </h4>
+              <p class="text-[11px] text-stone-200 font-sans line-clamp-2">
+                Cèdre de l'Atlas (Cedrus atlantica), Chêne vert et Genévrier thurifère.
+              </p>
+            </div>
+            <div class="flex items-center justify-between mt-2 pt-2 border-t border-white/20">
+              <span class="text-xs font-sans font-bold text-white">Part: 55%</span>
+              <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-md bg-white/20 text-white">
+                30 554 ha
+              </span>
+            </div>
+          </div>
+
+          <!-- Stage 4 -->
+          <div class="p-5 rounded-2xl border border-brand-light-gray bg-brand-sand/40 text-brand-text flex flex-col justify-between h-[170px] shadow-sm">
+            <div class="space-y-1">
+              <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-stone-400">
+                2700 m - 3164 m
+              </span>
+              <h4 class="font-serif font-bold text-sm text-brand-primary">
+                Étage Oroméditerranéen
+              </h4>
+              <p class="text-[11px] text-stone-500 font-sans line-clamp-2">
+                Coussinets épineux d'altitude et pelouses oroméditerranéennes.
+              </p>
+            </div>
+            <div class="flex items-center justify-between mt-2 pt-2 border-t border-brand-light-gray/60">
+              <span class="text-xs font-sans font-bold">Part: 11%</span>
+              <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-md bg-brand-sand text-brand-primary">
+                6 318 ha
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 3: Official Flora Inventory Statistics & IUCN Table -->
+      <section class="bg-white border border-brand-light-gray rounded-[40px] p-6 sm:p-10 shadow-sm space-y-6">
+        <div class="space-y-2">
+          <span class="text-xs font-bold font-sans uppercase tracking-widest text-brand-primary">Bilan Botanique Officiel</span>
+          <h3 class="font-serif font-bold text-2xl sm:text-3xl text-brand-text tracking-tight">Statistiques de Flore Sauvage & Raretés</h3>
+          <p class="text-sm text-stone-500 max-w-3xl font-sans">
+            L'inventaire officiel de la flore du Parc National du Haut Atlas Oriental dénombre un total de <strong class="text-brand-primary">525 espèces</strong> de plantes vasculaires, dont <strong class="text-brand-primary">85 espèces endémiques ou d'une rareté critique</strong> au niveau mondial ou national.
+          </p>
+        </div>
+
+        <!-- Highlight Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-2">
+          <div class="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">525</span>
+            <span class="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Espèces totales</span>
+          </div>
+          <div class="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">85</span>
+            <span class="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Endémiques / Rares</span>
+          </div>
+          <div class="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">15</span>
+            <span class="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Plantes Médicinales</span>
+          </div>
+          <div class="bg-brand-sand/30 border border-brand-light-gray/60 p-5 rounded-2xl text-center space-y-1">
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-brand-primary">4</span>
+            <span class="text-[11px] uppercase font-sans font-bold text-stone-400 block tracking-wider">Étages Végétaux</span>
+          </div>
+        </div>
+
+        <!-- Key Endemic & Protected Species List -->
+        <div class="bg-brand-sand/30 border border-brand-light-gray/80 rounded-2xl p-5 sm:p-6 space-y-4">
+          <h4 class="font-serif font-bold text-sm text-brand-primary">Répartition de la Rareté et Menaces Botaniques</h4>
+          <p class="text-xs text-stone-600 font-sans leading-relaxed">
+            Les espèces phares du parc subissent de fortes pressions climatiques et anthropiques (surpâturage et prélèvement excessif pour l'artisanat ou les huiles essentielles).
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs font-sans">
+            <div class="bg-white p-3.5 border border-brand-light-gray/60 rounded-xl space-y-1">
+              <span class="font-bold text-brand-primary">Espèces Endémiques Locales :</span>
+              <p class="text-stone-500">Germandrée de Midelt (Teucrium mideltense), Astragale de l'Atlas (Astragalus maireanus).</p>
+            </div>
+            <div class="bg-white p-3.5 border border-brand-light-gray/60 rounded-xl space-y-1">
+              <span class="font-bold text-brand-primary">Espèces en Danger Critique :</span>
+              <p class="text-stone-500">Cèdre de l'Atlas (Cedrus atlantica) en recul, Genévrier thurifère (Juniperus thurifera).</p>
+            </div>
+            <div class="bg-white p-3.5 border border-brand-light-gray/60 rounded-xl space-y-1">
+              <span class="font-bold text-brand-primary">Raretés Mondiales Présentes :</span>
+              <p class="text-stone-500">Buis des Baléares (Buxus balearica) localisé, Saxifrage à longues feuilles.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: Herbier Virtuel du Parc (Filter & Cards) -->
+      <section class="space-y-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <h3 class="font-serif font-bold text-xl text-brand-text self-start">
+            Herbier Virtuel du Parc
+          </h3>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="bg-brand-sand/50 border border-brand-light-gray rounded-[28px] p-5 flex flex-col lg:flex-row lg:items-center gap-4 shadow-sm">
+          <!-- Search input -->
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-3.5 flex items-center pointer-events-none text-brand-primary/60">
+              <i data-lucide="search" class="h-4 w-4"></i>
+            </div>
+            <input
+              type="text"
+              id="flora-search-input"
+              oninput="filterFloraCards()"
+              placeholder="Rechercher une herbe, fleur, arbre, biotope, nom scientifique..."
+              class="w-full bg-white border border-brand-light-gray rounded-2xl py-3 pl-11 pr-4 text-sm text-brand-text placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all shadow-inner"
+            />
+          </div>
+
+          <!-- Category filter buttons -->
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="text-brand-primary/80 flex items-center space-x-1.5 text-xs font-bold font-sans uppercase tracking-wider">
+              <i data-lucide="sliders-horizontal" class="h-3.5 w-3.5"></i>
+              <span>Catégorie :</span>
+            </div>
+
+            <div class="flex flex-wrap gap-1 bg-white p-1 rounded-xl border border-brand-light-gray shadow-sm" id="flora-cat-buttons">
+              <button
+                onclick="setFloraCategory('all')"
+                data-cat="all"
+                class="flora-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer bg-brand-primary text-white shadow-sm"
+              >
+                Tous
+              </button>
+              <button
+                onclick="setFloraCategory('endemic')"
+                data-cat="endemic"
+                class="flora-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer text-brand-text/75 hover:text-brand-primary"
+              >
+                Endémiques
+              </button>
+              <button
+                onclick="setFloraCategory('medicinal')"
+                data-cat="medicinal"
+                class="flora-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer text-brand-text/75 hover:text-brand-primary"
+              >
+                Médicinales & Aromatiques (PAM)
+              </button>
+              <button
+                onclick="setFloraCategory('protected')"
+                data-cat="protected"
+                class="flora-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer text-brand-text/75 hover:text-brand-primary"
+              >
+                Menacées / Protégées
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATIC HTML GRID OF ALL 21 FLORA ITEMS -->
+        <div id="flora-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Item 1: Thym du Maroc -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/thymus_maroccanus_1784114509918.jpg" alt="Thym du Maroc" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Espèce remarquable
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Thym du Maroc</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Thymus maroccanus</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Arbrisseau aromatique très recherché, endémique du Maroc. Il forme des coussinets denses et parfumés utilisés en phytothérapie locale.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Rochers, steppes arbustives</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: Saxifrage à longues feuilles -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/saxifraga_longifolia_1784114522079.jpg" alt="Saxifrage à longues feuilles" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Rare et protégée
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Saxifrage à longues feuilles</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Saxifrage longifolia</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Plante rupicole spectaculaire formant de grandes rosettes de feuilles argentées, produisant une inflorescence pyramidale blanche majestueuse.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Falaises calcaires calcicoles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: Germandrée de Midelt -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/teucrium_mideltense_1784114535027.jpg" alt="Germandrée de Midelt" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Endémique locale
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Germandrée de Midelt</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Teucrium mideltense</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Plante ligneuse naine endémique de la région de Midelt et du Haut Atlas oriental. Elle est parfaitement adaptée à la rigueur des sécheresses hivernales.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Pentes rocheuses et marnes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4: Marrube de Litardière -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/marrubium_litardierei_1784114547260.jpg" alt="Marrube de Litardière" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Endémique remarquable
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Marrube de Litardière</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Marrubium litardierei</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Plante herbacée tomenteuse de la famille des Lamiacées, remarquable pour son feuillage laineux gris-blanc qui la protège du rayonnement solaire extrême.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Éboulis et clairières</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 5: Carum de l'Atlas -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/carum_atlanticum_1784114558726.jpg" alt="Carum de l'Atlas" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Rare
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Carum de l'Atlas</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Carum atlanticum</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Ombellifère endémique des hautes montagnes de l'Atlas marocain, faisant partie de la biodiversité précieuse du parc.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Pelouses d'altitude et roches</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 6: Sabline de la Drise -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/arenaria_dyris_1784114570208.jpg" alt="Sabline de la Drise" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Spécifique d'altitude
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Sabline de la Drise</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Arenaria dyris</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Petite plante en coussinet à fleurs blanches étoilées, habituée des climats rigoureux des sommets dépassant 2800 m.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Pelouses oroméditerranéennes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 7: Thym à feuilles de sarriette -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="medicinal">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/thymus_saturejoides_1784114583855.jpg" alt="Thym à feuilles de sarriette" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-sand text-brand-primary border-brand-light-gray">
+                    Plante Aromatique
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Exploitée durablement
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Thym à feuilles de sarriette</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Thymus saturejoides</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Connu localement sous le nom d'Azoukni. Il est traditionnellement récolté par les populations locales d'Aït H'ddidou pour ses vertus antiseptiques et digestives exceptionnelles.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Steppes rocailleuses</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 8: Lavande dentée -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="medicinal">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/lavandula_dentata1_5ed5f5.jpg" alt="Lavande dentée" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-sand text-brand-primary border-brand-light-gray">
+                    Plante Aromatique
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Abondante
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Lavande dentée</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Lavandula dentata</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Lavande sauvage aux feuilles découpées et épis violets très parfumés. Utilisée pour l'extraction d'huiles essentielles et la médecine traditionnelle.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Versants ensoleillés</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 9: Menthe à longues feuilles -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="medicinal">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/mentha_longifolia_1784114603247.jpg" alt="Menthe à longues feuilles" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-sand text-brand-primary border-brand-light-gray">
+                    Plante Aromatique
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Zones humides
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Menthe à longues feuilles</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Mentha longifolia</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Menthe sauvage poussant le long des oueds et des zones humides. Elle possède une odeur de menthe poivrée intense très appréciée.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Bords d'oueds & sources</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 10: Buis des Baléares -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="medicinal">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/buxus_balearica_1784114615141.jpg" alt="Buis des Baléares" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-sand text-brand-primary border-brand-light-gray">
+                    Plante Aromatique
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Remarquable / Fragile
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Buis des Baléares</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Buxus balearica</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Arbuste persistant rare formant des peuplements remarquables dans les vallées abritées du parc. Ses feuilles contiennent des alcaloïdes précieux.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Thalwegs humides et ombragés</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 11: Renoncule du M'goun -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/ranunculus_mgounicus_1784114628960.jpg" alt="Renoncule du M'goun" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Danger Critique (CR)
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Renoncule du M'goun</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Ranunculus mgounicus</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Plante herbacée extrêmement rare, en danger critique d'extinction selon la liste rouge de l'UICN. Unique représentante d'une lignée alpine marocaine.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Fissures humides des sommets</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 12: Deverra d'Espagne -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/deverra_juncea_1784114641094.jpg" alt="Deverra d'Espagne" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    En Danger (EN)
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Deverra d'Espagne</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Deverra juncea</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Espèce de la liste rouge menacée par le surpâturage dans les zones semi-arides. Elle possède des tiges jonciformes vertes.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Sols érodés & steppes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 13: Astragale de Maire -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/astragalus_maireanus_1784114652366.jpg" alt="Astragale de Maire" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Vulnérable (VU)
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Astragale de Maire</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Astragalus maireanus</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Espèce vulnérable de légumineuse épineuse formant des coussins denses qui protègent le sol contre l'érosion éolienne et hydrique.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Steppes à xérophytes épineux</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 14: Laser d'Émilien -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/laserpitium_emilianum_1784114665445.jpg" alt="Laser d'Émilien" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Quasi menacée (NT)
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Laser d'Émilien</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Laserpitium emilianum</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Grande ombellifère endémique du Haut Atlas, classée comme quasi menacée en raison de la collecte incontrôlée et du pâturage.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Clairières de cédraies</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 15: Cèdre de l'Atlas -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/cedrus_atlantica1_c50f03.jpg" alt="Cèdre de l'Atlas" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    En Danger (EN) / Protégé
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Cèdre de l'Atlas</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Cedrus atlantica</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Arbre majestueux emblématique du Maroc, pouvant vivre plusieurs siècles. Il forme l'ossature des forêts d'altitude et constitue un refuge vital pour le singe Magot.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Montagnard (2200m - 2700m)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 16: Genévrier thurifère -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/juniperus_thurifera1_841ce9.jpg" alt="Genévrier thurifère" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Fortement protégé
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Genévrier thurifère</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Juniperus thurifera</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Conifère relique d'une résistance exceptionnelle, s'élevant jusqu'à la limite supérieure des arbres. Ses troncs noueux millénaires retiennent les sols face à l'érosion extrême.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Oroméditerranéen (>2700m)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 17: Chêne vert de l'Atlas -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="endemic">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/quercus_ilex1_91c254.jpg" alt="Chêne vert de l'Atlas" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-accent/15 text-brand-accent border-brand-accent/20">
+                    Endémique Maroc
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Espèce structurante
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Chêne vert de l'Atlas</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Quercus ilex ssp. rotundifolia</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Espèce forestière sempervirente dominante de la région méditerranéenne d'altitude. Son feuillage dense protège les bassins versants contre les rayonnements intenses.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Supraméditerranéen (1800m - 2400m)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 18: Astragale d'Ibrahim -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/abies_maroccana_1_1784115608724.jpg" alt="Astragale d'Ibrahim" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Rare & Protégée
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Astragale d'Ibrahim</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Astragalus ibrahimianus</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Plante en coussinet épineux endémique de la haute montagne marocaine, essentielle pour lutter contre le glissement des sols de l'Ayachi face aux vents violents.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Éboulis & sommets (>2600m)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 19: Genêt à balais -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="medicinal">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/spartium_junceum1_975890.jpg" alt="Genêt à balais" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-brand-sand text-brand-primary border-brand-light-gray">
+                    Plante Aromatique
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Espèce remarquable
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Genêt à balais</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Spartium junceum</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Arbuste vigoureux à fleurs d'un jaune d'or éclatant. Il est réputé pour sa résilience et ses vertus médicinales cardiotoniques et diurétiques.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Versants & lisières forestières</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 20: Tamaris de l'Atlas -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/tamaris_tamarix_africana1_c23014.jpg" alt="Tamaris de l'Atlas" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Espèce protectrice
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Tamaris de l'Atlas</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Tamarix africana</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Petit arbre ou arbuste parfaitement adapté aux sols saumâtres et humides. Ses racines stabilisent efficacement les berges des oueds.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Lits des oueds & salines</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 21: Cytise d'Algérie -->
+          <div class="flora-card bg-white border border-brand-light-gray rounded-[28px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="protected">
+            <div>
+              <div class="h-[200px] w-full relative overflow-hidden bg-brand-sand">
+                <img src="./images/flore/arganier_argania_spinosa1_9e45fd.jpg" alt="Cytise d'Algérie" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" />
+                <div class="absolute top-4 left-4">
+                  <span class="text-[10px] font-bold font-sans uppercase px-2.5 py-1 rounded-full border shadow-sm backdrop-blur-md bg-rose-50 text-rose-800 border-rose-100">
+                    Menacée (UICN)
+                  </span>
+                </div>
+                <div class="absolute top-4 right-4">
+                  <span class="text-[9px] text-stone-700 font-sans font-bold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-brand-light-gray shadow-sm">
+                    Espèce rare / Protégée
+                  </span>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="space-y-1">
+                  <h4 class="font-serif font-bold text-lg text-brand-text tracking-tight">Cytise d'Algérie (Trèfle de l'Atlas)</h4>
+                  <p class="text-xs font-mono text-brand-primary italic">Cytisus fontanesii</p>
+                </div>
+                <p class="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+                  Arbrisseau d'une grande valeur biogéographique, aux rameaux élancés et fleurs jaunes d'une grande rareté dans le Moyen et Haut Atlas.
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0 space-y-4">
+              <div class="pt-4 border-t border-brand-light-gray space-y-2 mt-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-stone-400 font-sans">Milieu :</span>
+                  <span class="text-brand-text font-bold font-sans truncate max-w-[170px]">Pentes calcaires d'altitude</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- No results message -->
+        <div id="flora-no-results" class="hidden text-center py-16 bg-white border border-brand-light-gray rounded-[32px] p-8">
+          <i data-lucide="leaf" class="h-10 w-10 text-stone-300 mx-auto mb-3"></i>
+          <p class="text-stone-500 font-sans text-sm font-medium">
+            Aucune espèce ne correspond à votre recherche.
+          </p>
+          <button
+            onclick="resetFloraFilter()"
+            class="mt-4 px-4 py-2 text-xs bg-brand-sand text-brand-primary hover:bg-brand-light-gray transition-colors rounded-xl font-bold cursor-pointer"
+          >
+            Réinitialiser les filtres
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- Fullscreen Image Modal / Lightbox -->
+  <div id="image-modal" class="fixed inset-0 z-[9999] hidden bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300">
+    <button id="close-modal-btn" aria-label="Fermer" class="absolute top-5 right-5 sm:top-8 sm:right-8 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 transition-colors cursor-pointer border border-white/30 backdrop-blur-sm z-10 focus:outline-none shadow-lg">
+      <i data-lucide="x" class="h-6 w-6"></i>
+    </button>
+    
+    <div class="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center justify-center pointer-events-auto">
+      <img id="modal-image" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl border border-white/10 transition-transform duration-300" />
+      <p id="modal-caption" class="mt-4 text-white font-serif text-sm sm:text-base text-center font-medium tracking-wide bg-stone-900/80 px-6 py-2 rounded-full border border-white/15 backdrop-blur-md shadow-md max-w-xl"></p>
+    </div>
+  </div>
+  <!-- ========================================================================= -->
+  <!-- WORDPRESS COPY-PASTE ZONE END                                             -->
+  <!-- ========================================================================= -->
+
+  <script>
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+
+    let activeCategory = 'all';
+
+    function setFloraCategory(cat) {
+      activeCategory = cat;
+      const btns = document.querySelectorAll('.flora-cat-btn');
+      btns.forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = "flora-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer bg-brand-primary text-white shadow-sm";
+        } else {
+          btn.className = "flora-cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer text-brand-text/75 hover:text-brand-primary";
+        }
+      });
+      filterFloraCards();
+    }
+
+    function filterFloraCards() {
+      const searchInput = document.getElementById('flora-search-input');
+      const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      const cards = document.querySelectorAll('.flora-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const text = card.textContent.toLowerCase();
+
+        const matchesCat = (activeCategory === 'all' || cat === activeCategory);
+        const matchesQuery = query === '' || text.includes(query);
+
+        if (matchesCat && matchesQuery) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      const noResults = document.getElementById('flora-no-results');
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove('hidden');
+        } else {
+          noResults.classList.add('hidden');
+        }
+      }
+    }
+
+    function resetFloraFilter() {
+      const searchInput = document.getElementById('flora-search-input');
+      if (searchInput) searchInput.value = '';
+      setFloraCategory('all');
+    }
+
+    // Fullscreen Image Modal Popup Logic
+    const imageModal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image');
+    const modalCaption = document.getElementById('modal-caption');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    function openImageModal(src, alt) {
+      if (!imageModal || !modalImage) return;
+      modalImage.src = src;
+      modalImage.alt = alt || 'Image';
+      if (modalCaption) {
+        if (alt) {
+          modalCaption.textContent = alt;
+          modalCaption.style.display = 'block';
+        } else {
+          modalCaption.style.display = 'none';
+        }
+      }
+      imageModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+
+    function closeImageModal() {
+      if (!imageModal) return;
+      imageModal.classList.add('hidden');
+      document.body.style.overflow = '';
+      if (modalImage) modalImage.src = '';
+    }
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', closeImageModal);
+    }
+
+    if (imageModal) {
+      imageModal.addEventListener('click', function(e) {
+        if (e.target === imageModal || e.target.id === 'image-modal') {
+          closeImageModal();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeImageModal();
+      }
+    });
+
+    // Make all images in #wp-pnhao-flore clickable to open modal
+    document.addEventListener('click', function(e) {
+      const img = e.target.closest('img');
+      if (img && !img.closest('#image-modal')) {
+        const src = img.getAttribute('src');
+        const alt = img.getAttribute('alt') || '';
+        if (src) {
+          openImageModal(src, alt);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
